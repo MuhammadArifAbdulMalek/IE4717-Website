@@ -19,6 +19,8 @@ container.addEventListener('scroll', () => {
     });
 }); */
 
+/* Sections and Dot Indicator Scroll */
+
 const container = document.querySelector('.horizontal-scroll-container');
 const content = document.querySelector('.content');
 const dots = document.querySelector('.dot-indicator');
@@ -50,3 +52,33 @@ container.addEventListener('scroll', () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const scrollcontainer = document.getElementsByClassName("scroll-content");
+    const scrollButton = document.getElementById("scroll-button");
+  
+    let currentDivIndex = 0;
+    const divs = container.getElementsByClassName("productwrapper");
+
+    scrollButton.addEventListener("click", function () {
+      currentDivIndex = (currentDivIndex + 1) % divs.length;
+      const divToScrollTo = divs[currentDivIndex];
+  
+      if (divToScrollTo) {
+        // Scroll the container to the next div if it exists
+        container.scroll({
+          left: divToScrollTo.offsetLeft,
+          behavior: "smooth",
+        });
+        
+        // Print the current div index to the console
+        console.log("Current Div Index: " + currentDivIndex);
+      }
+    });
+  
+    container.addEventListener("scroll", function () {
+      // Calculate the current div index based on scroll position
+      currentDivIndex = Math.floor(container.scrollLeft / divs[0].offsetWidth);
+      console.log("Current Div Index: " + currentDivIndex);
+    });
+  });
