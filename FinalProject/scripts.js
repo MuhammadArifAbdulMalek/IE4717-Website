@@ -1,24 +1,3 @@
-/* const container = document.querySelector('.horizontal-scroll-container');
-const content = document.querySelector('.content');
-const dotIndicators = document.querySelectorAll('.dot');
-const sections = document.querySelectorAll('.section');
-
-dotIndicators.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        container.scrollLeft = sections[index].offsetLeft;
-    });
-});
-
-container.addEventListener('scroll', () => {
-    sections.forEach((section, index) => {
-        if (container.scrollLeft >= section.offsetLeft && container.scrollLeft < section.offsetLeft + section.offsetWidth) {
-            dotIndicators[index].style.backgroundColor = 'aquamarine'; // Change the active dot color
-        } else {
-            dotIndicators[index].style.backgroundColor = '#555'; // Change the inactive dot color
-        }
-    });
-}); */
-
 /* Sections and Dot Indicator Scroll */
 
 const container = document.querySelector('.horizontal-scroll-container');
@@ -58,27 +37,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const scrollButton = document.getElementById("scroll-button");
   
     let currentDivIndex = 0;
-    const divs = container.getElementsByClassName("productwrapper");
-
+    const divs = scrollcontainer.querySelectorAll(".productwrapper");
+  
     scrollButton.addEventListener("click", function () {
       currentDivIndex = (currentDivIndex + 1) % divs.length;
       const divToScrollTo = divs[currentDivIndex];
-  
-      if (divToScrollTo) {
-        // Scroll the container to the next div if it exists
-        container.scroll({
-          left: divToScrollTo.offsetLeft,
-          behavior: "smooth",
-        });
-        
-        // Print the current div index to the console
-        console.log("Current Div Index: " + currentDivIndex);
-      }
-    });
-  
-    container.addEventListener("scroll", function () {
-      // Calculate the current div index based on scroll position
-      currentDivIndex = Math.floor(container.scrollLeft / divs[0].offsetWidth);
-      console.log("Current Div Index: " + currentDivIndex);
+      
+      // Scroll the container to the next div
+      container.scroll({
+        left: divToScrollTo.offsetLeft,
+        behavior: "smooth", // Use smooth scrolling for a nice effect
+      });
     });
   });
+  
