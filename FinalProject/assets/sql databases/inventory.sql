@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2023 at 07:09 AM
+-- Generation Time: Nov 01, 2023 at 04:06 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -31,48 +31,29 @@ CREATE TABLE `inventory` (
   `id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `colourway` varchar(50) NOT NULL,
-  `us_size` decimal(3,1) NOT NULL,
-  `qty` int(11) NOT NULL
+  `us_size_5.0` int(11) NOT NULL,
+  `us_size_5.5` int(11) NOT NULL,
+  `us_size_6.0` int(11) NOT NULL,
+  `us_size_6.5` int(11) NOT NULL,
+  `us_size_7.0` int(11) NOT NULL,
+  `us_size_7.5` int(11) NOT NULL,
+  `us_size_8.0` int(11) NOT NULL,
+  `us_size_8.5` int(11) NOT NULL,
+  `us_size_9.0` int(11) NOT NULL,
+  `us_size_9.5` int(11) NOT NULL,
+  `us_size_10.0` int(11) NOT NULL,
+  `us_size_10.5` int(11) NOT NULL,
+  `us_size_11.0` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `product_name`, `colourway`, `us_size`, `qty`) VALUES
-(1, 'Nike Air Force One', 'White', 5.0, 15),
-(2, 'Nike Air Force One', 'White', 5.5, 15),
-(3, 'Nike Air Force One', 'White', 6.0, 15),
-(4, 'Nike Air Force One', 'White', 6.5, 15),
-(5, 'Nike Air Force One', 'White', 7.0, 15),
-(6, 'Nike Air Force One', 'White', 7.5, 15),
-(7, 'Nike Air Force One', 'White', 8.0, 15),
-(8, 'Nike Air Force One', 'White', 8.5, 15),
-(9, 'Nike Air Force One', 'White', 9.0, 15),
-(10, 'Nike Air Force One', 'White', 9.5, 15),
-(11, 'Nike Air Force One', 'White', 10.0, 15),
-(12, 'Nike Air Force One', 'Black', 5.0, 15),
-(13, 'Nike Air Force One', 'Black', 5.5, 15),
-(14, 'Nike Air Force One', 'Black', 6.0, 15),
-(15, 'Nike Air Force One', 'Black', 6.5, 15),
-(16, 'Nike Air Force One', 'Black', 7.0, 15),
-(17, 'Nike Air Force One', 'Black', 7.5, 15),
-(18, 'Nike Air Force One', 'Black', 8.0, 15),
-(19, 'Nike Air Force One', 'Black', 8.5, 15),
-(20, 'Nike Air Force One', 'Black', 9.0, 15),
-(21, 'Nike Air Force One', 'Black', 9.5, 15),
-(22, 'Nike Air Force One', 'Black', 10.0, 15),
-(23, 'Nike Air Force One', 'Brown', 5.0, 15),
-(24, 'Nike Air Force One', 'Brown', 5.5, 15),
-(25, 'Nike Air Force One', 'Brown', 6.0, 15),
-(26, 'Nike Air Force One', 'Brown', 6.5, 15),
-(27, 'Nike Air Force One', 'Brown', 7.0, 15),
-(28, 'Nike Air Force One', 'Brown', 7.5, 15),
-(29, 'Nike Air Force One', 'Brown', 8.0, 15),
-(30, 'Nike Air Force One', 'Brown', 8.5, 15),
-(31, 'Nike Air Force One', 'Brown', 9.0, 15),
-(32, 'Nike Air Force One', 'Brown', 9.5, 15),
-(33, 'Nike Air Force One', 'Brown', 10.0, 15);
+INSERT INTO `inventory` (`id`, `product_name`, `colourway`, `us_size_5.0`, `us_size_5.5`, `us_size_6.0`, `us_size_6.5`, `us_size_7.0`, `us_size_7.5`, `us_size_8.0`, `us_size_8.5`, `us_size_9.0`, `us_size_9.5`, `us_size_10.0`, `us_size_10.5`, `us_size_11.0`) VALUES
+(1, 'Nike Air Force One', 'white', 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15),
+(2, 'Nike Air Force One', 'black', 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15),
+(3, 'Nike Air Force One', 'brown', 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15);
 
 --
 -- Indexes for dumped tables
@@ -92,7 +73,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
