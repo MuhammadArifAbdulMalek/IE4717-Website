@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2023 at 04:08 AM
+-- Generation Time: Nov 01, 2023 at 04:13 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,14 +34,9 @@ CREATE TABLE `products` (
   `colourway` varchar(20) NOT NULL,
   `image_data` longblob DEFAULT NULL,
   `image_name` varchar(255) DEFAULT NULL,
-  `price` decimal(10,2) DEFAULT NULL
+  `price` decimal(10,2) DEFAULT NULL,
+  `release_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `product_name`, `product_details`, `colourway`, `image_data`, `image_name`, `price`) VALUES
 
 --
 -- Indexes for dumped tables
@@ -61,7 +56,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -298,3 +298,168 @@ h1{
     -webkit-filter: drop-shadow(5px 5px 5px #898888);
 }
 
+/* Product Listing */
+
+.listing {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mensheader {
+    min-height: fit-content;
+    display: inline-block;
+    justify-content: space-between;
+    padding: 20px 20px 20px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    background-color: #D9D9D9;
+    width: 100%;
+}
+
+.mensheader span {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
+.mensfilter {
+    clear: left; 
+    margin-top: 30px; 
+    width: 29vh;
+    justify-content: space-between;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    box-sizing: content-box;
+}
+
+
+
+/* Style the label and checkboxes */
+label, input[type="checkbox"] {
+    margin-bottom: 10px; /* Add space between elements */
+}
+
+.dropdown {
+    position: relative;
+    width: 100%; /* Set the desired width */
+}
+
+.dropdown-bar {
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.checkbox-form {
+    display: none; /* Initially hide the form */
+    padding: 10px;
+    padding-left: 30px;
+}
+
+/* Style the form elements */
+.checkbox-form label {
+    display: block; /* Display labels as block-level elements */
+    margin-bottom: 10px; /* Add spacing between label-checkbox pairs */
+}
+
+.dropdown-divider {
+    /* Style for the horizontal line */
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 10px 0; /* Adjust margin as needed */
+}
+
+/* Price filter */
+.price-range-filter {
+    display: inline-block;
+    margin: 20px; /* Add some margin for spacing */
+}
+
+#price-range-label {
+    font-size:120%;
+}
+
+/* Customize the slider container */
+#price-range {
+    margin-top: 10px;
+    width: 100%; /* Set the width of the slider */
+    margin-bottom: 10px;
+}
+
+/* Customize the handles */
+#price-range .noUi-handle {
+    border: 10px solid #5A5A5A; /* Add a border around the handle */
+    width: 2px; /* Set the width of the handle */
+    height: 2px; /* Set the height of the handle */
+    border-radius: 50%; /* Make the handle circular (for round handles) */
+}
+
+
+/* Customize the connecting bar between handles */
+#price-range .noUi-connects {
+    background-color: #5A5A5A; /* Change the connecting bar color */
+    height: 4px; /* Set the height of the track (make it thicker if needed) */
+    top: 48%; /* Position the track closer to the middle of the slider */
+    width: 0px;
+}
+
+#min-max-values {
+    margin-top: 10px; /* Add margin for spacing */
+}
+
+
+#apply-price-filter {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px; /* Add margin between the max value and the apply button */
+}
+
+/* Style to disable spinners (up and down buttons) on number input fields */
+.no-spinners {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+.no-spinners::-webkit-inner-spin-button,
+.no-spinners::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.product_listing {
+    max-width: calc(100% - 29vh);
+    width:100%;
+    margin-top: 30px;
+}
+
+.product_listing_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-left: 50px;
+    padding-right: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+}
+
+.product_listing_total_products {
+    padding-top: 10px;
+}
+
+
+#sort-select {
+    padding: 10px; /* Increase padding to make it larger */
+    border: 1px solid #ccc; /* Thin border */
+    border-radius: 0; /* Remove border radius for a square shape */
+    width: 280px; /* Set a specific width to make it larger */
+    outline: none; /* Remove the default focus outline */
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 100%;
+}
+
+#sort-select option {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+}
