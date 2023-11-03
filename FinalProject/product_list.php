@@ -8,14 +8,54 @@ $conn = new mysqli($hostname, $username, $password, $database);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
+}
 
-// Loop through the product data and generate HTML for each product
-$products = [
-    ['name' => 'Product 1', 'image' => 'image1.jpg', 'price' => '$10', 'url' => 'product1.html'],
-    ['name' => 'Product 2', 'image' => 'image2.jpg', 'price' => '$20', 'url' => 'product2.html'],
-    // Add more product data here
-];
+// SQL query to select unique colors and brands for filtering
+$filterSql = "SELECT DISTINCT colorway FROM inventory";
+$filter2Sql = "SELECT DISTINCT brand FROM inventory";
+
+// Execute the filter SQL query
+$filterResult = $conn->query($filterSql);
+$filterResult2 = $conn->query($filter2Sql);
+
+// Initialize arrays to store unique colors and brands for filtering
+$colors = array();
+$brands = array();
+
+if ($filterResult->num_rows > 0) {
+    while ($row = $filterResult->fetch_assoc()) {
+        $colors[] = $row['colorway'];
+    }
+}
+
+if ($filterResult2->num_rows > 0) {
+    while ($row = $filterResult2->fetch_assoc()) {
+        $brands[] = $row['brand'];
+    }
+}
+
+
+
+// SQL query to select all fields for displaying products
+$productsSql = "SELECT product_page_url, image_data, product_name, price, release_date, colorway, brand FROM inventory";
+
+// Execute the products SQL query
+$productsResult = $conn->query($productsSql);
+
+// Initialize an array to store the retrieved product data
+$products = array();
+
+if ($productsResult->num_rows > 0) {
+    while ($row = $productsResult->fetch_assoc()) {
+        $products[] = $row;
+    }
+}
+
+// Close the database connection
+$conn->close();
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,7 +135,6 @@ $products = [
                             <label for="size-8"><input type="checkbox" id="size-8" class="size-filter" value="8">Size 8</label>
                             <label for="size-9"><input type="checkbox" id="size-9" class="size-filter" value="9">Size 9</label>
                             <!-- Add more size checkboxes as needed -->
-                            <button type="button" id="apply-filter">Apply Filter</button>
                         </form>
                     </div>
                 </div>
@@ -110,17 +149,11 @@ $products = [
                     </div>
                     <div class="checkbox-form">
                         <form>
-                            <label for="brand-nike">
-                                <input type="checkbox" id="brand-nike" class="brand-filter" value="nike"> Nike
-                            </label>
-                            <label for="brand-converse">
-                                <input type="checkbox" id="brand-converse" class="brand-filter" value="converse"> Converse
-                            </label>
-                            <label for="brand-adidas">
-                                <input type="checkbox" id="brand-adidas" class="brand-filter" value="adidas"> Adidas
-                            </label>
-                            <!-- Add more brand checkboxes as needed -->
-                            <button type="button" id="apply-brand-filter">Apply Filter</button>
+                            <?php foreach (array_unique($brands) as $brand): ?>
+                                <label for="brand-<?php echo $brand; ?>">
+                                    <input type="checkbox" id="brand-<?php echo $brand; ?>" class="brand-filter" value="<?php echo $brand; ?>"> <?php echo $brand; ?>
+                                </label>
+                            <?php endforeach; ?>
                         </form>
                     </div>
                 </div>
@@ -135,17 +168,12 @@ $products = [
                     </div>
                     <div class="checkbox-form">
                         <form>
-                            <label for="color-red">
-                                <input type="checkbox" id="color-red" class="color-filter" value="red"> Red
-                            </label>
-                            <label for="color-blue">
-                                <input type="checkbox" id="color-blue" class="color-filter" value="blue"> Blue
-                            </label>
-                            <label for="color-green">
-                                <input type="checkbox" id="color-green" class="color-filter" value="green"> Green
-                            </label>
-                            <!-- Add more color checkboxes as needed -->
-                            <button type="button" id="apply-color-filter">Apply Filter</button>
+                            <?php foreach ($colors as $color): ?>
+                                <label for="color-<?php echo $color; ?>">
+                                    <input type="checkbox" id="color-<?php echo $color; ?>" class="color-filter" value="<?php echo $color; ?>">
+                                    <?php echo $color; ?>
+                                </label>
+                            <?php endforeach; ?>
                         </form>
                     </div>
                 </div>
@@ -185,11 +213,11 @@ $products = [
             <div class="product_listing_grids">
                 <div class="product_listing_grid">
                     <?php foreach ($products as $product): ?>
-                        <div class="product_listing_product">
-                            <a href="<?php echo $product['url']; ?>">
-                                <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
-                                <p><?php echo $product['name']; ?></p>
-                                <p><?php echo $product['price']; ?></p>
+                        <div class="product_listing_product" data-colorway="<?php echo $product['colorway']; ?>" data-brand="<?php echo $product['brand']; ?>">
+                            <a href="productpage.php?product_name=<?php echo urlencode($product['product_name']); ?>&colorway=<?php echo urlencode($product['colorway']); ?>">
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image_data']); ?>" alt="<?php echo $product['product_name']; ?>">
+                                <p><?php echo $product['product_name']; ?></p>
+                                <p>$<?php echo $product['price']; ?></p>
                             </a>
                         </div>
                     <?php endforeach; ?>
@@ -223,6 +251,61 @@ dropdownBars.forEach((dropdownBar, index) => {
         }
     });
 });
+
+// Filtering
+// Get all brand and color checkboxes
+const brandCheckboxes = document.querySelectorAll('.brand-filter input[type="checkbox"]');
+const colorCheckboxes = document.querySelectorAll('.color-filter input[type="checkbox"]');
+
+// Add an event listener to each checkbox
+brandCheckboxes.forEach(function (checkbox) {
+  checkbox.addEventListener('change', function () {
+    filterProducts();
+  });
+});
+
+colorCheckboxes.forEach(function (checkbox) {
+  checkbox.addEventListener('change', function () {
+    filterProducts();
+  });
+});
+
+// Function to filter products by brand and color
+function filterProducts() {
+  // Get all selected brand checkboxes
+  const selectedBrands = Array.from(brandCheckboxes)
+    .filter(checkbox => checkbox.checked)
+    .map(checkbox => checkbox.value);
+
+  // Get all selected color checkboxes
+  const selectedColors = Array.from(colorCheckboxes)
+    .filter(checkbox => checkbox.checked)
+    .map(checkbox => checkbox.value);
+
+  // Get all product containers
+  const productContainers = document.querySelectorAll('.product_listing_product');
+
+  // Iterate through product containers and filter based on selected brands and colors
+  productContainers.forEach(function (container) {
+    const brand = container.getAttribute('data-brand');
+    const colorway = container.getAttribute('data-colorway');
+
+    if (
+      (selectedBrands.length === 0 || selectedBrands.includes(brand)) &&
+      (selectedColors.length === 0 || selectedColors.includes(colorway))
+    ) {
+      container.style.display = 'block';
+    } else {
+      container.style.display = 'none';
+    }
+  });
+}
+
+// Call the filterProducts function to initialize the filtering
+filterProducts();
+
+
+
 
 // Price Filter
 // Get references to elements
@@ -267,16 +350,8 @@ dropdownBars.forEach((dropdownBar, index) => {
     }
   });
 
-  // Product Listing Sort
-  const sortSelect = document.getElementById("sort-select");
 
-    sortSelect.addEventListener("change", function () {
-    const selectedValue = sortSelect.value;
-    
-    // You can add your sorting logic here based on the selectedValue
-    // For now, let's just display an alert to show the selected value.
-    alert("Sorting by: " + selectedValue);
-});
+
 
 
 </script>
