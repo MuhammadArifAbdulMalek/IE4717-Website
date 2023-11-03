@@ -1,3 +1,14 @@
+<?php
+// Connect to your database and fetch product data (e.g., using PDO or MySQLi)
+
+// Loop through the product data and generate HTML for each product
+$products = [
+    ['name' => 'Product 1', 'image' => 'image1.jpg', 'price' => '$10', 'url' => 'product1.html'],
+    ['name' => 'Product 2', 'image' => 'image2.jpg', 'price' => '$20', 'url' => 'product2.html'],
+    // Add more product data here
+];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,6 +172,19 @@
                         <option value="lowest-price">Lowest Price</option>
                         <option value="new-arrivals">New Arrivals</option>
                     </select>
+                </div>
+            </div>
+            <div class="product_listing_grids">
+                <div class="product_listing_grid">
+                    <?php foreach ($products as $product): ?>
+                        <div class="product_listing_product">
+                            <a href="<?php echo $product['url']; ?>">
+                                <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
+                                <p><?php echo $product['name']; ?></p>
+                                <p><?php echo $product['price']; ?></p>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
             
