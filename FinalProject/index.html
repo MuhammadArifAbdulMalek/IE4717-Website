@@ -1,61 +1,3 @@
-<?php
-
-$hostname = "localhost";
-$username = "root";
-$password = "";
-$database = "shoeshop";
-
-$conn = new mysqli($hostname, $username, $password, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-    global $conn;
-    $sql = "SELECT inventory.product_name, inventory.colorway, inventory.sales, products.image_data ,products.price
-            FROM inventory
-            INNER JOIN products ON inventory.product_name = products.product_name AND inventory.colorway = products.colourway
-            ORDER BY inventory.sales DESC LIMIT 3";
-
-
-    $result = $conn->query($sql);
-
-    if ($result && $result->num_rows > 0) {
-        $products = array();
-        
-        while ($row = $result->fetch_assoc()) {
-                $products[] = $row;
-        }
-
-    } else {
-            echo "No products found.";
-    }
-
-
-    $productsSql = "SELECT product_name, colourway, price, release_date, image_data FROM products
-                    ORDER BY release_date DESC";
-
-    // Execute the products SQL query
-    $productsResult = $conn->query($productsSql);
-    
-    // Initialize an array to store the retrieved product data
-    $newarrivals = array();
-    
-    if ($productsResult->num_rows > 0) {
-        while ($row = $productsResult->fetch_assoc()) {
-            $newarrivals[] = $row;
-        }
-    }
-
-
-    // Close the database connection
-    $conn->close();
-
-
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,7 +22,6 @@ if ($conn->connect_error) {
     }
  
  </script>
-
 </head>
 <body onload="scroller();">
     <div class="promo">  
@@ -92,20 +33,19 @@ if ($conn->connect_error) {
     </div>
     <nav class="navbar">
         <div class="navleft">
-            <span><a href="men.php">MEN </a></span>
-            <span><a href="women.php"> WOMEN  </a></span>
-            <span><a href="men.php"> MEN  </a></span>
-            <span><a href="women.php"> WOMEN  </a></span>
-           
+            <span>Link 1</span>
+            <span>Link 2</span>
+            <span>Link 3</span>
+            <span>Link 4</span>
         </div>
         <div class="navcenter">
             <span>Logo</span>
         </div>
         <div class="navright">
-        <span><a href="men.php">MEN </a></span>
-            <span><a href="women.php"> WOMEN  </a></span>
-            <span><a href="men.php"> MEN  </a></span>
-            <span><a href="women.php"> WOMEN  </a></span>
+            <span>Link 1</span>
+            <span>Link 2</span>
+            <span>Link 3</span>
+            <span>Search</span>
         </div>
     </nav>
     <div class="horizontal-scroll-container">
@@ -114,23 +54,19 @@ if ($conn->connect_error) {
                 <div class="sectiondetails1">
                     <a style="font-size: 100px">NIKE AIR FORCE ONES</a> <br>
                     <a>The versatile lifestyle shoe</a> <br>
-                    <button class="genderbutton" style="color:#ffffff; border: 2px solid #ffffff;"><a href="product_list.php?brand=Nike">Shop Now</a></button> 
+                    <button class="genderbutton" style="color:#ffffff; border: 2px solid #ffffff;">Shop Now</button> 
                 </div>
             </div>
             <div class="section" id="section2">
                 <div class="sectiondetails2">
                     <a style="font-size: 100px">DR MARTENS</a> <br>
                     <a>The boot that started it all</a> <br>
-                    <button class="genderbutton" style="color:#fffac6; border: 2px solid #fffac6;"><a href="product_list.php?brand=DrMartens">Shop Now</button> 
+                    <button class="genderbutton" style="color:#fffac6; border: 2px solid #fffac6;">Shop Now</button> 
                 </div>
                 
             </div>
             <div class="section" id="section3">
-            <div class="sectiondetails3">
-                    <a style="font-size: 100px">CROCS</a> <br>
-                    <a>The Biggest Selection Of Clogs, Sandals & More</a> <br>
-                    <button class="genderbutton" style="background-color:#00000080; color:#ffffff; border: 2px solid #ffffff;">Shop Now</button> 
-                </div>
+                
             </div>
         </div>
         <div class="dot-indicator"></div>
@@ -143,52 +79,35 @@ if ($conn->connect_error) {
             <table class="bestsellerhome"> 
                 <tr>
                     <td>
-                    <a class="clickable" href="productpage.php?product_name=<?php echo urlencode($products[0]['product_name']); ?>&colorway=<?php echo urlencode($products[0]['colorway']); ?>">
-                        <table class="productcontainer" id="bestseller1">
-                            <tr> <td class="productimage"> 
-                            <img src="data:image/jpeg;base64,<?php echo base64_encode($products[0]['image_data']); ?>">
-                            </td> </tr>
+                        <table class="productcontainer">
+                            <tr> <td class="productimage"> <img src ="assets/Images/Bestseller2.jpg"></td> </tr>
                             <tr> <td class="productdetails">  
-                            <h3><strong>
-                                    <?php echo $products[0]['product_name'] . ' (' . $products[0]['colorway'] . ')'; ?>
-                                </strong></h3>
-                                    <a> <small> $ <?= $products[0]['price']?></small></a>
+                                    <h3> <strong>  Product Name </strong> </h3> 
+                                    <a> <small> Product Details</small></a>
                                 </td>
                             </tr>
                         </table>
-                    </a>
+                        
                     </td>
                     <td>
-                    <a class="clickable" href="productpage.php?product_name=<?php echo urlencode($products[1]['product_name']); ?>&colorway=<?php echo urlencode($products[1]['colorway']); ?>">
-                        <table class="productcontainer"  id="bestseller2">
-                            <tr> <td class="productimage"> 
-                                <img src="data:image/jpeg;base64,<?php echo base64_encode($products[1]['image_data']); ?>">
-                            </td> </tr>
+                        <table class="productcontainer">
+                            <tr> <td class="productimage"> <img src ="assets/Images/Bestseller2.jpg"></td> </tr>
                             <tr> <td class="productdetails">  
-                            <h3><strong>
-                                    <?php echo $products[1]['product_name'] . ' (' . $products[1]['colorway'] . ')'; ?>
-                                </strong></h3>
-                                    <a> <small>$ <?= $products[1]['price']?></small></a>
+                                    <h3> <strong>  Product Name </strong> </h3> 
+                                    <a> <small> Product Details</small></a>
                                 </td>
                             </tr>
                         </table>
-                    </a>
                     </td>
                     <td>
-                    <a class="clickable" href="productpage.php?product_name=<?php echo urlencode($products[2]['product_name']); ?>&colorway=<?php echo urlencode($products[2]['colorway']); ?>">
-                        <table class="productcontainer"  id="bestseller3">
-                            <tr> <td class="productimage"> 
-                             <img src="data:image/jpeg;base64,<?php echo base64_encode($products[2]['image_data']); ?>">
-                            </td> </tr>
+                        <table class="productcontainer">
+                            <tr> <td class="productimage"> <img src ="assets/Images/Bestseller2.jpg"></td> </tr>
                             <tr> <td class="productdetails">  
-                            <h3><strong>
-                                    <?php echo $products[2]['product_name'] . ' (' . $products[2]['colorway'] . ')'; ?>
-                                </strong></h3>
-                                    <a> <small> $ <?= $products[2]['price']?></small></a>
+                                    <h3> <strong>  Product Name </strong> </h3> 
+                                    <a> <small> Product Details</small></a>
                                 </td>
                             </tr>
                         </table>
-                    </a>
                     </td>
                 </tr>
                
@@ -209,12 +128,10 @@ if ($conn->connect_error) {
             </div>
             <div class="collectionbottom">
                 <h1>NEW COLLECTION</h1>
-                <a>All the latest releases of the month<br>
-                    Get the newest kicks, be in trend
-                </a>
+                <a>More details on the new collection here</a>
                 <div class="collectionbuttons">
-                    <button class="genderbutton"> <a href="product_list.php">MEN</a> </button>
-                    <button class="genderbutton"> <a href="product_list.php">WOMEN</a> </button>
+                    <button class="genderbutton"> MEN </button>
+                    <button class="genderbutton"> WOMEN </button>
                 </div>
             </div>
         </div>
@@ -222,35 +139,31 @@ if ($conn->connect_error) {
             <h1>NEW ARRIVALS</h1>
             <div class="scrollnewarrival">
                 <div class="scroll-content">
-                    <a class="clickable" href="productpage.php?product_name=<?php echo urlencode($newarrivals[0]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
                         <div class="productimage">
-                            <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[0]['image_data']); ?>">
+                            <img src ="assets/Images/Bestseller2.jpg">
                         </div>
                         <div class="productdetails">
-                            <h3> <strong>  <?php echo $newarrivals[0]['product_name'] . ' (' . $newarrivals[0]['colourway'] . ')'; ?> </strong> </h3> 
-                            <a> <small> <?php echo $newarrivals[0]['price']; ?></small></a>
+                            <h3> <strong>  Product Name </strong> </h3> 
+                            <a> <small> Product Details</small></a>
                         </div>
                     </div>
-                    </a>
-                    <a class="clickable" href="product_list.php">
                     <div class="productwrapper">
                         <div class="productimage">
-                             <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[1]['image_data']); ?>">
+                            <img src ="assets/Images/Bestseller2.jpg">
                         </div>
                         <div class="productdetails">
-                         <h3> <strong>  <?php echo $newarrivals[1]['product_name'] . ' (' . $newarrivals[1]['colourway'] . ')'; ?> </strong> </h3> 
-                            <a> <small> <?php echo $newarrivals[1]['price']; ?></small></a>
+                            <h3> <strong>  Product Name </strong> </h3> 
+                            <a> <small> Product Details</small></a>
                         </div>
                     </div>
-                    </a>
                     <div class="productwrapper">
                         <div class="productimage">
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[2]['image_data']); ?>">
+                            <img src ="assets/Images/Bestseller2.jpg">
                         </div>
                         <div class="productdetails">
-                         <h3> <strong>  <?php echo $newarrivals[2]['product_name'] . ' (' . $newarrivals[2]['colourway'] . ')'; ?> </strong> </h3> 
-                            <a> <small> <?php echo $newarrivals[2]['price']; ?></small></a>
+                            <h3> <strong>  Product Name </strong> </h3> 
+                            <a> <small> Product Details</small></a>
                         </div>
                     </div>
                     <div class="productwrapper">

@@ -2,8 +2,12 @@ body{
     margin: 0;
   padding: 0;
   height: 100%;
+  font-family: 'DM Sans', sans-serif;
 }
 
+.clickable{
+    text-decoration: none;
+}
 /* Scrolling Promotional Bar */
 
 .promo {
@@ -619,4 +623,61 @@ label, input[type="checkbox"] {
 .product_listing_product img {
     width: 100%; /* Set a fixed width for the image container */
     height: 77%;
+}
+
+/* Product Page */
+.productpagecontainer{
+    display:flex;
+}
+.productpageimages{
+    flex: 1.2; /* Set the width to 50% of the page */
+    margin: 0 auto; /* Center the container horizontally */
+    text-align: center; /* Center the contents inside the container */
+    padding: 4vh 2vw 2vw 10vw; /* Add some padding for spacing */
+}
+
+.productpagedetails {
+    flex: 0.8; /* Set the width to 50% of the page */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 4vh 10vw 2vw 2vw; /* Add some padding for spacing */
+}
+
+.productpagedetails p{
+    margin-top:0px; 
+    margin-bottom:10px;
+}
+.imagecontainer{
+    width:50%;
+    float:right;
+    
+}
+#gallery_display img {
+    max-width: 20vw;
+    max-height: 20vw;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.productcolourwaytable{
+    display: table;
+    width: 50%;
+}
+
+.productcolourwayrow{
+    display: table-row;
+}
+
+.productcolourwaytable .productcolourwayrow .productcolourwaycell{
+    display: table-cell;
+    padding: 10px;
+       
+}
+
+.productcolourwaycell:not(:last-child) {
+    border-right: 1px solid #00000040; 
+}
+
+.productcolourwaycell img{
+    max-width: 5vw;
+    max-height: 5vw;
+    
 }

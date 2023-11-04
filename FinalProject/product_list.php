@@ -34,7 +34,23 @@ if ($filterResult2->num_rows > 0) {
     }
 }
 
+if (isset($_GET['brand'])) {
+    $selectedBrand = $_GET['brand'];
+    $productsSql = "SELECT image_data, product_name, price, release_date, colorway, brand FROM inventory WHERE brand = '$selectedBrand'";
 
+    // Execute the products SQL query
+    $productsResult = $conn->query($productsSql);
+
+    // Initialize an array to store the retrieved product data
+    $products = array();
+
+    if ($productsResult->num_rows > 0) {
+        while ($row = $productsResult->fetch_assoc()) {
+            $products[] = $row;
+        }
+    }
+
+}  else {
 
 // SQL query to select all fields for displaying products
 $productsSql = "SELECT product_page_url, image_data, product_name, price, release_date, colorway, brand FROM inventory";
@@ -49,6 +65,7 @@ if ($productsResult->num_rows > 0) {
     while ($row = $productsResult->fetch_assoc()) {
         $products[] = $row;
     }
+}
 }
 
 // Close the database connection
@@ -180,7 +197,7 @@ $conn->close();
             </div>
 
             <hr class="dropdown-divider">
-
+                                
             <!-- <div class="price-range-filter">
                 <label for="price-range">Price Range</label>
                 <div id="price-range"></div>
@@ -210,17 +227,19 @@ $conn->close();
                     </select>
                 </div>
             </div>
+            
             <div class="product_listing_grids">
                 <div class="product_listing_grid">
                     <?php foreach ($products as $product): ?>
                         <div class="product_listing_product" data-colorway="<?php echo $product['colorway']; ?>" data-brand="<?php echo $product['brand']; ?>">
-                            <a href="productpage.php?product_name=<?php echo urlencode($product['product_name']); ?>&colorway=<?php echo urlencode($product['colorway']); ?>">
+                            <a href="product_page.php?product_name=<?php echo urlencode($product['product_name']); ?>&colorway=<?php echo urlencode($product['colorway']); ?>">
                                 <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image_data']); ?>" alt="<?php echo $product['product_name']; ?>">
                                 <p><?php echo $product['product_name']; ?></p>
                                 <p>$<?php echo $product['price']; ?></p>
                             </a>
                         </div>
                     <?php endforeach; ?>
+                    
                 </div>
             </div>
             

@@ -33,21 +33,32 @@ container.addEventListener('scroll', () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const scrollcontainer = document.getElementsByClassName("scroll-content");
-    const scrollButton = document.getElementById("scroll-button");
-  
-    let currentDivIndex = 0;
-    const divs = scrollcontainer.querySelectorAll(".productwrapper");
-  
-    scrollButton.addEventListener("click", function () {
-      currentDivIndex = (currentDivIndex + 1) % divs.length;
-      const divToScrollTo = divs[currentDivIndex];
-      
-      // Scroll the container to the next div
-      container.scroll({
-        left: divToScrollTo.offsetLeft,
-        behavior: "smooth", // Use smooth scrolling for a nice effect
-      });
+    const container = document.querySelector(".horizontal-scroll-container");
+    const sections = document.querySelectorAll(".section");
+    const dotIndicator = document.querySelector(".dot-indicator");
+
+    let currentSectionIndex = 0;
+
+    // Function to scroll to the next section
+    function scrollToNextSection() {
+        currentSectionIndex = (currentSectionIndex + 1) % sections.length;
+        scrollSectionIntoView(currentSectionIndex);
+    }
+
+    // Function to scroll a section into view
+    function scrollSectionIntoView(index) {
+        sections[index].scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        });
+    }
+
+    // Automatically scroll to the next section every 10 seconds
+    const scrollInterval = setInterval(scrollToNextSection, 10000);
+
+    // Stop the auto-scroll when the user interacts with the container
+    container.addEventListener("scroll", function () {
+        clearInterval(scrollInterval);
     });
-  });
+});
   
