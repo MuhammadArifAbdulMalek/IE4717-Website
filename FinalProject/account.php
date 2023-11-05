@@ -234,21 +234,20 @@ $conn->close();
     </div>
     <nav class="navbar">
         <div class="navleft">
-            <span>MEN</span>
-            <span>WOMEN</span>
-            <span>UNISEX</span>
+            <span><a href="product_list.php">MEN </a></span>
+            <span><a href="product_list2.php"> WOMEN  </a></span>   
         </div>
         <div class="navcenter">
             <span><a href="index.php"> Logo </a></span>
         </div>
-        <div class="navright" style="width: 400px;">
-            <span>
+        <div class="navright" >
+            <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 120px; position: relative;">
-                        <div class="dropdown-bar" style="text-align:left; position: relative; display: inline-block;">                        
+                    <div class="dropdown" style="width: 140px; position: relative;">
+                        <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
-                                    <a href="logout.php">Logout</a> <!-- Link to logout page -->
+                                <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
                                 </div>
                         </div>
                     </div>
@@ -264,7 +263,7 @@ $conn->close();
     <div class="accounts">
         <div class="accounts-container">
             <div class="accounts-form">
-                <?php if (!isset($_SESSION['user_id'])): ?>
+                <?php if (!isset($_SESSION['user_id']) || !isset($_SESSION['first_name'])): ?>
                     <h2>Login</h2>
                     <form action="" method="post">
                         <div class="form-group">
@@ -391,7 +390,7 @@ $conn->close();
         }
 
         // Select all dropdown bars and checkbox forms
-        const dropdownBars = document.querySelectorAll(".dropdown-bar");
+        const dropdownBars = document.querySelectorAll(".dropdownbar");
         const dropdownContent = document.querySelectorAll(".dropdown-content");
 
         // Add a click event listener to each dropdown bar

@@ -9,11 +9,14 @@ if (isset($_SESSION['user_id'])) {
     session_destroy();
 }
 
-// Generate a new guest user ID and set it in the session
-$guest_user_id = generateGuestID();
-$_SESSION['user_id'] = $guest_user_id;
-
-// Redirect the user to the login page or any other desired page
-header("Location: account.php");
+// Check if a return URL parameter is set
+if (isset($_GET['return_url'])) {
+    // Redirect the user back to the page they clicked "Logout" from
+    $return_url = $_GET['return_url'];
+    header("Location: " . $return_url);
+} else {
+    // If no return URL is provided, redirect to a default page (e.g., account.php)
+    header("Location: account.php");
+}
 exit();
 ?>

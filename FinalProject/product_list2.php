@@ -49,7 +49,7 @@ if ($filterResult3->num_rows > 0) {
 
 // SQL query to select all fields for displaying products
 $productsSql = "SELECT id, image_data, product_name, price, release_date, colorway, brand, `US 4.0`, `US 4.5`, `US 5.0`, `US 5.5`, `US 6.0`, `US 6.5`, `US 7.0`, `US 7.5`, `US 8.0`, `US 8.5`, `US 9.0`, `US 9.5`, `US 10.0`, `US 10.5`, `US 11.0`
-              FROM inventory WHERE `M` = 1";
+              FROM inventory WHERE `F` = 1";
 
 // Execute the products SQL query
 $productsResult = $conn->query($productsSql);
@@ -87,7 +87,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shoe Shop - Product Listing</title>
+    <title>Shoe Shop - Women's</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&family=Lato:wght@700&display=swap" rel="stylesheet">
     <script src="scripts.js"defer></script>
@@ -133,7 +133,7 @@ $conn->close();
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
-                                    <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
+                                <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
                                 </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@ $conn->close();
     <div class="listing">
 
         <div class="mensheader">
-                <h2>MEN'S SHOES</h2>
+                <h2>WOMEN'S SHOES</h2>
                     <p>Footshop offers men's Nike, Converse, Supra, Vans, Jordan, Puma, New Balance, adidas Originals and more street style shoes.<br> These original designs are made from high quality materials.</p>
                     <br>
                     <span>Link 1</span> 
@@ -420,7 +420,7 @@ const brandCheckboxes = document.querySelectorAll('.brand-filter input[type="che
   // Call the filterProducts function to initialize the filtering
   filterProducts();
 
-// Select all dropdown bars and checkbox forms
+        // Select all dropdown bars and checkbox forms
         const dropdownBars2 = document.querySelectorAll(".dropdownbar");
         const dropdownContent = document.querySelectorAll(".dropdown-content");
 
@@ -435,6 +435,7 @@ const brandCheckboxes = document.querySelectorAll('.brand-filter input[type="che
                 }
             });
         });
+
 
 
 </script>

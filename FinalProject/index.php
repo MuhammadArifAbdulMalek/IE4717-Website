@@ -96,20 +96,29 @@ if (!isset($_SESSION['cart'])) {
     </div>
     <nav class="navbar">
         <div class="navleft">
-            <span><a href="men.php">MEN </a></span>
-            <span><a href="women.php"> WOMEN  </a></span>
-            <span><a href="men.php"> MEN  </a></span>
-            <span><a href="women.php"> WOMEN  </a></span>
-           
+            <span><a href="product_list.php">MEN </a></span>
+            <span><a href="product_list2.php"> WOMEN  </a></span>   
         </div>
         <div class="navcenter">
             <span>Logo</span>
         </div>
-        <div class="navright">
-        <span><a href="men.php">MEN </a></span>
-            <span><a href="women.php"> WOMEN  </a></span>
-            <span><a href="men.php"> MEN  </a></span>
-            <span><a href="women.php"> WOMEN  </a></span>
+        <div class="navright" >
+            <span style="margin:0px;">
+                <?php if (isset($_SESSION['first_name'])): ?>
+                    <div class="dropdown" style="width: 140px; position: relative;">
+                        <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
+                                <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
+                                <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
+                                </div>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <span><a href="account.php"><img src="assets/Images/Icons/account.png"></a></span>
+                <?php endif; ?>
+            </span>
+            <span><a href= "faq.php"> <img src="assets/Images/Icons/FAQ.png"> </a></span>
+            <span><a href= "cart.php"> <img src="assets/Images/Icons/cart.png"> </a></span>
         </div>
     </nav>
     <div class="horizontal-scroll-container">
@@ -322,6 +331,24 @@ if (!isset($_SESSION['cart'])) {
                 <a> 2023 ShoeShoe Singapore Ltd</a>
             </div>
         </div>
+
+        <script>
+            // Select all dropdown bars and checkbox forms
+            const dropdownBars = document.querySelectorAll(".dropdownbar");
+            const dropdownContent = document.querySelectorAll(".dropdown-content");
+
+            // Add a click event listener to each dropdown bar
+            dropdownBars.forEach((dropdownBar, index) => {
+                dropdownBar.addEventListener("click", () => {
+                    const form = dropdownContent[index];
+                    if (form.style.display === "none" || form.style.display === "") {
+                        form.style.display = "block";
+                    } else {
+                        form.style.display = "none";
+                    }
+                });
+            });
+        </script>
                
     </body>
     </html>
