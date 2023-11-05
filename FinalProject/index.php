@@ -10,9 +10,12 @@ $conn = new mysqli($hostname, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+session_start();
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array(); // Initialize an empty shopping cart as an array
+}
     global $conn;
-    $sql = "SELECT inventory.product_name, inventory.colorway, inventory.sales, products.image_data ,products.price
+    $sql = "SELECT inventory.id, inventory.product_name, inventory.colorway, inventory.sales, products.image_data ,products.price
             FROM inventory
             INNER JOIN products ON inventory.product_name = products.product_name AND inventory.colorway = products.colourway
             ORDER BY inventory.sales DESC LIMIT 3";
@@ -32,7 +35,7 @@ if ($conn->connect_error) {
     }
 
 
-    $productsSql = "SELECT product_name, colourway, price, release_date, image_data FROM products
+    $productsSql = "SELECT id, product_name, colourway, price, release_date, image_data FROM products
                     ORDER BY release_date DESC";
 
     // Execute the products SQL query
@@ -121,7 +124,7 @@ if ($conn->connect_error) {
                 <div class="sectiondetails2">
                     <a style="font-size: 100px">DR MARTENS</a> <br>
                     <a>The boot that started it all</a> <br>
-                    <button class="genderbutton" style="color:#fffac6; border: 2px solid #fffac6;"><a href="product_list.php?brand=DrMartens">Shop Now</button> 
+                    <button class="genderbutton" style="color:#fffac6; border: 2px solid #fffac6;"><a href="product_list.php?brand=Dr. Martens">Shop Now</button> 
                 </div>
                 
             </div>
@@ -143,7 +146,7 @@ if ($conn->connect_error) {
             <table class="bestsellerhome"> 
                 <tr>
                     <td>
-                    <a class="clickable" href="productpage.php?product_name=<?php echo urlencode($products[0]['product_name']); ?>&colorway=<?php echo urlencode($products[0]['colorway']); ?>">
+                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($products[0]['id']);?>&product_name=<?php echo urlencode($products[0]['product_name']); ?>&colorway=<?php echo urlencode($products[0]['colorway']); ?>">
                         <table class="productcontainer" id="bestseller1">
                             <tr> <td class="productimage"> 
                             <img src="data:image/jpeg;base64,<?php echo base64_encode($products[0]['image_data']); ?>">
@@ -159,7 +162,7 @@ if ($conn->connect_error) {
                     </a>
                     </td>
                     <td>
-                    <a class="clickable" href="productpage.php?product_name=<?php echo urlencode($products[1]['product_name']); ?>&colorway=<?php echo urlencode($products[1]['colorway']); ?>">
+                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($products[1]['id']);?>&product_name=<?php echo urlencode($products[1]['product_name']); ?>&colorway=<?php echo urlencode($products[1]['colorway']); ?>">
                         <table class="productcontainer"  id="bestseller2">
                             <tr> <td class="productimage"> 
                                 <img src="data:image/jpeg;base64,<?php echo base64_encode($products[1]['image_data']); ?>">
@@ -175,7 +178,7 @@ if ($conn->connect_error) {
                     </a>
                     </td>
                     <td>
-                    <a class="clickable" href="productpage.php?product_name=<?php echo urlencode($products[2]['product_name']); ?>&colorway=<?php echo urlencode($products[2]['colorway']); ?>">
+                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($products[2]['id']);?>&product_name=<?php echo urlencode($products[2]['product_name']); ?>&colorway=<?php echo urlencode($products[2]['colorway']); ?>">
                         <table class="productcontainer"  id="bestseller3">
                             <tr> <td class="productimage"> 
                              <img src="data:image/jpeg;base64,<?php echo base64_encode($products[2]['image_data']); ?>">
@@ -222,7 +225,7 @@ if ($conn->connect_error) {
             <h1>NEW ARRIVALS</h1>
             <div class="scrollnewarrival">
                 <div class="scroll-content">
-                    <a class="clickable" href="productpage.php?product_name=<?php echo urlencode($newarrivals[0]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
+                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[0]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
                         <div class="productimage">
                             <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[0]['image_data']); ?>">
@@ -233,7 +236,7 @@ if ($conn->connect_error) {
                         </div>
                     </div>
                     </a>
-                    <a class="clickable" href="product_list.php">
+                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[1]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
                         <div class="productimage">
                              <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[1]['image_data']); ?>">
@@ -244,6 +247,7 @@ if ($conn->connect_error) {
                         </div>
                     </div>
                     </a>
+                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[2]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
                         <div class="productimage">
                         <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[2]['image_data']); ?>">
@@ -253,51 +257,30 @@ if ($conn->connect_error) {
                             <a> <small> <?php echo $newarrivals[2]['price']; ?></small></a>
                         </div>
                     </div>
+                    </a>
+                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[3]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
-                        <div class="productimage">
-                            <img src ="assets/Images/Bestseller2.jpg">
+                    <div class="productimage">
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[3]['image_data']); ?>">
                         </div>
                         <div class="productdetails">
-                            <h3> <strong>  Product Name </strong> </h3> 
-                            <a> <small> Product Details</small></a>
+                         <h3> <strong>  <?php echo $newarrivals[3]['product_name'] . ' (' . $newarrivals[3]['colourway'] . ')'; ?> </strong> </h3> 
+                            <a> <small> <?php echo $newarrivals[3]['price']; ?></small></a>
                         </div>
                     </div>
+                    </a>
+                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[4]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
-                        <div class="productimage">
-                            <img src ="assets/Images/Bestseller2.jpg">
+                    <div class="productimage">
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[4]['image_data']); ?>">
                         </div>
                         <div class="productdetails">
-                            <h3> <strong>  Product Name </strong> </h3> 
-                            <a> <small> Product Details</small></a>
+                         <h3> <strong>  <?php echo $newarrivals[4]['product_name'] . ' (' . $newarrivals[4]['colourway'] . ')'; ?> </strong> </h3> 
+                            <a> <small> <?php echo $newarrivals[4]['price']; ?></small></a>
                         </div>
                     </div>
-                    <div class="productwrapper">
-                        <div class="productimage">
-                            <img src ="assets/Images/Bestseller2.jpg">
-                        </div>
-                        <div class="productdetails">
-                            <h3> <strong>  Product Name </strong> </h3> 
-                            <a> <small> Product Details</small></a>
-                        </div>
-                    </div>
-                    <div class="productwrapper">
-                        <div class="productimage">
-                            <img src ="assets/Images/Bestseller2.jpg">
-                        </div>
-                        <div class="productdetails">
-                            <h3> <strong>  Product Name </strong> </h3> 
-                            <a> <small> Product Details</small></a>
-                        </div>
-                    </div>
-                    <div class="productwrapper">
-                        <div class="productimage">
-                            <img src ="assets/Images/Bestseller2.jpg">
-                        </div>
-                        <div class="productdetails">
-                            <h3> <strong>  Product Name </strong> </h3> 
-                            <a> <small> Product Details</small></a>
-                        </div>
-                    </div>       
+                    </a>
+                    
                 </div>
                 <button id="scroll-button">
                     <img src="assets/Images/nextbutton.png">

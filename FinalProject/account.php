@@ -230,19 +230,17 @@ $conn->close();
     </div>
     <nav class="navbar">
         <div class="navleft">
-            <span>Link 1</span>
-            <span>Link 2</span>
-            <span>Link 3</span>
-            <span>Link 4</span>
+            <span>MEN</span>
+            <span>WOMEN</span>
+            <span>UNISEX</span>
         </div>
         <div class="navcenter">
-            <span>Logo</span>
+            <span><a href="index.php"> Logo </a></span>
         </div>
         <div class="navright">
-            <span>Link 1</span>
-            <span>Link 2</span>
-            <span>Link 3</span>
-            <span>Search</span>
+            <span><a href= "account.php"> <img src="assets/Images/Icons/account.png"> </a></span>
+            <span><a href= "faq.php"> <img src="assets/Images/Icons/FAQ.png"> </a></span>
+            <span><a href= "findus.php"> <img src="assets/Images/Icons/map.png"> </a></span>
         </div>
     </nav>
 

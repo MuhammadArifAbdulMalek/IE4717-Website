@@ -1,5 +1,6 @@
+
 <?php
-session_start();
+
 $hostname = "localhost";
 $username = "root";
 $password = "";
@@ -7,47 +8,27 @@ $database = "shoeshop";
 
 $conn = new mysqli($hostname, $username, $password, $database);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-if (isset($_POST['addtocart'])) {
-    $product_id = $_POST['id'];
-    $product_name = $_POST['product_name'];
-    $product_price = $_POST['price'];
-    $product_size = $_POST['size'];
-    $product_quantity = $_POST['quantity'];
-    $product_color = $_POST['colorway'];
-
-    // Check if the product is already in the cart
-    if (isset($_SESSION['cart'][$product_id][$product_size])) {
-        // Increment the quantity if it's already in the cart
-        $_SESSION['cart'][$product_id][$product_size]['quantity']++;
-        
-    } else {
-        // Add the product to the cart
-        $_SESSION['cart'][$product_id][$product_size] = [
-            'name' => $product_name,
-            'price' => $product_price,
-            'quantity' => $product_quantity,
-            'size' => $product_size,
-            'color' => $product_color,
-        ];
-        echo '<script>alert("Added to Cart");</script>';
-    }
-}
-/* if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $productid = $_POST['id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productName = $_POST['product_name'];
     $colorway = $_POST['colorway'];
     $quantity = $_POST['quantity'];
-    $size = $_POST['size'];
-}  */
-        $productid = $_GET['id'];
+    echo "Product Name: " . $productName;
+    echo "Colorway: " . $colorway;
+    echo "Quantity: " . $quantity;
+} else {
+    // Handle invalid or unexpected requests, or show an error message.
+    echo "Invalid request";
+}
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+        $productName = $_GET['product_name'];
+        $colorway = $_GET['colorway'];
         
         
-        $productsSql = "SELECT id, colourway, image_data, image_data2, image_data3, image_data4, product_name, price, product_details, gender
+        $productsSql = "SELECT colourway, image_data, image_data2, image_data3, image_data4, product_name, price, product_details, gender
                         FROM products 
-                        WHERE id = '$productid'";
+                        WHERE product_name = '$productName' AND colourway = '$colorway' ";
 
         $productspageResult = $conn->query($productsSql);
 
@@ -59,7 +40,7 @@ if (isset($_POST['addtocart'])) {
                 $products[] = $row;
             }
         }
-        $id = $products[0]['id'];
+
         $productName = $products[0]['product_name'];
         $colorway = $products[0]['colourway'];
         $productprice = $products[0]['price'];
@@ -108,7 +89,7 @@ if (isset($_POST['addtocart'])) {
             <span><a href="index.php"> Logo </a></span>
         </div>
         <div class="navright">
-            <span><a href= "account.php"> <img src="assets/Images/Icons/account.png"> </a></span>
+            <span><a href= "accounts.php"> <img src="assets/Images/Icons/account.png"> </a></span>
             <span><a href= "faq.php"> <img src="assets/Images/Icons/FAQ.png"> </a></span>
             <span><a href= "findus.php"> <img src="assets/Images/Icons/map.png"> </a></span>
         </div>
@@ -135,7 +116,7 @@ if (isset($_POST['addtocart'])) {
             <p style="font-size:30px;"> <strong> $ <?php echo $productprice; ?> </strong> </p>
             <a style="font-size:15px; margin-top:20px;"> COLOURS </a> 
             <?php
-           $sql = "SELECT id, colourway, image_data, product_name, product_details FROM products WHERE product_name = '" . $products[0]['product_name'] . "' AND gender = '" . $products[0]['gender'] . "'";
+           $sql = "SELECT colourway, image_data, product_name, product_details FROM products WHERE product_name = '" . $products[0]['product_name'] . "' AND gender = '" . $products[0]['gender'] . "'";
 
            // Execute the query
            $result = $conn->query($sql);
@@ -157,7 +138,7 @@ if (isset($_POST['addtocart'])) {
                        // Create a table cell for each element in the row
                        
                        echo '<div class="productcolourwaycell">';
-                       echo '<a id="colourbutton" href="product_page.php?id=' . urlencode($cell['id']) .'&product_name=' . urlencode($cell['product_name']) . '&colorway=' . urlencode($cell['colourway']) . '">';
+                       echo '<a id="colourbutton" href="product_page.php?product_name=' . urlencode($cell['product_name']) . '&colorway=' . urlencode($cell['colourway']) . '">';
                        echo '<img src="data:image/jpeg;base64,' . base64_encode($cell['image_data']) . '">';
                        echo '</a>';
                        echo '</div>';
@@ -209,16 +190,16 @@ if (isset($_POST['addtocart'])) {
                     foreach ($columnNames as $columnName) {
                         if ($stock[0][$columnName] >0 ){
                             echo '<div class="productsizecell">';
-                            echo '<a href="product_page.php?id=' . urlencode($id) .'&product_name=' . urlencode($productName) . '&colorway=' . urlencode($colorway) .'&size=' . urlencode($columnName).'">';
+                            echo '<a href="product_page.php?product_name=' . urlencode($productName) . '&colorway=' . urlencode($colorway) .'&size=' . urlencode($columnName).'">';
                             if (isset($_GET['size'])) {
                                 $size = $_GET['size'];
                                 if ($columnName == $size){                  
-                                    echo '<button id="sizebuttonactive" type="button" data-price="'.$productprice.'"  title="'.$columnName.'">'.$columnName.' </button>';
+                                    echo '<button id="sizebuttonactive" type="button" data-price="$price" data-stock="$stock[$columnName]" title="'.$columnName.'">'.$columnName.' </button>';
                                 }   else {
-                                    echo '<button id="sizebutton" type="button" data-price="'.$productprice.'"  title="'.$columnName.'">'.$columnName.' </button>';
+                                    echo '<button id="sizebutton" type="button" data-price="$price" data-stock="$stock[$columnName]" title="'.$columnName.'">'.$columnName.' </button>';
                                 }
                             } else {
-                                echo '<button id="sizebutton" type="button" data-price="'.$productprice.'" title="'.$columnName.'">'.$columnName.' </button>';
+                                echo '<button id="sizebutton" type="button" data-price="$price" data-stock="$stock[$columnName]" title="'.$columnName.'">'.$columnName.' </button>';
                             }
                             echo '</a>';
                             echo '</div>';
@@ -289,16 +270,13 @@ if (isset($_POST['addtocart'])) {
             }
             </script>
             
-            <form method="post" onsubmit="return validateaddtocart()">
+            <form method="POST" onsubmit="return validateaddtocart()">
                 <div class="hidden-input">
-                    <input type="text" name="id" value="<?php echo $_GET['id']; ?>">
                     <input type="text" name="product_name" value="<?php echo $_GET['product_name']; ?>">
                     <input type="text" name="colorway" value="<?php echo $_GET['colorway']; ?>">
-                    <input type="text" name="size" value="<?php echo $_GET['size']; ?>">
-                    <input type="number" step="any" name="price" value="<?php echo $productprice; ?>">
                     <input type="number" id="quantity" name="quantity" value="<?php echo $_GET['quantity']; ?>">
                 </div>
-                <button id="productpageaddtocart" name="addtocart"> ADD TO CART </button>
+                <button id="productpageaddtocart"> ADD TO CART </button>
             </form>
             
         </div>
@@ -329,40 +307,9 @@ if (isset($_POST['addtocart'])) {
                 <a> 2023 ShoeShoe Singapore Ltd</a>
             </div>
         </div>
-        <?php
-       
-       if (isset($_SESSION['cart'])) {
-        foreach ($_SESSION['cart'] as $product_id => $sizes) {
-            foreach ($sizes as $product_size => $product) {
-                echo "<li>{$product['name']} - \${$product['price']} (Quantity: {$product['quantity']}) (Color: {$product['color']})</li>";
-                
-                    
-                
-            }
-        }
-        
-    }
-            
-        ?>
-        <div id="cart-overlay" class="cart-overlay">
-        <div class="cart-content">
-            <span class="close-button" id="close-cart">X</span>
-            <h2>Your Cart</h2>
-            <ul id="cart-items">
-                <!-- Cart items will be dynamically added here -->
-            </ul>
-        </div>
-    </div>
-</div>
+    
 </body>
 </html>
-<?php
- /*// Unset a specific session variable
-unset($_SESSION['cart']);
 
-// Destroy the session
-session_destroy();
 
-// Redirect or perform any other actions after destroying the session
-*/?>
 

@@ -61,4 +61,25 @@ document.addEventListener("DOMContentLoaded", function () {
         clearInterval(scrollInterval);
     });
 });
-  
+
+
+// Get references to elements
+const cartOverlay = document.getElementById("cart-overlay");
+const cartContent = document.getElementById("cart-content");
+const closeCartButton = document.getElementById("close-cart");
+
+// Add event listener to "Add to Cart" button
+const addToCartButton = document.getElementById("productpageaddtocart");
+addToCartButton.addEventListener("click", () => {
+    // Show the cart overlay
+    cartOverlay.style.display = "flex";
+
+    // Add items to the cart (you will need to implement this logic)
+    // Example: cartContent.innerHTML += "<div>Product Name - $20</div>";
+});
+
+// Add event listener to close button
+closeCartButton.addEventListener("click", () => {
+    // Hide the cart overlay
+    cartOverlay.style.display = "none";
+});

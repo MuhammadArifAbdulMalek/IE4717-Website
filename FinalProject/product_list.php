@@ -44,10 +44,9 @@ if ($filterResult3->num_rows > 0) {
     }
 }
 
-
 if (isset($_GET['brand'])) {
     $selectedBrand = $_GET['brand'];
-    $productsSql = "SELECT id,image_data, product_name, price, release_date, colorway, brand FROM inventory WHERE brand = '$selectedBrand'";
+    $productsSql = "SELECT  id, image_data, product_name, price, release_date, colorway, brand FROM inventory WHERE brand = '$selectedBrand'";
 
     // Execute the products SQL query
     $productsResult = $conn->query($productsSql);
@@ -64,7 +63,7 @@ if (isset($_GET['brand'])) {
 }  else {
 
 // SQL query to select all fields for displaying products
-$productsSql = "SELECT id,image_data, product_name, price, release_date, colorway, brand FROM inventory";
+$productsSql = "SELECT id, image_data, product_name, price, release_date, colorway, brand FROM inventory";
 
 // Execute the products SQL query
 $productsResult = $conn->query($productsSql);
@@ -122,19 +121,17 @@ $conn->close();
     </div>
     <nav class="navbar">
         <div class="navleft">
-            <span>Link 1</span>
-            <span>Link 2</span>
-            <span>Link 3</span>
-            <span>Link 4</span>
+            <span>MEN</span>
+            <span>WOMEN</span>
+            <span>UNISEX</span>
         </div>
         <div class="navcenter">
-            <span>Logo</span>
+            <span><a href="index.php"> Logo </a></span>
         </div>
         <div class="navright">
-            <span>Link 1</span>
-            <span>Link 2</span>
-            <span>Link 3</span>
-            <span>Search</span>
+            <span><a href= "account.php"> <img src="assets/Images/Icons/account.png"> </a></span>
+            <span><a href= "faq.php"> <img src="assets/Images/Icons/FAQ.png"> </a></span>
+            <span><a href= "findus.php"> <img src="assets/Images/Icons/map.png"> </a></span>
         </div>
     </nav>
 
@@ -272,14 +269,14 @@ $conn->close();
                 <div class="product_listing_grid">
                     <?php foreach ($products as $product): ?>
                         <div class="product_listing_product" data-id="<?php echo $product['id']; ?>" data-colorway="<?php echo $product['colorway']; ?>" data-brand="<?php echo $product['brand']; ?>">
-                            <a href="product_page.php?product_name=<?php echo urlencode($product['product_name']); ?>&colorway=<?php echo urlencode($product['colorway']); ?>">
+                            <a href="product_page.php?id=<?php echo urlencode($product['id']); ?>&product_name=<?php echo urlencode($product['product_name']); ?>&colorway=<?php echo urlencode($product['colorway']); ?>">
                                 <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image_data']); ?>" alt="<?php echo $product['product_name']; ?>">
                                 <p><?php echo $product['product_name']; ?></p>
                                 <p>$<?php echo $product['price']; ?></p>
-                                <!-- <p>ID: <?php echo $product['id']; ?></p> -->
                             </a>
                         </div>
                     <?php endforeach; ?>
+                    
                 </div>
             </div>
             
