@@ -23,11 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $loginPassword = $_POST['login-password'];
     
         // Query the database to check the credentials
-        $loginQuery = "SELECT user_id, username, email, password FROM users WHERE username = ? OR email = ?";
+        $loginQuery = "SELECT user_id, username, email, password, first_name FROM users WHERE username = ? OR email = ?";
         $loginStmt = $conn->prepare($loginQuery);
         $loginStmt->bind_param("ss", $loginInput, $loginInput); // Check both username and email
         $loginStmt->execute();
-        $loginStmt->bind_result($dbUser_Id,$dbUsername, $dbEmail, $dbPassword);
+        $loginStmt->bind_result($dbUser_Id,$dbUsername, $dbEmail, $dbPassword, $dbFirst_Name);
     
         if ($loginStmt->fetch()) {
             if (password_verify($loginPassword, $dbPassword)) {
@@ -35,6 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $loginSuccess = true;
                 $loginMessage = "var_dump($dbUser_Id)";
                 $_SESSION['user_id'] = $dbUser_Id;
+                $_SESSION['first_name'] = $dbFirst_Name;
+                $_SESSION['username'] = $dbUsername;
             } else {
                 // Password doesn't match
                 $loginMessage = "Invalid password.";
@@ -84,10 +86,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     
             // Insert the hashed password into the database
-            $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO users (username, email, password, first_name, last_name) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sss", $username, $email, $hashedPassword);
-    
+            $stmt->bind_param("sssss", $username, $email, $hashedPassword, $first_name, $last_name);
+
             if ($stmt->execute()) {
                 // Registration successful
                 $registrationSuccess = true;
@@ -239,8 +241,21 @@ $conn->close();
         <div class="navcenter">
             <span><a href="index.php"> Logo </a></span>
         </div>
-        <div class="navright">
-            <span><a href= "account.php"> <img src="assets/Images/Icons/account.png"> </a></span>
+        <div class="navright" style="width: 400px;">
+            <span>
+                <?php if (isset($_SESSION['first_name'])): ?>
+                    <div class="dropdown" style="width: 120px; position: relative;">
+                        <div class="dropdown-bar" style="text-align:left; position: relative; display: inline-block;">                        
+                                <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
+                                <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <a href="logout.php">Logout</a> <!-- Link to logout page -->
+                                </div>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <span><a href="account.php"><img src="assets/Images/Icons/account.png"></a></span>
+                <?php endif; ?>
+            </span>
             <span><a href= "faq.php"> <img src="assets/Images/Icons/FAQ.png"> </a></span>
             <span><a href= "cart.php"> <img src="assets/Images/Icons/cart.png"> </a></span>
         </div>
@@ -249,20 +264,25 @@ $conn->close();
     <div class="accounts">
         <div class="accounts-container">
             <div class="accounts-form">
-                <h2>Login</h2>
-                <form action="" method="post">
-                    <div class="form-group">
-                        <label for="login-username">Username or Email:</label>
-                        <input type="text" id="login-username" name="login-username" required>
-                    </div>
+                <?php if (!isset($_SESSION['user_id'])): ?>
+                    <h2>Login</h2>
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="login-username">Username or Email:</label>
+                            <input type="text" id="login-username" name="login-username" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="login-password">Password:</label>
-                        <input type="password" id="login-password" name="login-password" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="login-password">Password:</label>
+                            <input type="password" id="login-password" name="login-password" required>
+                        </div>
 
-                    <button type="submit" name="login">Login</button>
-                </form>
+                        <button type="submit" name="login">Login</button>
+                    </form>
+                <?php else: ?>
+                    <h2>You are already logged in as <?php echo $_SESSION['username']; ?>.</h2>
+                    <p style="font-size:66%;">If you want to log in as a different user, please <a href="logout.php">logout</a> first.</p>
+                <?php endif; ?>
             </div>
 
             <div class="accounts-form">
@@ -369,6 +389,23 @@ $conn->close();
 
             return true;
         }
+
+        // Select all dropdown bars and checkbox forms
+        const dropdownBars = document.querySelectorAll(".dropdown-bar");
+        const dropdownContent = document.querySelectorAll(".dropdown-content");
+
+        // Add a click event listener to each dropdown bar
+        dropdownBars.forEach((dropdownBar, index) => {
+            dropdownBar.addEventListener("click", () => {
+                const form = dropdownContent[index];
+                if (form.style.display === "none" || form.style.display === "") {
+                    form.style.display = "block";
+                } else {
+                    form.style.display = "none";
+                }
+            });
+        });
+
     </script>
 
 </body>

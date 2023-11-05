@@ -48,10 +48,12 @@ body{
     margin-right: 20px;
     text-decoration: none;
     color:black;
-    
-    
+    display: inline-block;
 }
 
+.navright {
+    width: 450px;
+}
 
 
 /*Image Bar*/
@@ -460,6 +462,12 @@ label, input[type="checkbox"] {
     padding: 10px;
     cursor: pointer;
     margin-left: 20px;
+}
+
+.dropdown-content {
+    display: none; /* Initially hide the form */
+    padding: 10px;
+    padding-left: 30px;
 }
 
 .checkbox-form {

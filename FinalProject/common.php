@@ -30,5 +30,13 @@ function generateGuestID() {
     return 'guest_' . uniqid();
 }
 
+function isGuest() {
+    if (isset($_SESSION['user_id'])) {
+        return (strpos($_SESSION['user_id'], 'guest_') === 0);
+    } else {
+        return false; // If user_id is not set, it means the user is not a guest.
+    }
+}
 
 ?>
+
