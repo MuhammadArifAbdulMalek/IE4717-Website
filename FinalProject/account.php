@@ -1,4 +1,5 @@
 <?php
+include 'common.php';
 $hostname = "localhost";
 $username = "root";
 $password = "";
