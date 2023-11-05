@@ -46,26 +46,10 @@ if ($filterResult3->num_rows > 0) {
     }
 }
 
-if (isset($_GET['brand'])) {
-    $selectedBrand = $_GET['brand'];
-    $productsSql = "SELECT  id, image_data, product_name, price, release_date, colorway, brand FROM inventory WHERE brand = '$selectedBrand'";
-
-    // Execute the products SQL query
-    $productsResult = $conn->query($productsSql);
-
-    // Initialize an array to store the retrieved product data
-    $products = array();
-
-    if ($productsResult->num_rows > 0) {
-        while ($row = $productsResult->fetch_assoc()) {
-            $products[] = $row;
-        }
-    }
-
-}  else {
 
 // SQL query to select all fields for displaying products
-$productsSql = "SELECT id, image_data, product_name, price, release_date, colorway, brand FROM inventory";
+$productsSql = "SELECT id, image_data, product_name, price, release_date, colorway, brand, `US 4.0`, `US 4.5`, `US 5.0`, `US 5.5`, `US 6.0`, `US 6.5`, `US 7.0`, `US 7.5`, `US 8.0`, `US 8.5`, `US 9.0`, `US 9.5`, `US 10.0`, `US 10.5`, `US 11.0`
+              FROM inventory";
 
 // Execute the products SQL query
 $productsResult = $conn->query($productsSql);
@@ -75,9 +59,21 @@ $products = array();
 
 if ($productsResult->num_rows > 0) {
     while ($row = $productsResult->fetch_assoc()) {
-        $products[] = $row;
+        // Check if all 'US' columns are blank
+        $usColumns = ['US 4.0', 'US 4.5', 'US 5.0', 'US 5.5', 'US 6.0', 'US 6.5', 'US 7.0', 'US 7.5', 'US 8.0', 'US 8.5', 'US 9.0', 'US 9.5', 'US 10.0', 'US 10.5', 'US 11.0'];
+        $isEmptyRow = true;
+        foreach ($usColumns as $column) {
+            if (!empty($row[$column])) {
+                $isEmptyRow = false;
+                break;
+            }
+        }
+
+        // If the row is not empty, add it to the products array
+        if (!$isEmptyRow) {
+            $products[] = $row;
+        }
     }
-}
 }
 
 // Close the database connection
@@ -185,7 +181,7 @@ $conn->close();
                                 <label for="size-<?php echo $size; ?>">
                                     <input type="checkbox" id="size-<?php echo $size; ?>" class="size-filter" value="<?php echo $size; ?>" data-product-ids="<?php echo implode(',', $availableProductIds[$size]); ?>">
                                     Size <?php echo $size; ?> <span style="font-weight: normal; color: #B0B0B0;"> (<?php echo $sizeCount; ?>) </span>
-                                    <!-- <span style="font-weight: normal; color: #B0B0B0;"> IDs: <?php echo implode(',', $availableProductIds[$size]); ?></span> -->
+                                    <span style="font-weight: normal; color: #B0B0B0;"> IDs: <?php echo implode(',', $availableProductIds[$size]); ?></span>
                                 </label>
                             <?php endforeach; ?>
                         </form>
@@ -234,6 +230,8 @@ $conn->close();
 
             <hr class="dropdown-divider">
 
+            <div id="out-of-stock-ids"></div>
+
             
             <!-- <button id="clear-filters">Clear Filters</button> -->
             
@@ -275,6 +273,7 @@ $conn->close();
                                 <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image_data']); ?>" alt="<?php echo $product['product_name']; ?>">
                                 <p><?php echo $product['product_name']; ?></p>
                                 <p>$<?php echo $product['price']; ?></p>
+                                <p><?php echo $product['id']; ?></p>
                             </a>
                         </div>
                     <?php endforeach; ?>
@@ -346,21 +345,23 @@ const brandCheckboxes = document.querySelectorAll('.brand-filter input[type="che
   // Add event listeners to all checkboxes
   brandCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
-      filterProducts();
+        filterProducts()
     });
   });
 
   colorCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
-      filterProducts();
+        filterProducts()
     });
   });
 
   sizeCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
-      filterProducts();
+        filterProducts()
     });
   });
+
+  
 
   // Function to filter products by brand, color, and size
   function filterProducts() {
@@ -406,29 +407,7 @@ const brandCheckboxes = document.querySelectorAll('.brand-filter input[type="che
   // Call the filterProducts function to initialize the filtering
   filterProducts();
 
-  // Function to clear all selected checkboxes
-  function clearFilters() {
-        brandCheckboxes.forEach(function (checkbox) {
-            checkbox.checked = false;
-        });
 
-        colorCheckboxes.forEach(function (checkbox) {
-            checkbox.checked = false;
-        });
-
-        sizeCheckboxes.forEach(function (checkbox) {
-            checkbox.checked = false;
-        });
-
-        // Reset the filtering
-        filterProducts();
-    }
-
-    // Add an event listener to the "Clear Filters" button
-    const clearFiltersButton = document.getElementById('clear-filters');
-    if (clearFiltersButton) {
-        clearFiltersButton.addEventListener('click', clearFilters);
-    }
 
 </script>
 

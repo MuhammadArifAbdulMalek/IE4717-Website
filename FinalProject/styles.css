@@ -414,6 +414,7 @@ h1{
     display: flex;
     flex-wrap: wrap;
     overflow-y: auto; /* Enable vertical scrolling if content exceeds the viewport */
+    margin-bottom: 80px;
 
 }
 
@@ -609,7 +610,7 @@ label, input[type="checkbox"] {
     padding-top: 25px;
     width: 100%; /* Allow each individual product grid item to take up 100% of the column width */
     box-sizing: border-box; /* Ensure padding and borders are included in the width */
-    max-height: 500px;
+    max-height: 489px;
 }
 
 .product_listing_product a {
