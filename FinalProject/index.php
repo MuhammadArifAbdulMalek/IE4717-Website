@@ -1,6 +1,5 @@
 <?php
 include 'common.php';
-var_dump($_SESSION['user_id']);
 $hostname = "localhost";
 $username = "root";
 $password = "";

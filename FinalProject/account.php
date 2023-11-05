@@ -35,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $loginSuccess = true;
                 $loginMessage = "var_dump($dbUser_Id)";
                 $_SESSION['user_id'] = $dbUser_Id;
-                var_dump($_SESSION['user_id']);
             } else {
                 // Password doesn't match
                 $loginMessage = "Invalid password.";
@@ -136,10 +135,10 @@ $conn->close();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.4.0/nouislider.min.js"></script>
 
     <script>
-        var registrationSuccess = <?php echo json_encode($registrationSuccess); ?>;
-        var registrationMessage = <?php echo json_encode($registrationMessage); ?>;
-        var loginSuccess = <?php echo json_encode($loginSuccess); ?>;
-        var loginMessage = <?php echo json_encode($loginMessage); ?>;
+        var registrationSuccess = <?php echo $registrationSuccess ? 'true' : 'false'; ?>;
+        var registrationMessage = "<?php echo $registrationMessage; ?>";
+        var loginSuccess = <?php echo $loginSuccess ? 'true' : 'false'; ?>;
+        var loginMessage = "<?php echo $loginMessage; ?>";
 
         function showMessage() {
             if (registrationSuccess) {
