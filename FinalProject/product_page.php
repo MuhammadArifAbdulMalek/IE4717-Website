@@ -1,5 +1,5 @@
 <?php
-session_start();
+include 'common.php';
 $hostname = "localhost";
 $username = "root";
 $password = "";
@@ -11,14 +11,27 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 if (isset($_POST['addtocart'])) {
+    $user_id = setUserSession();
     $product_id = $_POST['id'];
     $product_name = $_POST['product_name'];
     $product_price = $_POST['price'];
     $product_size = $_POST['size'];
     $product_quantity = $_POST['quantity'];
     $product_color = $_POST['colorway'];
+    $subtotal = $product_price * $product_quantity;
+    $sql = "INSERT INTO cart (user_id, product_id, quantity, price, subtotal)
+            VALUES (?, ?, ?, ?, ?)";
 
-    // Check if the product is already in the cart
+    // Prepare the SQL statement
+    $stmt = $conn->prepare($sql);
+
+    // Calculate the subtotal
+    $subtotal = $product_price * $product_quantity;
+
+    // Bind parameters and their data types
+    $stmt->bind_param('siidi', $user_id, $product_id, $product_quantity, $product_price, $subtotal);
+    
+    /*// Check if the product is already in the cart
     if (isset($_SESSION['cart'][$product_id][$product_size])) {
         // Increment the quantity if it's already in the cart
         $_SESSION['cart'][$product_id][$product_size]['quantity']++;
@@ -32,7 +45,13 @@ if (isset($_POST['addtocart'])) {
             'size' => $product_size,
             'color' => $product_color,
         ];
+        
+    }*/
+
+    if ($stmt->execute()) {
         echo '<script>alert("Added to Cart");</script>';
+    } else {
+        echo "Error adding product to the cart: " . $stmt->error;
     }
 }
 /* if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -110,7 +129,7 @@ if (isset($_POST['addtocart'])) {
         <div class="navright">
             <span><a href= "account.php"> <img src="assets/Images/Icons/account.png"> </a></span>
             <span><a href= "faq.php"> <img src="assets/Images/Icons/FAQ.png"> </a></span>
-            <span><a href= "findus.php"> <img src="assets/Images/Icons/map.png"> </a></span>
+            <span><a href= "cart.php"> <img src="assets/Images/Icons/cart.png"> </a></span>
         </div>
     </nav>
     <div class="productpagecontainer">
@@ -334,7 +353,7 @@ if (isset($_POST['addtocart'])) {
        if (isset($_SESSION['cart'])) {
         foreach ($_SESSION['cart'] as $product_id => $sizes) {
             foreach ($sizes as $product_size => $product) {
-                echo "<li>{$product['name']} - \${$product['price']} (Quantity: {$product['quantity']}) (Color: {$product['color']})</li>";
+                echo "<li>{$product['name']} - \${$product['price']} (Quantity: {$product['quantity']})(Size: {$product_size}, Color: {$product['color']})</li>";
                 
                     
                 
@@ -354,15 +373,23 @@ if (isset($_POST['addtocart'])) {
         </div>
     </div>
 </div>
+<?php
+    if (isset($_GET['return_url'])) {
+        // Save the return URL in a session variable
+        $_SESSION['return_url'] = $_GET['return_url'];
+    }    
+    ?>
 </body>
 </html>
 <?php
- /*// Unset a specific session variable
-unset($_SESSION['cart']);
+ // Unset a specific session variable
+/*unset($_SESSION['cart']);
 
 // Destroy the session
 session_destroy();
 
-// Redirect or perform any other actions after destroying the session
-*/?>
+// Redirect or perform any other actions after destroying the session*/
+?>
+
+
 

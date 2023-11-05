@@ -1,5 +1,6 @@
 <?php
-
+include 'common.php';
+var_dump($_SESSION['user_id']);
 $hostname = "localhost";
 $username = "root";
 $password = "";
@@ -10,7 +11,8 @@ $conn = new mysqli($hostname, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-session_start();
+
+
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array(); // Initialize an empty shopping cart as an array
 }

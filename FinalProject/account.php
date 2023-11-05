@@ -22,17 +22,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $loginPassword = $_POST['login-password'];
     
         // Query the database to check the credentials
-        $loginQuery = "SELECT username, email, password FROM users WHERE username = ? OR email = ?";
+        $loginQuery = "SELECT user_id, username, email, password FROM users WHERE username = ? OR email = ?";
         $loginStmt = $conn->prepare($loginQuery);
         $loginStmt->bind_param("ss", $loginInput, $loginInput); // Check both username and email
         $loginStmt->execute();
-        $loginStmt->bind_result($dbUsername, $dbEmail, $dbPassword);
+        $loginStmt->bind_result($dbUser_Id,$dbUsername, $dbEmail, $dbPassword);
     
         if ($loginStmt->fetch()) {
             if (password_verify($loginPassword, $dbPassword)) {
                 // Login successful
                 $loginSuccess = true;
-                $loginMessage = "Login successful.";
+                $loginMessage = "var_dump($dbUser_Id)";
+                $_SESSION['user_id'] = $dbUser_Id;
+                var_dump($_SESSION['user_id']);
             } else {
                 // Password doesn't match
                 $loginMessage = "Invalid password.";
@@ -240,7 +242,7 @@ $conn->close();
         <div class="navright">
             <span><a href= "account.php"> <img src="assets/Images/Icons/account.png"> </a></span>
             <span><a href= "faq.php"> <img src="assets/Images/Icons/FAQ.png"> </a></span>
-            <span><a href= "findus.php"> <img src="assets/Images/Icons/map.png"> </a></span>
+            <span><a href= "cart.php"> <img src="assets/Images/Icons/cart.png"> </a></span>
         </div>
     </nav>
 
@@ -259,7 +261,7 @@ $conn->close();
                         <input type="password" id="login-password" name="login-password" required>
                     </div>
 
-                    <button type="submit">Login</button>
+                    <button type="submit" name="login">Login</button>
                 </form>
             </div>
 
