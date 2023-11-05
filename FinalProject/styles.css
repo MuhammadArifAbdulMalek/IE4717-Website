@@ -591,6 +591,7 @@ label, input[type="checkbox"] {
     display: flex;
     justify-content: space-between;
     margin-bottom: 12px;
+    margin-bottom: 80px;
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
     flex-grow: 1; /* Expand to fill available space */
@@ -605,6 +606,7 @@ label, input[type="checkbox"] {
     padding-left: 50px;
     padding-right: 40px;
     width: 100%;
+    
 }
 
 .product_listing_product {
@@ -614,6 +616,7 @@ label, input[type="checkbox"] {
     padding-top: 25px;
     width: 100%; /* Allow each individual product grid item to take up 100% of the column width */
     box-sizing: border-box; /* Ensure padding and borders are included in the width */
+    max-height: 500px;
 }
 
 .product_listing_product a {
