@@ -7,6 +7,38 @@ $database = "shoeshop";
 
 $conn = new mysqli($hostname, $username, $password, $database);
 $user_id = setUserSession();
+
+$sqlUpdate = "UPDATE cart
+    JOIN (
+        SELECT user_id, product_id, size, SUM(quantity) AS total_quantity
+        FROM cart
+        GROUP BY user_id, product_id, size
+    ) AS subquery
+    ON cart.user_id = subquery.user_id
+    AND cart.product_id = subquery.product_id
+    AND cart.size = subquery.size
+    SET cart.quantity = subquery.total_quantity";
+
+if ($conn->query($sqlUpdate) === TRUE) {
+    echo "Quantity updated successfully.";
+} else {
+    echo "Error updating quantity: " . $conn->error;
+}
+
+$sqlDelete = "DELETE c1
+            FROM cart c1
+            JOIN cart c2
+            ON c1.user_id = c2.user_id
+            AND c1.product_id = c2.product_id
+            AND c1.size = c2.size
+            AND c1.cart_id < c2.cart_id;";
+
+if ($conn->query($sqlDelete) === TRUE) {
+    echo "Redundant rows deleted successfully.";
+} else {
+    echo "Error deleting redundant rows: " . $conn->error;
+}
+
 ?>
 
 
@@ -72,6 +104,8 @@ $user_id = setUserSession();
             <span><a href= "cart.php"> <img src="assets/Images/Icons/cart.png"> </a></span>
         </div>
     </nav>
+    <form action="checkout.php" method="post" class="cartdetails" id="checkout-form">
+    
     <div class="cart">
         <h1 style="padding-top:15px;"> Cart </h1>
         <?php
@@ -155,20 +189,32 @@ $user_id = setUserSession();
                     echo '<p style="font-size:20px;">Colour: ' . " " . $colourway . '</p>';
                     echo '<p style="font-size:20px;">Size: ' . " " . $size . '</p>';
                     echo '<p style="font-size:20px;">Quantity: ' . " ";
-                    echo '<input type="number" class="quantity-input" min="0" max="'. $stock.'" value="' . $quantity . '" data-price="' . $price . '" data-subtotal="' . $subtotal . '">';
+                    echo '<input type="number" class="quantity-input" name="quantity[]" min="0" max="'. $stock.'" value="' . $quantity . '" data-price="' . $price . '" data-subtotal="' . $subtotal . '">';
                     echo '</p>';
                     echo '<p> Subtotal: <span class="subtotal">$' . $subtotal . '</span></p>';
                     echo '</td>';
                     echo '</tr>';
+                    echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
+                    echo '<input type="hidden" name="product_name[]" value="'. $product_name .'">';
+                    echo '<input type="hidden" name="colourway[]" value="'. $colourway .'">';
+                    echo '<input type="hidden" name="size[]" value="'. $size .'">';
+                    echo '<input type="hidden" name="price[]" value="'. $price .'">';
                 }
                 ?>
+
             </table>
         </div>
         <h2 id="total">Total: $ <?php echo $total ?></h2>
+        <input type="hidden" name="user_id" value="<?php echo $user_id ?>">
+       
+    
+ 
+  
+       </div>
         <div class="cartcheckoutbuttons">
-         <button class="checkoutbutton">Checkout</button>
+         <button class="checkoutbutton" type="submit">Checkout</button>
         </div>
-        
+        </form>
         <div class="footer">
             <div class="footerupper">
                 <div class="sitemap">
@@ -197,29 +243,11 @@ $user_id = setUserSession();
         </div>
         <?php
        
-       if (isset($_SESSION['cart'])) {
-        foreach ($_SESSION['cart'] as $product_id => $sizes) {
-            foreach ($sizes as $product_size => $product) {
-                echo "<li>{$product['name']} - \${$product['price']} (Quantity: {$product['quantity']})(Size: {$product_size}, Color: {$product['color']})</li>";
-                
-                    
-                
-            }
-        }
-        
-    }
+       
             
         ?>
-        <div id="cart-overlay" class="cart-overlay">
-        <div class="cart-content">
-            <span class="close-button" id="close-cart">X</span>
-            <h2>Your Cart</h2>
-            <ul id="cart-items">
-                <!-- Cart items will be dynamically added here -->
-            </ul>
-        </div>
-    </div>
-    </div>
+        
+    
 </body>
 </html>
 
@@ -271,6 +299,6 @@ $user_id = setUserSession();
                     }
                 });
             });
-        
+       
 </script>
 
