@@ -49,7 +49,8 @@ if ($filterResult3->num_rows > 0) {
 
 // SQL query to select all fields for displaying products
 $productsSql = "SELECT id, image_data, product_name, price, release_date, colorway, brand, `US 4.0`, `US 4.5`, `US 5.0`, `US 5.5`, `US 6.0`, `US 6.5`, `US 7.0`, `US 7.5`, `US 8.0`, `US 8.5`, `US 9.0`, `US 9.5`, `US 10.0`, `US 10.5`, `US 11.0`
-              FROM inventory WHERE `F` = 1";
+              FROM inventory WHERE `F` = 1 AND `M` = 1";
+
 
 // Execute the products SQL query
 $productsResult = $conn->query($productsSql);

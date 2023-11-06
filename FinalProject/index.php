@@ -10,11 +10,23 @@ $conn = new mysqli($hostname, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+if (isset($_POST['newsletter'])) {
+        $sqlemail = $_POST['newsletter'];
+        $sqldup = "SELECT * FROM newsletter WHERE email = '$sqlemail'";
+        $result = $conn->query($sqldup);
+        if ($result->num_rows > 0) {
+            // Data already exists; you can update it or take appropriate action
+            echo '<script>alert("You have already subscribed to our newsletter.");</script>';
+        }
+         else {   $insertSql = "INSERT INTO newsletter (email) VALUES (?)";
+                    $stmt = $conn->prepare($insertSql);
+                    $stmt->bind_param("s", $sqlemail);
+                    $stmt->execute();
+                    $stmt->close();
+                    echo '<script>alert("You have successfully subscribed to our newsletter. \n We look forward to keeping you updated.");</script>';
+        }
+    }   
 
-
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = array(); // Initialize an empty shopping cart as an array
-}
     global $conn;
     $sql = "SELECT inventory.id, inventory.product_name, inventory.colorway, inventory.sales, products.image_data ,products.price
             FROM inventory
@@ -98,7 +110,7 @@ if (!isset($_SESSION['cart'])) {
         <div class="navleft">
             <a style="text-decoration:none; color:black;" href="product_list.php"><span>MEN</span></a>
             <a style="text-decoration:none; color:black;" href="product_list2.php"><span>WOMEN</span></a>
-            <a style="text-decoration:none; color:black;" href="product_list.php"><span>UNISEX</span></a>
+            <a style="text-decoration:none; color:black;" href="product_list3.php"><span>UNISEX</span></a>
         </div>
         </div>
         <div class="navcenter">
@@ -302,8 +314,8 @@ if (!isset($_SESSION['cart'])) {
         <div class="newsletter">
             <h1> NEWSLETTER</h1>
             <a> JOIN OUR NEWSLETTER TO BE UPDATED</a>
-            <form>
-                <input type="email" id="email" placeholder="Enter Your Email Address">
+            <form method="POST" action="">
+                <input type="email" id="email" name="newsletter" placeholder="Enter Your Email Address">
                 <button type="submit" class="submit">SIGN UP </button>
             </form>
         </div>

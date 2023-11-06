@@ -117,6 +117,7 @@ $conn->close();
         <div class="navleft">
             <span><a href="product_list.php">MEN </a></span>
             <span><a href="product_list2.php"> WOMEN  </a></span>   
+            <span><a href="product_list3.php"> UNISEX  </a></span>   
         </div>
         <div class="navcenter">
             <span><a href="index.php"> Logo </a></span>

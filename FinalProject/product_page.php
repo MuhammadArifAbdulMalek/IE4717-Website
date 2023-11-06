@@ -19,6 +19,7 @@ if (isset($_POST['addtocart'])) {
     $product_quantity = $_POST['quantity'];
     $product_color = $_POST['colorway'];
     $subtotal = $product_price * $product_quantity;
+    
     $sql = "INSERT INTO cart (user_id, product_id,size, quantity, price, subtotal)
             VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -121,7 +122,7 @@ if (isset($_POST['addtocart'])) {
         <div class="navleft">
             <a style="text-decoration:none; color:black;" href="product_list.php"><span>MEN</span></a>
             <a style="text-decoration:none; color:black;" href="product_list2.php"><span>WOMEN</span></a>
-            <a style="text-decoration:none; color:black;" href="product_list.php"><span>UNISEX</span></a>
+            <a style="text-decoration:none; color:black;" href="product_list3.php"><span>UNISEX</span></a>
         </div>
         </div>
         <div class="navcenter">

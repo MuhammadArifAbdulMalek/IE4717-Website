@@ -100,10 +100,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
     
             $stmt->close();
+
+            $sqldup = "SELECT * FROM email WHERE email = '$email'";
+            $result = $conn->query($sqldup);
+
+            if ($result->num_rows > 0) {
+                // Data already exists; you can update it or take appropriate action
+                echo "Data already exists.";
+            } else {    $insertSql = "INSERT INTO email (email) VALUES ('$sqlemail')";
+                        $stmt2->query($insertSql);
+                        $stmt2->close();
+            }
         }
     }
 }
-
 $conn->close();
 ?>
 
@@ -236,7 +246,7 @@ $conn->close();
         <div class="navleft">
         <span><a style="text-decoration:none; color:black;"href="product_list.php">MEN </a></span>
         <span><a style="text-decoration:none; color:black;" href="product_list2.php"> WOMEN  </a></span> 
-        <a style="text-decoration:none; color:black;" href="product_list.php"><span>UNISEX</span></a>
+        <a style="text-decoration:none; color:black;" href="product_list3.php"><span>UNISEX</span></a>
         </div>
         <div class="navcenter">
             <span><a href="index.php"> Logo </a></span>

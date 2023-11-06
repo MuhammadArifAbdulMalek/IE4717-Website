@@ -19,12 +19,6 @@ $sqlUpdate = "UPDATE cart
     AND cart.size = subquery.size
     SET cart.quantity = subquery.total_quantity";
 
-if ($conn->query($sqlUpdate) === TRUE) {
-    echo "Quantity updated successfully.";
-} else {
-    echo "Error updating quantity: " . $conn->error;
-}
-
 $sqlDelete = "DELETE c1
             FROM cart c1
             JOIN cart c2
@@ -32,13 +26,6 @@ $sqlDelete = "DELETE c1
             AND c1.product_id = c2.product_id
             AND c1.size = c2.size
             AND c1.cart_id < c2.cart_id;";
-
-if ($conn->query($sqlDelete) === TRUE) {
-    echo "Redundant rows deleted successfully.";
-} else {
-    echo "Error deleting redundant rows: " . $conn->error;
-}
-
 ?>
 
 
@@ -79,7 +66,7 @@ if ($conn->query($sqlDelete) === TRUE) {
         <div class="navleft">
             <a style="text-decoration:none; color:black;" href="product_list.php"><span>MEN</span></a>
             <a style="text-decoration:none; color:black;" href="product_list2.php"><span>WOMEN</span></a>
-            <a style="text-decoration:none; color:black;" href="product_list.php"><span>UNISEX</span></a>
+            <a style="text-decoration:none; color:black;" href="product_list3.php"><span>UNISEX</span></a>
         </div>
         </div>
         <div class="navcenter">
@@ -168,9 +155,12 @@ if ($conn->query($sqlDelete) === TRUE) {
         // Add buttons for updating the cart or proceeding to checkout
         ?>
         <div class="displaycart">
-            <table class="displayproducts">
-                <?php
+            <?php if (empty($productDetails)) {
+                    echo '<h2 style="font-size:30px; text-align: center;">Your shopping cart is empty</h2>';
+                } else { echo ' <table class="displayproducts">';
+                
                 $total = 0 ;
+                
                 foreach ($productDetails as $product) {
                     $product_id = $product['product_id'];
                     $product_name = $product['product_name'];
@@ -200,21 +190,38 @@ if ($conn->query($sqlDelete) === TRUE) {
                     echo '<input type="hidden" name="size[]" value="'. $size .'">';
                     echo '<input type="hidden" name="price[]" value="'. $price .'">';
                 }
+
+                echo '</table>';
+                }
+
+
                 ?>
 
-            </table>
+            
         </div>
-        <h2 id="total">Total: $ <?php echo $total ?></h2>
-        <input type="hidden" name="user_id" value="<?php echo $user_id ?>">
+        <?php if (!empty($productDetails)) {
+            echo '<h2 id="total">Total: $ <?php echo '.$total.' ?></h2>';
+            echo '<input type="hidden" name="user_id" value="<?php echo '.$user_id.'?>">';
+        }
+        ?>
        
-    
- 
-  
-       </div>
         <div class="cartcheckoutbuttons">
-         <button class="checkoutbutton" type="submit">Checkout</button>
+         <button class="checkoutbutton" type="submit">
+            <?php if (empty($productDetails)): ?>
+                Add items
+            <?php else: ?>
+                Checkout
+            <?php endif; ?></button>
         </div>
+
+    </div>
         </form>
+
+        <script>
+        <?php if (empty($productDetails)): ?>
+            document.getElementById("checkout-form").action = "index.php";
+        <?php endif; ?>
+    </script>
         <div class="footer">
             <div class="footerupper">
                 <div class="sitemap">

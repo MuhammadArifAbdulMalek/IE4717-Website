@@ -110,7 +110,7 @@ $conn->close();
         <div class="navleft">
         <a style="text-decoration:none; color:black;" href="product_list.php"><span>MEN</span></a>
         <a style="text-decoration:none; color:black;" href="product_list2.php"><span>WOMEN</span></a>
-        <a style="text-decoration:none; color:black;" href="product_list.php"><span>UNISEX</span></a>
+        <a style="text-decoration:none; color:black;" href="product_list3.php"><span>UNISEX</span></a>
         </div>
         </div>
         <div class="navcenter">
