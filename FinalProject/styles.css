@@ -42,6 +42,7 @@ body{
     font-weight: 600;
     max-height: 5vh;
     font-size: 140%;
+    margin-top: 10px;
 }
 
 .navleft span, .navright span, .navleft a, .navright a{
@@ -1646,3 +1647,4 @@ label, input[type="checkbox"] {
     padding: 10px;
     padding-left: 30px;
 }
+
