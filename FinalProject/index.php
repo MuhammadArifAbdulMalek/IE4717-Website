@@ -96,11 +96,13 @@ if (!isset($_SESSION['cart'])) {
     </div>
     <nav class="navbar">
         <div class="navleft">
-            <span><a href="product_list.php">MEN </a></span>
-            <span><a href="product_list2.php"> WOMEN  </a></span>   
+            <a style="text-decoration:none; color:black;" href="product_list.php"><span>MEN</span></a>
+            <a style="text-decoration:none; color:black;" href="product_list2.php"><span>WOMEN</span></a>
+            <a style="text-decoration:none; color:black;" href="product_list.php"><span>UNISEX</span></a>
+        </div>
         </div>
         <div class="navcenter">
-            <span>Logo</span>
+            <span><a href="index.php"> Logo </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
@@ -127,14 +129,14 @@ if (!isset($_SESSION['cart'])) {
                 <div class="sectiondetails1">
                     <a style="font-size: 100px">NIKE AIR FORCE ONES</a> <br>
                     <a>The versatile lifestyle shoe</a> <br>
-                    <button class="genderbutton" style="color:#ffffff; border: 2px solid #ffffff;"><a href="product_list.php?brand=Nike">Shop Now</a></button> 
+                    <button class="genderbutton" style="color:#ffffff; border: 2px solid #ffffff;"><a style="text-decoration:none; color:#ffffff;" href="product_list.php?brand=Nike">Shop Now</a></button> 
                 </div>
             </div>
             <div class="section" id="section2">
                 <div class="sectiondetails2">
                     <a style="font-size: 100px">DR MARTENS</a> <br>
                     <a>The boot that started it all</a> <br>
-                    <button class="genderbutton" style="color:#fffac6; border: 2px solid #fffac6;"><a href="product_list.php?brand=Dr. Martens">Shop Now</button> 
+                    <button class="genderbutton" style="color:#fffac6; border: 2px solid #fffac6;"><a style="text-decoration:none;  color:#fffac6;" href="product_list.php?brand=Dr. Martens">Shop Now</a></button> 
                 </div>
                 
             </div>
@@ -142,7 +144,7 @@ if (!isset($_SESSION['cart'])) {
             <div class="sectiondetails3">
                     <a style="font-size: 100px">CROCS</a> <br>
                     <a>The Biggest Selection Of Clogs, Sandals & More</a> <br>
-                    <button class="genderbutton" style="background-color:#00000080; color:#ffffff; border: 2px solid #ffffff;">Shop Now</button> 
+                    <button class="genderbutton" style="background-color:#00000080; color:#ffffff; border: 2px solid #ffffff;"><a style="text-decoration:none; color:white;" href="product_list.php?brand=Crocs">Shop Now</a></button> 
                 </div>
             </div>
         </div>
@@ -156,7 +158,7 @@ if (!isset($_SESSION['cart'])) {
             <table class="bestsellerhome"> 
                 <tr>
                     <td>
-                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($products[0]['id']);?>&product_name=<?php echo urlencode($products[0]['product_name']); ?>&colorway=<?php echo urlencode($products[0]['colorway']); ?>">
+                    <a class="clickable" style="text-decoration:none; color:black;" href="product_page.php?id=<?php echo urlencode($products[0]['id']);?>&product_name=<?php echo urlencode($products[0]['product_name']); ?>&colorway=<?php echo urlencode($products[0]['colorway']); ?>">
                         <table class="productcontainer" id="bestseller1">
                             <tr> <td class="productimage"> 
                             <img src="data:image/jpeg;base64,<?php echo base64_encode($products[0]['image_data']); ?>">
@@ -172,7 +174,7 @@ if (!isset($_SESSION['cart'])) {
                     </a>
                     </td>
                     <td>
-                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($products[1]['id']);?>&product_name=<?php echo urlencode($products[1]['product_name']); ?>&colorway=<?php echo urlencode($products[1]['colorway']); ?>">
+                    <a class="clickable" style="text-decoration:none; color:black;" href="product_page.php?id=<?php echo urlencode($products[1]['id']);?>&product_name=<?php echo urlencode($products[1]['product_name']); ?>&colorway=<?php echo urlencode($products[1]['colorway']); ?>">
                         <table class="productcontainer"  id="bestseller2">
                             <tr> <td class="productimage"> 
                                 <img src="data:image/jpeg;base64,<?php echo base64_encode($products[1]['image_data']); ?>">
@@ -188,7 +190,7 @@ if (!isset($_SESSION['cart'])) {
                     </a>
                     </td>
                     <td>
-                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($products[2]['id']);?>&product_name=<?php echo urlencode($products[2]['product_name']); ?>&colorway=<?php echo urlencode($products[2]['colorway']); ?>">
+                    <a class="clickable" style="text-decoration:none; color:black;" href="product_page.php?id=<?php echo urlencode($products[2]['id']);?>&product_name=<?php echo urlencode($products[2]['product_name']); ?>&colorway=<?php echo urlencode($products[2]['colorway']); ?>">
                         <table class="productcontainer"  id="bestseller3">
                             <tr> <td class="productimage"> 
                              <img src="data:image/jpeg;base64,<?php echo base64_encode($products[2]['image_data']); ?>">
@@ -226,8 +228,8 @@ if (!isset($_SESSION['cart'])) {
                     Get the newest kicks, be in trend
                 </a>
                 <div class="collectionbuttons">
-                    <button class="genderbutton"> <a href="product_list.php">MEN</a> </button>
-                    <button class="genderbutton"> <a href="product_list.php">WOMEN</a> </button>
+                    <button class="genderbutton"> <a style="text-decoration:none; color:black;" href="product_list.php">MEN</a> </button>
+                    <button class="genderbutton"> <a style="text-decoration:none; color:black;" href="product_list.php">WOMEN</a> </button>
                 </div>
             </div>
         </div>
@@ -235,58 +237,58 @@ if (!isset($_SESSION['cart'])) {
             <h1>NEW ARRIVALS</h1>
             <div class="scrollnewarrival">
                 <div class="scroll-content">
-                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[0]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
+                    <a class="clickable" style="text-decoration:none; color:black;" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[0]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
                         <div class="productimage">
                             <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[0]['image_data']); ?>">
                         </div>
                         <div class="productdetails">
-                            <h3> <strong>  <?php echo $newarrivals[0]['product_name'] . ' (' . $newarrivals[0]['colourway'] . ')'; ?> </strong> </h3> 
-                            <a> <small> <?php echo $newarrivals[0]['price']; ?></small></a>
+                            <h3> <strong>  <?php echo $newarrivals[0]['product_name'] . ' <br> (' . $newarrivals[0]['colourway'] . ')'; ?> </strong> </h3> 
+                            <a> <small> $<?php echo $newarrivals[0]['price']; ?></small></a>
                         </div>
                     </div>
                     </a>
-                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[1]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
+                    <a class="clickable"style="text-decoration:none; color:black;" href="product_page.php?id=<?php echo urlencode($newarrivals[1]['id']);?>&product_name=<?php echo urlencode($newarrivals[1]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
                         <div class="productimage">
                              <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[1]['image_data']); ?>">
                         </div>
                         <div class="productdetails">
-                         <h3> <strong>  <?php echo $newarrivals[1]['product_name'] . ' (' . $newarrivals[1]['colourway'] . ')'; ?> </strong> </h3> 
-                            <a> <small> <?php echo $newarrivals[1]['price']; ?></small></a>
+                         <h3> <strong>  <?php echo $newarrivals[1]['product_name'] . ' <br> (' . $newarrivals[1]['colourway'] . ')'; ?> </strong> </h3> 
+                            <a> <small> $<?php echo $newarrivals[1]['price']; ?></small></a>
                         </div>
                     </div>
                     </a>
-                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[2]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
+                    <a class="clickable" style="text-decoration:none; color:black;" href="product_page.php?id=<?php echo urlencode($newarrivals[2]['id']);?>&product_name=<?php echo urlencode($newarrivals[2]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
                         <div class="productimage">
                         <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[2]['image_data']); ?>">
                         </div>
                         <div class="productdetails">
-                         <h3> <strong>  <?php echo $newarrivals[2]['product_name'] . ' (' . $newarrivals[2]['colourway'] . ')'; ?> </strong> </h3> 
-                            <a> <small> <?php echo $newarrivals[2]['price']; ?></small></a>
+                         <h3> <strong>  <?php echo $newarrivals[2]['product_name'] . ' <br> (' . $newarrivals[2]['colourway'] . ')'; ?> </strong> </h3> 
+                            <a> <small> $<?php echo $newarrivals[2]['price']; ?></small></a>
                         </div>
                     </div>
                     </a>
-                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[3]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
+                    <a class="clickable" style="text-decoration:none; color:black;" href="product_page.php?id=<?php echo urlencode($newarrivals[3]['id']);?>&product_name=<?php echo urlencode($newarrivals[3]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
                     <div class="productimage">
                         <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[3]['image_data']); ?>">
                         </div>
                         <div class="productdetails">
-                         <h3> <strong>  <?php echo $newarrivals[3]['product_name'] . ' (' . $newarrivals[3]['colourway'] . ')'; ?> </strong> </h3> 
-                            <a> <small> <?php echo $newarrivals[3]['price']; ?></small></a>
+                         <h3> <strong>  <?php echo $newarrivals[3]['product_name'] . ' <br> (' . $newarrivals[3]['colourway'] . ')'; ?> </strong> </h3> 
+                            <a> <small> $<?php echo $newarrivals[3]['price']; ?></small></a>
                         </div>
                     </div>
                     </a>
-                    <a class="clickable" href="product_page.php?id=<?php echo urlencode($newarrivals[0]['id']);?>&product_name=<?php echo urlencode($newarrivals[4]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
+                    <a class="clickable" style="text-decoration:none; color:black;"  href="product_page.php?id=<?php echo urlencode($newarrivals[4]['id']);?>&product_name=<?php echo urlencode($newarrivals[4]['product_name']); ?>&colorway=<?php echo urlencode($newarrivals[0]['colourway']); ?>">
                     <div class="productwrapper">
                     <div class="productimage">
                         <img src="data:image/jpeg;base64,<?php echo base64_encode($newarrivals[4]['image_data']); ?>">
                         </div>
                         <div class="productdetails">
-                         <h3> <strong>  <?php echo $newarrivals[4]['product_name'] . ' (' . $newarrivals[4]['colourway'] . ')'; ?> </strong> </h3> 
-                            <a> <small> <?php echo $newarrivals[4]['price']; ?></small></a>
+                         <h3> <strong>  <?php echo $newarrivals[4]['product_name'] . ' <br> (' . $newarrivals[4]['colourway'] . ')'; ?> </strong> </h3> 
+                            <a> <small> $<?php echo $newarrivals[4]['price']; ?></small></a>
                         </div>
                     </div>
                     </a>
@@ -331,12 +333,10 @@ if (!isset($_SESSION['cart'])) {
                 <a> 2023 ShoeShoe Singapore Ltd</a>
             </div>
         </div>
-
         <script>
             // Select all dropdown bars and checkbox forms
             const dropdownBars = document.querySelectorAll(".dropdownbar");
             const dropdownContent = document.querySelectorAll(".dropdown-content");
-
             // Add a click event listener to each dropdown bar
             dropdownBars.forEach((dropdownBar, index) => {
                 dropdownBar.addEventListener("click", () => {
@@ -348,8 +348,7 @@ if (!isset($_SESSION['cart'])) {
                     }
                 });
             });
-        </script>
-               
+        </script> 
     </body>
     </html>
 </body>

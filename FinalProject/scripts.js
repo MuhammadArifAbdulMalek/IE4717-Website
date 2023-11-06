@@ -1,26 +1,27 @@
-/* Sections and Dot Indicator Scroll */
-
-const container = document.querySelector('.horizontal-scroll-container');
-const content = document.querySelector('.content');
-const dots = document.querySelector('.dot-indicator');
-
 const sections = document.querySelectorAll('.section');
-sections.forEach((section, index) => {
-    const dot = document.createElement('div');
-    dot.classList.add('dot');
-    dot.addEventListener('click', () => {
-        container.scrollLeft = index * section.offsetWidth;
-    });
-    dots.appendChild(dot);
-});
+const dotIndicator = document.querySelector('.dot-indicator');
+const container = document.querySelector('.horizontal-scroll-container');
 
-container.addEventListener('scroll', () => {
-    const scrollPosition = container.scrollLeft;
-    const sectionWidth = sections[0].offsetWidth;
-    const activeDotIndex = Math.floor(scrollPosition / sectionWidth);
-    const dotsArray = Array.from(dots.querySelectorAll('.dot'));
-    dotsArray.forEach((dot, index) => {
-        if (index === activeDotIndex) {
+let currentSectionIndex = 0;
+let isScrolling = true; // Variable to control auto-scrolling
+let dotClicked = false;
+
+// Function to pause auto-scrolling for 3 seconds
+function pauseAutoScroll() {
+    dotClicked = true;
+    setTimeout(() => {
+        dotClicked = false;
+    }, 3000); // 3000 milliseconds (3 seconds)
+}
+
+function scrollToSection(index) {
+    sections[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function updateDotIndicator() {
+    const dots = Array.from(dotIndicator.children);
+    dots.forEach((dot, index) => {
+        if (index === currentSectionIndex) {
             dot.style.background = 'white'; // Active dot color
             dot.style.height = "15px";
             dot.style.width = "15px";
@@ -30,56 +31,45 @@ container.addEventListener('scroll', () => {
             dot.style.width = "10px";
         }
     });
+}
+
+function scrollToNextSection() {
+    if (isScrolling) {
+        currentSectionIndex = (currentSectionIndex + 1) % sections.length;
+        scrollToSection(currentSectionIndex);
+        updateDotIndicator();
+    }
+}
+
+// Set an interval to scroll to the next section every 10 seconds
+const scrollInterval = setInterval(scrollToNextSection, 5000);
+
+// Initialize the dot indicator
+sections.forEach((section, index) => {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (index === currentSectionIndex) {
+        dot.style.background = 'white'; // Active dot color
+        dot.style.height = "15px";
+        dot.style.width = "15px";
+    }
+    dot.addEventListener('click', (event) => {
+        scrollToSection(index);
+        currentSectionIndex = index;
+        updateDotIndicator();
+    });
+    dotIndicator.appendChild(dot);
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const container = document.querySelector(".horizontal-scroll-container");
-    const sections = document.querySelectorAll(".section");
-    const dotIndicator = document.querySelector(".dot-indicator");
-
-    let currentSectionIndex = 0;
-
-    // Function to scroll to the next section
-    function scrollToNextSection() {
-        currentSectionIndex = (currentSectionIndex + 1) % sections.length;
-        scrollSectionIntoView(currentSectionIndex);
-    }
-
-    // Function to scroll a section into view
-    function scrollSectionIntoView(index) {
-        sections[index].scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-        });
-    }
-
-    // Automatically scroll to the next section every 10 seconds
-    const scrollInterval = setInterval(scrollToNextSection, 10000);
-
-    // Stop the auto-scroll when the user interacts with the container
-    container.addEventListener("scroll", function () {
-        clearInterval(scrollInterval);
+// Use Intersection Observer to detect if the container is not in view
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+            isScrolling = false; // Pause auto-scrolling when the container is not in view
+        } else {
+            isScrolling = true; // Resume auto-scrolling when the container is in view
+        }
     });
 });
 
-
-// Get references to elements
-const cartOverlay = document.getElementById("cart-overlay");
-const cartContent = document.getElementById("cart-content");
-const closeCartButton = document.getElementById("close-cart");
-
-// Add event listener to "Add to Cart" button
-const addToCartButton = document.getElementById("productpageaddtocart");
-addToCartButton.addEventListener("click", () => {
-    // Show the cart overlay
-    cartOverlay.style.display = "flex";
-
-    // Add items to the cart (you will need to implement this logic)
-    // Example: cartContent.innerHTML += "<div>Product Name - $20</div>";
-});
-
-// Add event listener to close button
-closeCartButton.addEventListener("click", () => {
-    // Hide the cart overlay
-    cartOverlay.style.display = "none";
-});
+observer.observe(container);

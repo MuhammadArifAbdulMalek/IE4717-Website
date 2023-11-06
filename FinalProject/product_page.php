@@ -19,8 +19,8 @@ if (isset($_POST['addtocart'])) {
     $product_quantity = $_POST['quantity'];
     $product_color = $_POST['colorway'];
     $subtotal = $product_price * $product_quantity;
-    $sql = "INSERT INTO cart (user_id, product_id, quantity, price, subtotal)
-            VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO cart (user_id, product_id,size, quantity, price, subtotal)
+            VALUES (?, ?, ?, ?, ?, ?)";
 
     // Prepare the SQL statement
     $stmt = $conn->prepare($sql);
@@ -29,7 +29,7 @@ if (isset($_POST['addtocart'])) {
     $subtotal = $product_price * $product_quantity;
 
     // Bind parameters and their data types
-    $stmt->bind_param('siidi', $user_id, $product_id, $product_quantity, $product_price, $subtotal);
+    $stmt->bind_param('sisidi', $user_id, $product_id, $product_size, $product_quantity, $product_price, $subtotal);
     
     /*// Check if the product is already in the cart
     if (isset($_SESSION['cart'][$product_id][$product_size])) {
@@ -119,15 +119,29 @@ if (isset($_POST['addtocart'])) {
     </div>
     <nav class="navbar">
         <div class="navleft">
-            <span>MEN</span>
-            <span>WOMEN</span>
-            <span>UNISEX</span>
+            <a style="text-decoration:none; color:black;" href="product_list.php"><span>MEN</span></a>
+            <a style="text-decoration:none; color:black;" href="product_list2.php"><span>WOMEN</span></a>
+            <a style="text-decoration:none; color:black;" href="product_list.php"><span>UNISEX</span></a>
+        </div>
         </div>
         <div class="navcenter">
             <span><a href="index.php"> Logo </a></span>
         </div>
-        <div class="navright">
-            <span><a href= "account.php"> <img src="assets/Images/Icons/account.png"> </a></span>
+        <div class="navright" >
+            <span style="margin:0px;">
+                <?php if (isset($_SESSION['first_name'])): ?>
+                    <div class="dropdown" style="width: 140px; position: relative;">
+                        <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
+                                <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
+                                <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
+                                </div>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <span><a href="account.php"><img src="assets/Images/Icons/account.png"></a></span>
+                <?php endif; ?>
+            </span>
             <span><a href= "faq.php"> <img src="assets/Images/Icons/FAQ.png"> </a></span>
             <span><a href= "cart.php"> <img src="assets/Images/Icons/cart.png"> </a></span>
         </div>
@@ -380,6 +394,22 @@ if (isset($_POST['addtocart'])) {
     }    
     ?>
 </body>
+<script>
+            // Select all dropdown bars and checkbox forms
+            const dropdownBars = document.querySelectorAll(".dropdownbar");
+            const dropdownContent = document.querySelectorAll(".dropdown-content");
+            // Add a click event listener to each dropdown bar
+            dropdownBars.forEach((dropdownBar, index) => {
+                dropdownBar.addEventListener("click", () => {
+                    const form = dropdownContent[index];
+                    if (form.style.display === "none" || form.style.display === "") {
+                        form.style.display = "block";
+                    } else {
+                        form.style.display = "none";
+                    }
+                });
+            });
+        </script> 
 </html>
 <?php
  // Unset a specific session variable

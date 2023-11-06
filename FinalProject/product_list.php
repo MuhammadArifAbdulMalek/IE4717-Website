@@ -46,10 +46,11 @@ if ($filterResult3->num_rows > 0) {
     }
 }
 
-
 // SQL query to select all fields for displaying products
 $productsSql = "SELECT id, image_data, product_name, price, release_date, colorway, brand, `US 4.0`, `US 4.5`, `US 5.0`, `US 5.5`, `US 6.0`, `US 6.5`, `US 7.0`, `US 7.5`, `US 8.0`, `US 8.5`, `US 9.0`, `US 9.5`, `US 10.0`, `US 10.5`, `US 11.0`
               FROM inventory WHERE `M` = 1";
+
+//$productsSql = "SELECT id, image_data, product_name, price, release_date, colorway, brand FROM inventory";
 
 // Execute the products SQL query
 $productsResult = $conn->query($productsSql);
@@ -59,22 +60,10 @@ $products = array();
 
 if ($productsResult->num_rows > 0) {
     while ($row = $productsResult->fetch_assoc()) {
-        // Check if all 'US' columns are blank
-        $usColumns = ['US 4.0', 'US 4.5', 'US 5.0', 'US 5.5', 'US 6.0', 'US 6.5', 'US 7.0', 'US 7.5', 'US 8.0', 'US 8.5', 'US 9.0', 'US 9.5', 'US 10.0', 'US 10.5', 'US 11.0'];
-        $isEmptyRow = true;
-        foreach ($usColumns as $column) {
-            if (!empty($row[$column])) {
-                $isEmptyRow = false;
-                break;
-            }
-        }
-
-        // If the row is not empty, add it to the products array
-        if (!$isEmptyRow) {
-            $products[] = $row;
-        }
+        $products[] = $row;
     }
 }
+
 
 // Close the database connection
 $conn->close();
@@ -119,9 +108,10 @@ $conn->close();
     </div>
     <nav class="navbar">
         <div class="navleft">
-            <span><a href=product_list.php>MEN</a></span>
-            <span><a href=product_list2.php>WOMEN</a></span>
-            <span></span>
+        <a style="text-decoration:none; color:black;" href="product_list.php"><span>MEN</span></a>
+        <a style="text-decoration:none; color:black;" href="product_list2.php"><span>WOMEN</span></a>
+        <a style="text-decoration:none; color:black;" href="product_list.php"><span>UNISEX</span></a>
+        </div>
         </div>
         <div class="navcenter">
             <span><a href="index.php"> Logo </a></span>
@@ -243,23 +233,7 @@ $conn->close();
 
             <hr class="dropdown-divider">
 
-            <div id="out-of-stock-ids"></div>
-
             
-            <!-- <button id="clear-filters">Clear Filters</button> -->
-            
-            
-            <!-- <div class="price-range-filter">
-                <label for="price-range">Price Range</label>
-                <div id="price-range"></div>
-                <div id="min-max-values">
-                    <input type="number" id="min-value" class="no-spinners" placeholder="Min" step="1">
-                    <input type="number" id="max-value" class="no-spinners" placeholder="Max" step="1">
-                </div>
-                <button type="button" id="apply-price-filter">Apply Filter</button>
-            </div>
-
-            <hr class="dropdown-divider"> -->
                     
         </div>
 
@@ -286,7 +260,7 @@ $conn->close();
                                 <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image_data']); ?>" alt="<?php echo $product['product_name']; ?>">
                                 <p><?php echo $product['product_name']; ?></p>
                                 <p>$<?php echo $product['price']; ?></p>
-                                <!-- <p><?php echo $product['id']; ?></p> -->
+                                 <!-- <p><?php echo $product['id']; ?></p> -->
                             </a>
                         </div>
                     <?php endforeach; ?>
@@ -358,23 +332,21 @@ const brandCheckboxes = document.querySelectorAll('.brand-filter input[type="che
   // Add event listeners to all checkboxes
   brandCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
-        filterProducts()
+      filterProducts();
     });
   });
 
   colorCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
-        filterProducts()
+      filterProducts();
     });
   });
 
   sizeCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
-        filterProducts()
+      filterProducts();
     });
   });
-
-  
 
   // Function to filter products by brand, color, and size
   function filterProducts() {
@@ -420,10 +392,9 @@ const brandCheckboxes = document.querySelectorAll('.brand-filter input[type="che
   // Call the filterProducts function to initialize the filtering
   filterProducts();
 
-// Select all dropdown bars and checkbox forms
-        const dropdownBars2 = document.querySelectorAll(".dropdownbar");
+  // Select all dropdown bars and checkbox forms
+  const dropdownBars2 = document.querySelectorAll(".dropdownbar");
         const dropdownContent = document.querySelectorAll(".dropdown-content");
-
         // Add a click event listener to each dropdown bar
         dropdownBars2.forEach((dropdownBar, index) => {
             dropdownBar.addEventListener("click", () => {
@@ -436,6 +407,29 @@ const brandCheckboxes = document.querySelectorAll('.brand-filter input[type="che
             });
         });
 
+  // Function to clear all selected checkboxes
+  function clearFilters() {
+        brandCheckboxes.forEach(function (checkbox) {
+            checkbox.checked = false;
+        });
+
+        colorCheckboxes.forEach(function (checkbox) {
+            checkbox.checked = false;
+        });
+
+        sizeCheckboxes.forEach(function (checkbox) {
+            checkbox.checked = false;
+        });
+
+        // Reset the filtering
+        filterProducts();
+    }
+
+    // Add an event listener to the "Clear Filters" button
+    const clearFiltersButton = document.getElementById('clear-filters');
+    if (clearFiltersButton) {
+        clearFiltersButton.addEventListener('click', clearFilters);
+    }
 
 </script>
 

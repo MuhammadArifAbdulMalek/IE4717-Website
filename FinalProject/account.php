@@ -234,8 +234,9 @@ $conn->close();
     </div>
     <nav class="navbar">
         <div class="navleft">
-            <span><a href="product_list.php">MEN </a></span>
-            <span><a href="product_list2.php"> WOMEN  </a></span>   
+        <span><a style="text-decoration:none; color:black;"href="product_list.php">MEN </a></span>
+        <span><a style="text-decoration:none; color:black;" href="product_list2.php"> WOMEN  </a></span> 
+        <a style="text-decoration:none; color:black;" href="product_list.php"><span>UNISEX</span></a>
         </div>
         <div class="navcenter">
             <span><a href="index.php"> Logo </a></span>
@@ -244,7 +245,7 @@ $conn->close();
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
                     <div class="dropdown" style="width: 140px; position: relative;">
-                        <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
+                        <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
                                 <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
@@ -263,7 +264,7 @@ $conn->close();
     <div class="accounts">
         <div class="accounts-container">
             <div class="accounts-form">
-                <?php if (!isset($_SESSION['user_id']) || !isset($_SESSION['first_name'])): ?>
+            <?php if (!isset($_SESSION['user_id']) || !isset($_SESSION['first_name'])): ?>
                     <h2>Login</h2>
                     <form action="" method="post">
                         <div class="form-group">
