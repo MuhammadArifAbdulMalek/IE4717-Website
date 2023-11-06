@@ -274,7 +274,7 @@ if (isset($_POST['addtocart'])) {
             <label for="quantity" class="quantity">Quantity</label> <br>
             <div class="quantity-input">
                 <button id="decrement">-</button>
-                <input type="number" id="quantity" value="0" min="0">
+                <input type="number" id="quantity" value="0" min="0" onkeydown="handleEnterKey(event)" onblur="handleInput()">
 
                 <button id="increment">+</button>
             </div>
@@ -297,6 +297,19 @@ if (isset($_POST['addtocart'])) {
                 window.history.pushState({}, '', url);
             }
             
+            function handleEnterKey(event) {
+            if (event.key === "Enter") {
+                var quantity = document.getElementById("quantity").value;
+                updateURL(quantity);
+                refreshPage();
+            }
+            }
+
+            function handleInput() {
+                var quantity = document.getElementById("quantity").value;
+                updateURL(quantity);
+                refreshPage();
+            }
             function refreshPage() {
                 location.reload();
             }
