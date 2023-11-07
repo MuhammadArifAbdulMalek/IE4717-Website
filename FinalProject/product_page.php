@@ -167,7 +167,7 @@ if (isset($_POST['addtocart'])) {
             <p style="font-size:80px; margin-bottom:0px;"> <?php echo $productName; ?> </p>
             <p style="font-size:15px; margin-top:0px;"> <strong> <?php echo $colorway; ?> </strong> </p>
             <p style="font-size:30px;"> <strong> $ <?php echo $productprice; ?> </strong> </p>
-            <a style="font-size:15px; margin-top:20px;"> COLOURS </a> 
+            <a style="font-size:15px; margin-top:20px;text-decoration:underline; S"> COLOURS </a> 
             <?php
            $sql = "SELECT id, colourway, image_data, product_name, product_details FROM products WHERE product_name = '" . $products[0]['product_name'] . "' AND gender = '" . $products[0]['gender'] . "'";
 
@@ -202,7 +202,7 @@ if (isset($_POST['addtocart'])) {
            }
                      
             ?>
-            <a style="font-size:15px; margin-top:20px;"> SIZES </a> 
+            <a style="font-size:15px; margin-top:20px; text-decoration:underline;"> SIZES </a> 
             <?php
             $columnNamesQuery = "SHOW COLUMNS FROM inventory";
             $resultColumnNames = $conn->query($columnNamesQuery);
@@ -234,7 +234,7 @@ if (isset($_POST['addtocart'])) {
             echo '<div class="productsizetable">';
             // Loop through the array to create table rows
             echo '<div class="productsizerow">';
-            
+            $allZero = true;
             
             if ($resultData->num_rows > 0) {
                 while ($row = $resultData->fetch_assoc()) {
@@ -242,6 +242,7 @@ if (isset($_POST['addtocart'])) {
                 }
                     foreach ($columnNames as $columnName) {
                         if ($stock[0][$columnName] >0 ){
+                            $allZero = false;
                             echo '<div class="productsizecell">';
                             echo '<a href="product_page.php?id=' . urlencode($id) .'&product_name=' . urlencode($productName) . '&colorway=' . urlencode($colorway) .'&size=' . urlencode($columnName).'">';
                             if (isset($_GET['size'])) {
@@ -261,7 +262,11 @@ if (isset($_POST['addtocart'])) {
                 }
                 
              else {
-                echo 'empty';
+                echo 'No Stock Available. Please kindly wait for the next restock';
+            }
+
+            if ($allZero) {
+                echo 'No Stock Available. Please kindly wait for the next restock';
             }
             echo '</div>';
             echo '</div>';    
@@ -269,8 +274,10 @@ if (isset($_POST['addtocart'])) {
             $conn->close();
             
             ?>
-            <p style="font-size:15px; margin-top:20px;   text-decoration: underline;"> PRODUCT DETAILS </p>
+            <div>
+            <p style="font-size:15px; margin-top:20px; padding-left:0px;  text-decoration: underline;"> PRODUCT DETAILS </p>
             <p style="font-size:14px; "> <?php echo $productdetails; ?> </p> 
+            </div>
             <label for="quantity" class="quantity">Quantity</label> <br>
             <div class="quantity-input">
                 <button id="decrement">-</button>
