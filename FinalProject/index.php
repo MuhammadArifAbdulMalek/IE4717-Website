@@ -83,7 +83,7 @@ if (isset($_POST['newsletter'])) {
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&family=Lato:wght@700&display=swap" rel="stylesheet">
 <script src="scripts.js"defer></script>
 <script type="text/JavaScript">
-    var message="Current Promotions Latest News Get it Here! Promo Code:15OFF for 15% Off";
+    var message="Current Promotions Latest News Get it Here";
     var space=" ";
     var position=0;
     function scroller(){
@@ -102,7 +102,7 @@ if (isset($_POST['newsletter'])) {
     <div class="promo">  
         <table border="0">
             <tr>
-            <td id="tabledata" style="color: #ffffff;">Current Promotion</td>
+               <td id="tabledata">Current Promotion</td>
              </tr>
         </table>
     </div>
@@ -141,29 +141,29 @@ if (isset($_POST['newsletter'])) {
                 <div class="sectiondetails1">
                     <a style="font-size: 100px">NIKE AIR FORCE ONES</a> <br>
                     <a>The versatile lifestyle shoe</a> <br>
-                    <button class="genderbutton" style="color:#ffffff; border: 2px solid #ffffff;"><a style="text-decoration:none; color:#ffffff;" href="product_list.php?brand=Nike">Shop Now</a></button> 
+                    <button class="genderbutton" style="color:#ffffff; border: 2px solid #ffffff;"><a style="text-decoration:none; color:#ffffff;" href="product_list3.php">Shop Now</a></button> 
+                </div>
+            </div>
+            <div class="section" id="section3">
+            <div class="sectiondetails3">
+                    <a style="font-size: 100px">CROCS</a> <br>
+                    <a>The Biggest Selection Of Clogs, Sandals & More</a> <br>
+                    <button class="genderbutton" style="background-color:#00000080; color:#ffffff; border: 2px solid #ffffff;"><a style="text-decoration:none; color:white;" href="product_list2.php">Shop Now</a></button> 
                 </div>
             </div>
             <div class="section" id="section2">
                 <div class="sectiondetails2">
                     <a style="font-size: 100px">DR MARTENS</a> <br>
                     <a>The boot that started it all</a> <br>
-                    <button class="genderbutton" style="color:#fffac6; border: 2px solid #fffac6;"><a style="text-decoration:none;  color:#fffac6;" href="product_list.php?brand=Dr. Martens">Shop Now</a></button> 
+                    <button class="genderbutton" style="color:#fffac6; border: 2px solid #fffac6;"><a style="text-decoration:none;  color:#fffac6;" href="product_list.php">Shop Now</a></button> 
                 </div>
                 
-            </div>
-            <div class="section" id="section3">
-            <div class="sectiondetails3">
-                    <a style="font-size: 100px">CROCS</a> <br>
-                    <a>The Biggest Selection Of Clogs, Sandals & More</a> <br>
-                    <button class="genderbutton" style="background-color:#00000080; color:#ffffff; border: 2px solid #ffffff;"><a style="text-decoration:none; color:white;" href="product_list.php?brand=Crocs">Shop Now</a></button> 
-                </div>
             </div>
         </div>
         <div class="dot-indicator"></div>
     </div>
     <div class="latestnews">  
-    <a id="LatestNews" style="color: #ffffff;">Buy Our Latest Collection Now</a>
+        <a id="LatestNews" style="color: #ffffff;">Buy Our Latest Collection Now</a>
     </div>
     <div class="Title">
         <h1>OUR BESTSELLERS</h1>
@@ -306,7 +306,6 @@ if (isset($_POST['newsletter'])) {
                     </a>
                     
                 </div>
-                
             </div>
         </div>    
         <div class="newsletter">
@@ -322,21 +321,21 @@ if (isset($_POST['newsletter'])) {
                 <div class="sitemap">
                     <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
                     <table class = sitemaplinks>
-                    <tr>
-                        <td> <a> Size Guide</a> </td>
-                        <td> <a> T&Cs</a> </td>
-                    </tr>
-                    <tr>
-                        <td> <a> Contact Us</a> </td>
-                        <td> <a> Privacy Policy</a> </td>
-                    </tr>
+                        <tr>
+                            <td> <a> Size Guide</a> </td>
+                            <td> <a> T&Cs</a> </td>
+                        </tr>
+                        <tr>
+                            <td> <a> Contact Us</a> </td>
+                            <td> <a> Privacy Policy</a> </td>
+                        </tr>
                     </table>
-                    
+                        
                 </div>
                 <div class="socialmedia">
-                <a><img src="assets/Images/Icons/facebook.png"></a>
-                <a><img src="assets/Images/Icons/instagram.png"></a>
-                <a><img src="assets/Images/Icons/tiktok.png"></a>
+                    <a><img src="assets/Images/Icons/facebook.png"></a>
+                    <a><img src="assets/Images/Icons/instagram.png"></a>
+                    <a><img src="assets/Images/Icons/tiktok.png"></a>
                 </div>
             </div>
             <div class="copyright">

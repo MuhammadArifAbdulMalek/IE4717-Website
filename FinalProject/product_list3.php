@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query to select unique colors and brands for filtering
-$filterSql = "SELECT DISTINCT colorway FROM inventory";
+$filterSql = "SELECT DISTINCT colorway FROM inventory WHERE `M` = 1 AND `F` = 1";
 $filter2Sql = "SELECT DISTINCT brand FROM inventory";
 $filter3Sql = "SHOW COLUMNS FROM inventory WHERE Field LIKE 'US%'";
 

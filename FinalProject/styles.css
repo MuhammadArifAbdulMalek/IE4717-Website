@@ -38,33 +38,20 @@ body{
 .navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px 20px 20px 20px;
+    padding: 25px 20px 15px 20px;
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
     max-height: 5vh;
     font-size: 140%;
-    margin-top: 10px;
+    background-color: #ffffff;
 }
 
-.navcenter{
-    flex: 1;
-  text-align: center;
-  align-items: center;
+.navleft , .navright, .navcenter{
+    display: flex;
+    align-items: center;
 }
-.navleft{
-    flex: 1;
-    align-items: left;
-} 
 
-
-.navright{
-    display: flex; /* Make .navright a flex container */
-  flex: 1;
-  justify-content: flex-end; /* Align items to the right horizontally */
-  align-items: center;
-} 
-.navleft span, .navright span, .navleft a, .navright a{
+.navleft span, .navright span, .navright a{
     margin-left: 20px;
     margin-right: 20px;
     text-decoration: none;
@@ -72,6 +59,23 @@ body{
     display: inline-block;
 }
 
+.navleft a {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    color:black;
+    display: inline-block;
+}
+
+.navcenter a {
+    text-decoration: none;
+    color:black;
+    display: inline-block;
+    padding-right: 60px;
+    font-size: 130%;
+    padding-bottom: 10px;
+    padding-top:10px;
+}
 
 
 /*Image Bar*/
@@ -107,7 +111,7 @@ body{
 }
 
 .sectiondetails1{
-    color:#F5F5DC;
+    color:#ffffff;
     font-family: 'DM Sans', sans-serif;
     text-align: center;
     padding-top:5vh;
@@ -121,7 +125,7 @@ body{
 }
 
 .sectiondetails2{
-    color:#fffac6;
+    color:#F5F5DC;
     font-family: 'DM Sans', sans-serif;
     text-align: center;
     padding-top:5vh;
@@ -129,6 +133,8 @@ body{
 
 #section3{
     background-image: url("assets/Images/Index/Front-3.jpg");
+    background-image: cover;
+    background-size: 100% 100%;
     background-repeat: no-repeat; /* Prevent image repetition */
     background-position: center; /* Center the image */
 }
@@ -447,6 +453,7 @@ h1{
 .listing {
     display: flex;
     flex-wrap: wrap;
+    /*overflow-y: auto; /* Enable vertical scrolling if content exceeds the viewport */
     margin-bottom: 80px;
 
 }
@@ -458,13 +465,14 @@ h1{
     padding: 20px 20px 20px 20px;
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
-    background-color: #D9D9D9;
+    background-color: #222222;
     width: 100%;
+    height: 19vh;
 }
 
-.mensheader span {
-    margin-left: 20px;
-    margin-right: 20px;
+.mensheader h2, p {
+    color: #ffffff;
+    padding: 10px 0px 20px 20px;
 }
 
 
@@ -476,13 +484,8 @@ h1{
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
     box-sizing: content-box;
-    background-color: #222222;
-    height: 19vh;
 }
-.mensheader h2, p {
-    color: #ffffff;
-    padding: 10px 0px 10px 20px;
-}
+
 
 
 /* Style the label and checkboxes */
@@ -523,62 +526,6 @@ label, input[type="checkbox"] {
     margin: 10px 0; /* Adjust margin as needed */
 }
 
-/* Price filter */
-.price-range-filter {
-    display: inline-block;
-    margin: 20px; /* Add some margin for spacing */
-}
-
-#price-range-label {
-    font-size:120%;
-}
-
-/* Customize the slider container */
-#price-range {
-    margin-top: 10px;
-    width: 100%; /* Set the width of the slider */
-    margin-bottom: 10px;
-}
-
-/* Customize the handles */
-#price-range .noUi-handle {
-    border: 10px solid #5A5A5A; /* Add a border around the handle */
-    width: 2px; /* Set the width of the handle */
-    height: 2px; /* Set the height of the handle */
-    border-radius: 50%; /* Make the handle circular (for round handles) */
-}
-
-
-/* Customize the connecting bar between handles */
-#price-range .noUi-connects {
-    background-color: #5A5A5A; /* Change the connecting bar color */
-    height: 4px; /* Set the height of the track (make it thicker if needed) */
-    top: 48%; /* Position the track closer to the middle of the slider */
-    width: 0px;
-}
-
-#min-max-values {
-    margin-top: 10px; /* Add margin for spacing */
-}
-
-
-#apply-price-filter {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px; /* Add margin between the max value and the apply button */
-}
-
-/* Style to disable spinners (up and down buttons) on number input fields */
-.no-spinners {
-    -moz-appearance: textfield;
-    appearance: textfield;
-}fq
-.no-spinners::-webkit-inner-spin-button,
-.no-spinners::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 0;
-}
 
 .product_listing {
     max-width: calc(100% - 29vh);

@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query to select unique colors and brands for filtering
-$filterSql = "SELECT DISTINCT colorway FROM inventory";
+$filterSql = "SELECT DISTINCT colorway FROM inventory WHERE `M` = 1 AND `F` = 0";
 $filter2Sql = "SELECT DISTINCT brand FROM inventory";
 $filter3Sql = "SHOW COLUMNS FROM inventory WHERE Field LIKE 'US%'";
 
@@ -48,7 +48,7 @@ if ($filterResult3->num_rows > 0) {
 
 // SQL query to select all fields for displaying products
 $productsSql = "SELECT id, image_data, product_name, price, release_date, colorway, brand, `US 4.0`, `US 4.5`, `US 5.0`, `US 5.5`, `US 6.0`, `US 6.5`, `US 7.0`, `US 7.5`, `US 8.0`, `US 8.5`, `US 9.0`, `US 9.5`, `US 10.0`, `US 10.5`, `US 11.0`
-              FROM inventory WHERE `M` = 1";
+              FROM inventory WHERE `M` = 1 AND `F` = 0";
 
 //$productsSql = "SELECT id, image_data, product_name, price, release_date, colorway, brand FROM inventory";
 
@@ -175,7 +175,7 @@ $conn->close();
                                     die("Connection failed: " . $conn->connect_error);
                                 }
 
-                                $sizeQuery = "SELECT COUNT(*) as count, GROUP_CONCAT(id) as product_ids FROM inventory WHERE `US $size` > 0";
+                                $sizeQuery = "SELECT COUNT(*) as count, GROUP_CONCAT(id) as product_ids FROM inventory WHERE `US $size` > 0 AND `M` = 1 AND `F` = 0";
                                 $sizeResult = $conn->query($sizeQuery);
 
                                 if ($sizeResult->num_rows > 0) {
