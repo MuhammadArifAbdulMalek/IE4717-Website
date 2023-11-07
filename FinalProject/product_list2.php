@@ -124,12 +124,12 @@ $conn->close();
             <span><a href=product_list3.php>UNISEX</a></span>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> SHOESHOE </a></span>
+            <span><a href="index.php"> <img src="assets/Images/logo.png"> </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 110px; position: relative;">
+                    <div class="dropdown" style="width: 140px; position: relative;">
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
@@ -149,8 +149,8 @@ $conn->close();
     <div class="listing">
 
         <div class="mensheader">
-                <h2>WOMEN'S</h2>
-                    <p>Shoeshoe offers Nike, Converse, Supra, Vans, Jordan, Puma, New Balance, adidas Originals and more street style shoes.<br> These original designs are made from high quality materials.</p>
+                <h2>WOMEN'S SHOES</h2>
+                    <p>Footshop offers men's Nike, Converse, Supra, Vans, Jordan, Puma, New Balance, adidas Originals and more street style shoes.<br> These original designs are made from high quality materials.</p>
         </div>
 
         <div class="mensfilter">
@@ -295,10 +295,10 @@ $conn->close();
     </div>
 
     <div class="footer">
-        <div class="footerupper">
-            <div class="sitemap">
-                <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
-                <table class = sitemaplinks>
+            <div class="footerupper">
+                <div class="sitemap">
+                    <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
+                    <table class = sitemaplinks>
                     <tr>
                         <td> <a> Size Guide</a> </td>
                         <td> <a> T&Cs</a> </td>
@@ -307,19 +307,19 @@ $conn->close();
                         <td> <a> Contact Us</a> </td>
                         <td> <a> Privacy Policy</a> </td>
                     </tr>
-                </table>
+                    </table>
                     
-            </div>
-            <div class="socialmedia">
+                </div>
+                <div class="socialmedia">
                 <a><img src="assets/Images/Icons/facebook.png"></a>
                 <a><img src="assets/Images/Icons/instagram.png"></a>
                 <a><img src="assets/Images/Icons/tiktok.png"></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <a> 2023 ShoeShoe Singapore Ltd</a>
             </div>
         </div>
-        <div class="copyright">
-            <a> 2023 ShoeShoe Singapore Ltd</a>
-        </div>
-    </div>
 
 
 

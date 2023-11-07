@@ -47,7 +47,7 @@ for ($i = 0; $i < count($product_ids); $i++) {
         'size' => $sizes[$i],
         'price' => $prices[$i],
         'quantity' => $quantities[$i],
-        'subtotal' => $subtotals[$i],
+        'subtotal' => $prices[$i] * $quantities[$i]
     ];
 }
 
@@ -104,6 +104,7 @@ $conn->close();
 </head>
 <body>
     <div class="thankyoucontainer">
+        <img src="assets/Images/logo.png" style="padding-top:10vh;">
         <h1> Thank you for your purchase </h1>
         <p> Your items will be delivered promptly. </p>
         <a href="index.php"> <button class="checkoutbutton"> Go to Home </button> </a>

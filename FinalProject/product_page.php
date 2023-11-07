@@ -126,12 +126,12 @@ if (isset($_POST['addtocart'])) {
         </div>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> SHOESHOE </a></span>
+            <span><a href="index.php"> Logo </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 110px; position: relative;">
+                    <div class="dropdown" style="width: 140px; position: relative;">
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
@@ -351,10 +351,10 @@ if (isset($_POST['addtocart'])) {
         </div>
     </div>
     <div class="footer">
-        <div class="footerupper">
-            <div class="sitemap">
-                <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
-                <table class = sitemaplinks>
+            <div class="footerupper">
+                <div class="sitemap">
+                    <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
+                    <table class = sitemaplinks>
                     <tr>
                         <td> <a> Size Guide</a> </td>
                         <td> <a> T&Cs</a> </td>
@@ -363,50 +363,19 @@ if (isset($_POST['addtocart'])) {
                         <td> <a> Contact Us</a> </td>
                         <td> <a> Privacy Policy</a> </td>
                     </tr>
-                </table>
+                    </table>
                     
-            </div>
-            <div class="socialmedia">
+                </div>
+                <div class="socialmedia">
                 <a><img src="assets/Images/Icons/facebook.png"></a>
                 <a><img src="assets/Images/Icons/instagram.png"></a>
                 <a><img src="assets/Images/Icons/tiktok.png"></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <a> 2023 ShoeShoe Singapore Ltd</a>
             </div>
         </div>
-        <div class="copyright">
-            <a> 2023 ShoeShoe Singapore Ltd</a>
-        </div>
-    </div>
-        <?php
-       
-       if (isset($_SESSION['cart'])) {
-        foreach ($_SESSION['cart'] as $product_id => $sizes) {
-            foreach ($sizes as $product_size => $product) {
-                echo "<li>{$product['name']} - \${$product['price']} (Quantity: {$product['quantity']})(Size: {$product_size}, Color: {$product['color']})</li>";
-                
-                    
-                
-            }
-        }
-        
-    }
-            
-        ?>
-        <div id="cart-overlay" class="cart-overlay">
-        <div class="cart-content">
-            <span class="close-button" id="close-cart">X</span>
-            <h2>Your Cart</h2>
-            <ul id="cart-items">
-                <!-- Cart items will be dynamically added here -->
-            </ul>
-        </div>
-    </div>
-</div>
-<?php
-    if (isset($_GET['return_url'])) {
-        // Save the return URL in a session variable
-        $_SESSION['return_url'] = $_GET['return_url'];
-    }    
-    ?>
 </body>
 <script>
             // Select all dropdown bars and checkbox forms
@@ -425,15 +394,7 @@ if (isset($_POST['addtocart'])) {
             });
         </script> 
 </html>
-<?php
- // Unset a specific session variable
-/*unset($_SESSION['cart']);
 
-// Destroy the session
-session_destroy();
-
-// Redirect or perform any other actions after destroying the session*/
-?>
 
 
 

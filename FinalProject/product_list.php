@@ -60,20 +60,19 @@ $products = array();
 
 if ($productsResult->num_rows > 0) {
     while ($row = $productsResult->fetch_assoc()) {
-        // Check if all 'US' columns are blank
-        $usColumns = ['US 4.0', 'US 4.5', 'US 5.0', 'US 5.5', 'US 6.0', 'US 6.5', 'US 7.0', 'US 7.5', 'US 8.0', 'US 8.5', 'US 9.0', 'US 9.5', 'US 10.0', 'US 10.5', 'US 11.0'];
-        $isEmptyRow = true;
-        foreach ($usColumns as $column) {
-            if (!empty($row[$column])) {
-                $isEmptyRow = false;
-                break;
-            }
-        }
-
-        // If the row is not empty, add it to the products array
-        if (!$isEmptyRow) {
-            $products[] = $row;
-        }
+       // Check if all 'US' columns are blank
+       $usColumns = ['US 4.0', 'US 4.5', 'US 5.0', 'US 5.5', 'US 6.0', 'US 6.5', 'US 7.0', 'US 7.5', 'US 8.0', 'US 8.5', 'US 9.0', 'US 9.5', 'US 10.0', 'US 10.5', 'US 11.0'];
+       $isEmptyRow = true;
+       foreach ($usColumns as $column) {
+           if (!empty($row[$column])) {
+               $isEmptyRow = false;
+               break;
+           }
+       }
+       // If the row is not empty, add it to the products array
+       if (!$isEmptyRow) {
+           $products[] = $row;
+       }
     }
 }
 
@@ -127,7 +126,7 @@ $conn->close();
         </div>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> SHOESHOE </a></span>
+            <span><a href="index.php"> <img src="assets/Images/logo.png"> </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
@@ -152,7 +151,7 @@ $conn->close();
     <div class="listing">
 
         <div class="mensheader">
-                <h2>MEN'S</h2>
+        <h2>MEN'S</h2>
                     <p>Shoeshoe offers men's Nike, Converse, Supra, Vans, Jordan, Puma, New Balance, adidas Originals and more street style shoes.<br> These original designs are made from high quality materials.</p>
         </div>
 
@@ -176,7 +175,7 @@ $conn->close();
                                     die("Connection failed: " . $conn->connect_error);
                                 }
 
-                                $sizeQuery = "SELECT COUNT(*) as count, GROUP_CONCAT(id) as product_ids FROM inventory WHERE `US $size` > 0 AND `M`= 1";
+                                $sizeQuery = "SELECT COUNT(*) as count, GROUP_CONCAT(id) as product_ids FROM inventory WHERE `US $size` > 0";
                                 $sizeResult = $conn->query($sizeQuery);
 
                                 if ($sizeResult->num_rows > 0) {
@@ -282,10 +281,10 @@ $conn->close();
     </div>
 
     <div class="footer">
-        <div class="footerupper">
-            <div class="sitemap">
-                <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
-                <table class = sitemaplinks>
+            <div class="footerupper">
+                <div class="sitemap">
+                    <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
+                    <table class = sitemaplinks>
                     <tr>
                         <td> <a> Size Guide</a> </td>
                         <td> <a> T&Cs</a> </td>
@@ -294,19 +293,19 @@ $conn->close();
                         <td> <a> Contact Us</a> </td>
                         <td> <a> Privacy Policy</a> </td>
                     </tr>
-                </table>
+                    </table>
                     
-            </div>
-            <div class="socialmedia">
+                </div>
+                <div class="socialmedia">
                 <a><img src="assets/Images/Icons/facebook.png"></a>
                 <a><img src="assets/Images/Icons/instagram.png"></a>
                 <a><img src="assets/Images/Icons/tiktok.png"></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <a> 2023 ShoeShoe Singapore Ltd</a>
             </div>
         </div>
-        <div class="copyright">
-            <a> 2023 ShoeShoe Singapore Ltd</a>
-        </div>
-    </div>
 
 
 

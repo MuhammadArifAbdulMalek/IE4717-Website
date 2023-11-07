@@ -16,13 +16,53 @@ $sizes = $_POST['size'];
 $quantities = $_POST['quantity'];
 $prices = $_POST['price'];
 $total = 0;
+if (!isset($_SESSION['promocodeapplied'])){
+    $_SESSION['promocodeapplied'] = 0;
+}
+
+
+if (isset($_POST['promocodeaddition'])) {
+    if (isset($_POST['promocode'])) {
+        $promocode = $_POST['promocode'];
+        
+        if ($promocode == $_SESSION['promocodeapplied']) {
+            echo '<script>alert("Promo Code has been applied previously");</script>';
+        } else {
+            // Use prepared statements to avoid SQL injection
+            $promocodesql = "SELECT pricecut FROM promocode WHERE promocode = ?";
+            $stmt = $conn->prepare($promocodesql);
+            $stmt->bind_param("s", $promocode);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $promoCodeRow = $result->fetch_assoc();
+                $priceCut = $promoCodeRow['pricecut'];
+                $quantities = $_POST['quantity'];
+                $prices = $_POST['price'];
+                $_SESSION['promocodeapplied'] = $promocode;
+                echo '<script>alert("'.$promocode.' has been applied");</script>';
+                for ($i = 0; $i < count($prices); $i++) {
+                    $prices[$i] = $prices[$i] * $priceCut;
+                }
+            } else {
+                echo '<script>alert("Promo Code Invalid");</script>';
+            }
+        }
+    }
+}
+
+
+
+    
+
 ?>
 
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Product Page</title>
+    <title>Checkout</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,19 +70,6 @@ $total = 0;
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&family=Lato:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
-    <script>
-        function validateaddtocart() {
-
-        var quantity = document.getElementById("quantity").value;
-
-        if (quantity <1) {
-            alert("No quantity has been selected");
-                return false;
-        } else {
-            return true;
-        }
-        }
-    </script>
     
     
 </head>
@@ -62,12 +89,12 @@ $total = 0;
         </div>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> SHOESHOE </a></span>
+            <span><a href="index.php"> <img src="assets/Images/logo.png"> </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 110px; position: relative;">
+                    <div class="dropdown" style="width: 140px; position: relative;">
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
@@ -91,51 +118,82 @@ $total = 0;
             <div class="infoneeded">
                 <h2> Billing Information </h2>
                     <label for=myName>Name: </label><label class="orderheader">* </label> <br>
-                    <input type="text" name="myName" size="25" id="myName" oninput="checkName()"><br>
+                    <input type="text" name="myName" size="25" id="myName" pattern="[A-Za-z\s]+" required title="Please enter only alphabets" required><br>
+                 
                     <label for="myEmail">Email:</label><label class="orderheader">* </label><br>
-                    <input type="text" name="myEmail" size="25" id="myEmail" oninput="checkEmail()"><br>  
+                    <input type="text" name="myEmail" size="25" id="myEmail" pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" required title="Please enter following example (hello@domain.sg)" required><br>
+         
                     <label for="myphone">Phone: +65</label><label class="orderheader">* </label><br>
                     <input type="tel" id="phone" name="myphone" class="intl-tel-input" required><br>
+  
                     <label for="myaddress">Delivery Address:</label><label class="orderheader">* </label><br>
                     <input type="text" name="myaddress" size="25" id="myaddress"  required><br>  
+         
                     <label for="myaddress2">Delivery Address Line 2:</label><br>
                     <input type="text" name="myaddress2" size="25" id="myaddress2"><br>  
+             
                     <label for="mycity">City:</label><label class="orderheader">* </label><br>
-                    <input type="text" name="mycity" size="25" id="mycity" required><br>
+                    <input type="text" name="mycity" size="25" id="mycity"  required><br>
+
                     <label for="mypostalcode">Postal Code:</label><label class="orderheader">* </label><br>
-                    <input type="text" name="mypostalcode" size="25" id="mypostalcode" required><br>
+                    <input type="text" name="mypostalcode" size="25" id="mypostalcode"  pattern="[0-9]+" required title="Please enter a valid number (digits only)" required><br>
+                
                 
                 <h2> Payment </h2>
                 <label for="mybillingaddress">Biling Address:</label><label class="orderheader">* </label><br>
                 <input type="text" name="mybillingaddress" size="25" id="mybillingaddress"  required><br>
-                <label for="mybillingaddress2">Billing Address Line 2:</label><br>
+      
+                <label for="mybillingaddress2">Billing Address Line 2:</label>
                 <input type="text" name="mybillingaddress2" size="25" id="mybillingaddress2"><br>
+             
                 <label for="mybillingcity">City:</label><label class="orderheader">* </label><br>
                 <input type="text" name="mybillingcity" size="25" id="mybillingcity" required><br>
+         
                 <label for="mybillingpostalcode">Postal Code:</label><label class="orderheader">* </label><br>
-                <input type="text" name="mybillingpostalcode" size="25" id="mybillingpostalcode" required><br>   
-            </div>
-            <div class="orderbutton">
-            <button class="checkoutbutton" type="submit" style="margin-top:10px; margin-left:20px;">Order Now</button>
-            </div>
-        </div>
-        </div>
-        <div class="cartorders">
-            <h2 style="text-align:center; padding-top:5vh;"> In Your Cart </h2>
-            <div class="cartdisplayitems">
-            <table class="displayproductsorder">
-                <?php
+                <input type="text" name="mybillingpostalcode" size="25" id="mybillingpostalcode" pattern="[0-9]+" required title="Please enter a valid number (digits only)" required><br>   
+         
+                <?php  
                     for ($i = 0; $i < count($product_ids); $i++) {
-                        
                         $product_id = $product_ids[$i];
                         $product_name = $product_names[$i];
                         $colourway= $colourways[$i];
                         $size = $sizes[$i];
                         $quantity = $quantities[$i];
                         $price = $prices[$i];
-                        $subtotal = $quantity * $price;
-                        $total +=  $subtotal;
+                        $subtotal = $quantities[$i] * $prices[$i];
 
+                        echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
+                        echo '<input type="hidden" name="product_name[]" value="'. $product_name .'">';
+                        echo '<input type="hidden" name="colourway[]" value="'. $colourway .'">';
+                        echo '<input type="hidden" name="size[]" value="'. $size .'">';
+                        echo '<input type="hidden" name="price[]" value="'. $price .'">';
+                        echo '<input type="hidden" name="quantity[]" value="'. $quantity .'">';
+                        echo '<input type="hidden" name="subtotal[]" value="'. $subtotal .'">';
+                        }
+                    
+                ?>
+            </div>
+            <div class="orderbutton">
+            <button class="checkoutbutton" type="submit" style="margin-top:10px; margin-left:20px;">Order Now</button>
+            </div>
+        </div>
+        </div>
+        </form>
+        <div class="cartorders">
+            <h2 style="text-align:center; padding-top:5vh;"> In Your Cart </h2>
+            <div class="cartdisplayitems">
+            <table class="displayproductsorder">
+                <?php
+                    for ($i = 0; $i < count($product_ids); $i++) {
+                        if($quantity >0){
+                            $product_id = $product_ids[$i];
+                            $product_name = $product_names[$i];
+                            $colourway= $colourways[$i];
+                            $size = $sizes[$i];
+                            $quantity = $quantities[$i];
+                            $price = $prices[$i];
+                            $subtotal = $quantities[$i] * $prices[$i];
+                            $total +=  $subtotal;
                         $sql = "SELECT image_data FROM products WHERE id = $product_id";
                         $result = $conn->query($sql);
                         $row = $result->fetch_assoc();
@@ -152,13 +210,11 @@ $total = 0;
                         echo '<p style="font-size:20px;">Subtotal: $ ' . " " . $subtotal . '</p>';
                         echo '</td>';
                         echo '</tr>';
-                        echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
-                        echo '<input type="hidden" name="product_name[]" value="'. $product_name .'">';
-                        echo '<input type="hidden" name="colourway[]" value="'. $colourway .'">';
-                        echo '<input type="hidden" name="size[]" value="'. $size .'">';
-                        echo '<input type="hidden" name="price[]" value="'. $price .'">';
-                        echo '<input type="hidden" name="quantity[]" value="'. $quantity .'">';
-                        echo '<input type="hidden" name="subtotal[]" value="'. $subtotal .'">';
+                        
+                        
+                    } else if ($quantity=0){
+                        echo 'Cart is now empty';
+                    }
                     }
                     echo '<input type="hidden" name="total[]" value="'. $total .'">';
                     
@@ -166,17 +222,57 @@ $total = 0;
             </table>
             </div>
             <div class="orderreturn">
+            <div style="padding-top:20px; ">
+            <form action="" method="post" id="promocodeaddition" name="promocodeaddition" style="display: flex; align-items: center; justify-content: center;">
+            <label for=promocode>Promo Code: </label>
+            <input type="text" name="promocode" size="25" id="promocode" style="margin-left:20px;"><br>
+            <?php
+             for ($i = 0; $i < count($product_ids); $i++) {
+            echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
+                        echo '<input type="hidden" name="product_name[]" value="'. $product_name .'">';
+                        echo '<input type="hidden" name="colourway[]" value="'. $colourway .'">';
+                        echo '<input type="hidden" name="size[]" value="'. $size .'">';
+                        echo '<input type="hidden" name="price[]" value="'. $price .'">';
+                        echo '<input type="hidden" name="quantity[]" value="'. $quantity .'">';
+             }
+                        ?>
+            <button class="checkoutbutton" id="promocodeaddition" name="promocodeaddition" type="submit" style="margin-top:10px; margin-left:20px;">Apply</button>
+            </form>
+            </div>
             <h2 id="total" style="text-align:center">Total: $ <?php echo $total ?></h2>
-            <a href="cart.php" class="button-link">Back to Cart</a>
+
+            <a href="cart.php" id="backToCartLink" class="button-link">Back to Cart</a>
+            <script>
+        
+             document.getElementById("backToCartLink").addEventListener("click", function (event) {
+ 
+            event.preventDefault();
+
+            var form = document.createElement("form");
+            form.action = "cart.php"; // Set the target URL
+            form.method = "post";
+
+            
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "backtocart";
+
+   
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+    </script>
             </div>
         </div>
     </div>
-    </form>
+    
     <div class="footer">
-        <div class="footerupper">
-            <div class="sitemap">
-                <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
-                <table class = sitemaplinks>
+            <div class="footerupper">
+                <div class="sitemap">
+                    <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
+                    <table class = sitemaplinks>
                     <tr>
                         <td> <a> Size Guide</a> </td>
                         <td> <a> T&Cs</a> </td>
@@ -185,19 +281,19 @@ $total = 0;
                         <td> <a> Contact Us</a> </td>
                         <td> <a> Privacy Policy</a> </td>
                     </tr>
-                </table>
+                    </table>
                     
-            </div>
-            <div class="socialmedia">
+                </div>
+                <div class="socialmedia">
                 <a><img src="assets/Images/Icons/facebook.png"></a>
                 <a><img src="assets/Images/Icons/instagram.png"></a>
                 <a><img src="assets/Images/Icons/tiktok.png"></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <a> 2023 ShoeShoe Singapore Ltd</a>
             </div>
         </div>
-        <div class="copyright">
-            <a> 2023 ShoeShoe Singapore Ltd</a>
-        </div>
-    </div>
 </body>
 </html>
 <script>

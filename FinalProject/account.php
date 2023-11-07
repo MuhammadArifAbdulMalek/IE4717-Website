@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             $stmt->close();
 
-            $sqldup = "SELECT * FROM users WHERE email = '$email'";
+            $sqldup = "SELECT * FROM email WHERE email = '$email'";
             $result = $conn->query($sqldup);
 
             if ($result->num_rows > 0) {
@@ -128,21 +128,19 @@ $conn->close();
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&family=Lato:wght@700&display=swap" rel="stylesheet">
     <script src="scripts.js" defer></script>
     <script type="text/JavaScript">
-        var message = "Current Promotions Latest News Get it Here";
-        var space = " ";
-        var position = 0;
-
-        function scroller() {
-            var newtext = space + message.substring(position, message.length) + space + message.substring(0, position);
-            var td = document.getElementById("tabledata");
-            td.firstChild.nodeValue = newtext;
-            position++;
-            if (position > message.length) {
-                position = 0;
-            }
-            setTimeout(scroller, 200);
-        }
-    </script>
+    var message="Current Promotions Latest News Get it Here! Promo Code:15OFF for 15% Off";
+    var space=" ";
+    var position=0;
+    function scroller(){
+         var newtext = space + message.substring(position,message.length) + space + message.substring(0,position);
+         var td = document.getElementById("tabledata");
+         td.firstChild.nodeValue = newtext;
+         position++;
+         if (position > message.length){position=0;}
+         window.setTimeout("scroller()",200);
+    }
+ 
+ </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.4.0/nouislider.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.4.0/nouislider.min.js"></script>
 
@@ -202,12 +200,10 @@ $conn->close();
         .accounts-form h2 {
             margin: 0;
         }
-        
         .accounts-form p {
             color: #000000;
             padding-left: 0px;
         }
-
         .accounts-form label {
             display: block;
             font-size: 80%;
@@ -254,7 +250,7 @@ $conn->close();
         <a style="text-decoration:none; color:black;" href="product_list3.php"><span>UNISEX</span></a>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> SHOESHOE </a></span>
+        <span><a href="index.php"> <img src="assets/Images/logo.png"> </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
@@ -339,10 +335,10 @@ $conn->close();
         </div>
     </div>
     <div class="footer">
-        <div class="footerupper">
-            <div class="sitemap">
-                <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
-                <table class = sitemaplinks>
+            <div class="footerupper">
+                <div class="sitemap">
+                    <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
+                    <table class = sitemaplinks>
                     <tr>
                         <td> <a> Size Guide</a> </td>
                         <td> <a> T&Cs</a> </td>
@@ -351,19 +347,19 @@ $conn->close();
                         <td> <a> Contact Us</a> </td>
                         <td> <a> Privacy Policy</a> </td>
                     </tr>
-                </table>
+                    </table>
                     
-            </div>
-            <div class="socialmedia">
+                </div>
+                <div class="socialmedia">
                 <a><img src="assets/Images/Icons/facebook.png"></a>
                 <a><img src="assets/Images/Icons/instagram.png"></a>
                 <a><img src="assets/Images/Icons/tiktok.png"></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <a> 2023 ShoeShoe Singapore Ltd</a>
             </div>
         </div>
-        <div class="copyright">
-            <a> 2023 ShoeShoe Singapore Ltd</a>
-        </div>
-    </div>
 
     <script>
 

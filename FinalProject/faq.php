@@ -120,7 +120,7 @@ $conn->close();
             <span><a href="product_list3.php"> UNISEX  </a></span>   
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> SHOESHOE </a></span>
+            <span><a href="index.php"> <img src="assets/Images/logo.png"> </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">

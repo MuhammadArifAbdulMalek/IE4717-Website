@@ -15,6 +15,7 @@ body{
     background-color: #222222;
     text-align: center;
     display: flex;
+    color:white;
     justify-content: center;
     white-space: nowrap;
     overflow: hidden;
@@ -27,52 +28,48 @@ body{
 
 #tabledata{
     text-align: center;
-    max-width: 80vw;
+    max-width: 20vw;
     white-space: nowrap;
     overflow: hidden;
-    color: #ffffff;
+    
 }
 
 /* Navigation Bar */
 .navbar {
     display: flex;
     justify-content: space-between;
-    padding: 25px 20px 15px 20px;
+    align-items: center;
+    padding: 20px 20px 20px 20px;
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
     max-height: 5vh;
     font-size: 140%;
-    background-color: #ffffff;
+    margin-top: 10px;
 }
 
-.navleft , .navright, .navcenter{
-    display: flex;
-    align-items: center;
+.navcenter{
+    flex: 1;
+  text-align: center;
+  align-items: center;
 }
+.navleft{
+    flex: 1;
+    align-items: left;
+} 
 
-.navleft span, .navright span, .navright a{
+
+.navright{
+    display: flex; /* Make .navright a flex container */
+  flex: 1;
+  justify-content: flex-end; /* Align items to the right horizontally */
+  align-items: center;
+} 
+.navleft span, .navright span, .navleft a, .navright a{
     margin-left: 20px;
     margin-right: 20px;
     text-decoration: none;
     color:black;
     display: inline-block;
-}
-
-.navleft a {
-    margin-left: 10px;
-    margin-right: 10px;
-    text-decoration: none;
-    color:black;
-    display: inline-block;
-}
-
-.navcenter a {
-    text-decoration: none;
-    color:black;
-    display: inline-block;
-    padding-right: 60px;
-    font-size: 130%;
-    padding-bottom: 10px;
 }
 
 
@@ -110,7 +107,7 @@ body{
 }
 
 .sectiondetails1{
-    color:#ffffff;
+    color:#F5F5DC;
     font-family: 'DM Sans', sans-serif;
     text-align: center;
     padding-top:5vh;
@@ -124,7 +121,7 @@ body{
 }
 
 .sectiondetails2{
-    color:#F5F5DC;
+    color:#fffac6;
     font-family: 'DM Sans', sans-serif;
     text-align: center;
     padding-top:5vh;
@@ -207,8 +204,9 @@ h1{
 
 .productimage{
     max-width:40vh;
-    max-height:286.5px;
+    max-height:40vh;
     border-collapse: collapse;
+    padding: 0;
 }
 
 .productimage img {
@@ -248,20 +246,21 @@ h1{
     text-align: center;
     align-items: center;
 }
-
 .newarrivals{
     background-color: #ffffff;
-    height:100vh;
+    height:80vh;
     text-align: center;
     align-items: center;
-}
+    padding-top: 100px;
+    padding-bottom: 100px;
 
+}
 .collectionimage img {
     width: 100%;
     height: 100%; 
     object-fit: cover;
     padding: 0;
-    box-shadow: 0px 0px #88888890;
+    box-shadow: 0px 5px #88888890;
 }
 
 .collectionbottom {
@@ -326,7 +325,6 @@ h1{
 }
 .scrollnewarrival{
     /*padding-left:10vw;*/
-    height:65vh;
     overflow:hidden;
 }
 
@@ -360,8 +358,7 @@ h1{
 
 /* Newsletter*/
 .newsletter {
-    background-color: #ffffff;
-    
+    background-color: #4d4d4d;
     height:41vh;
     display: flex;
     flex-direction: column;
@@ -373,17 +370,19 @@ h1{
     font-size: 70px;
     padding-top: 0px;
     margin-bottom: 10px;
+    color:white;
 }
 
 .newsletter a{
     margin-bottom:20px;
+    color:white;
 }
 
 #email {
     width:36vw;
     background-color: #FFFFFF;
     font-size: 16px;
-    border:2px solid #000;
+    border:0px;
     padding: 10px 10px;
     border-radius: 5px;
 }
@@ -429,25 +428,17 @@ h1{
     float:right;
 }
 
-
-.socialmedia img {
-        width: 30px;
-        height: 30px;
-        margin: 5px; /* Add spacing between icons if desired */
-    }
-
-
 .copyright{
     position: absolute; 
     bottom: 2vh; 
     width: 100%; 
     padding: 10px;
-    padding-bottom: 25px;
     text-align: center;
+    padding-bottom: 25px;
 }
 
 .sitemaplinks td{
-    padding-top: 10px;
+    padding: 10px 0px 10px;
 }
 
 
@@ -456,7 +447,6 @@ h1{
 .listing {
     display: flex;
     flex-wrap: wrap;
-    /*overflow-y: auto; /* Enable vertical scrolling if content exceeds the viewport */
     margin-bottom: 80px;
 
 }
@@ -468,14 +458,13 @@ h1{
     padding: 20px 20px 20px 20px;
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
-    background-color: #222222;
+    background-color: #D9D9D9;
     width: 100%;
-    height: 19vh;
 }
 
-.mensheader h2, p {
-    color: #ffffff;
-    padding: 10px 0px 20px 20px;
+.mensheader span {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 
@@ -487,8 +476,13 @@ h1{
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
     box-sizing: content-box;
+    background-color: #222222;
+    height: 19vh;
 }
-
+.mensheader h2, p {
+    color: #ffffff;
+    padding: 10px 0px 10px 20px;
+}
 
 
 /* Style the label and checkboxes */
@@ -578,7 +572,7 @@ label, input[type="checkbox"] {
 .no-spinners {
     -moz-appearance: textfield;
     appearance: textfield;
-}
+}fq
 .no-spinners::-webkit-inner-spin-button,
 .no-spinners::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -655,7 +649,6 @@ label, input[type="checkbox"] {
     box-sizing: border-box; /* Ensure padding and borders are included in the width */
     max-height: 489px;
 }
-
 .product_listing_product p {
     color: #000000;
     padding: 0px;
@@ -698,8 +691,9 @@ label, input[type="checkbox"] {
 }
 
 .productpagedetails p{
+    color:black;
     margin-top:0px; 
-    margin-bottom:10px;
+    padding-bottom:0px;
 }
 .imagecontainer{
     width:50%;
@@ -809,29 +803,38 @@ label, input[type="checkbox"] {
     display: none; /* Hide the input element */
 }
 
+/* Cart */
+
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
 
 /* Add more styles for cart items, button, etc. */
 
 /* Cart */
 .cart{
     text-align: center;
-    max-height: 500vh;
-    height: auto;
-    min-height: 70vh;
-    padding-bottom: 30px;
-    
+    flex-direction: column;
+    min-height: 63.5vh;      
 }
 
 /* Center the table */
 .displaycart {
     display: flex;
     justify-content: center;
+    flex: 1; /* Expand to fill the remaining vertical space */
+    overflow: auto;
+    height:auto;
 }
 
 .displaycart p {
     color: #000000;
 }
-
 /* Style your table */
 .displayproducts {
     border-collapse: collapse;
@@ -860,6 +863,11 @@ label, input[type="checkbox"] {
     width: 40vh; /* Adjust image max width */
     max-width: 40vh;
     height: auto;
+}
+#cartdetailscolumn p {
+    margin-top:0px;
+    margin-bottom:0px;
+    margin-block-end: 0em;
 }
 
 .cartimage img {
@@ -997,4 +1005,19 @@ label, input[type="checkbox"] {
 /*Thank you page */
 .thankyoucontainer{
     text-align: center; /* Center vertically */
+}
+
+.socialmedia img {
+    width: 30px;
+    height: 30px;
+    margin: 5px; /* Add spacing between icons if desired */
+}
+
+#error-myName, #error-email, #error-mypostalcode{
+	color: red;
+	font-size: 10px;
+}
+
+.thankyoucontainer p, .thankyoucontainer a{
+    color:black;
 }
