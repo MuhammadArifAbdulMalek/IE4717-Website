@@ -12,9 +12,8 @@ body{
 /* Scrolling Promotional Bar */
 
 .promo {
-    background-color: #D9D9D9;
+    background-color: #222222;
     text-align: center;
-    margin: 0 auto;
     display: flex;
     justify-content: center;
     white-space: nowrap;
@@ -26,37 +25,54 @@ body{
     letter-spacing: 2px;
 }
 
-.tabledata{
+#tabledata{
     text-align: center;
     max-width: 80vw;
     white-space: nowrap;
     overflow: hidden;
-    
+    color: #ffffff;
 }
 
 /* Navigation Bar */
 .navbar {
     display: flex;
     justify-content: space-between;
-    padding: 20px 20px 20px 20px;
+    padding: 25px 20px 15px 20px;
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
     max-height: 5vh;
     font-size: 140%;
-    margin-top: 10px;
+    background-color: #ffffff;
 }
 
 .navleft , .navright, .navcenter{
     display: flex;
-  align-items: center;
+    align-items: center;
 }
 
-.navleft span, .navright span, .navleft a, .navright a{
+.navleft span, .navright span, .navright a{
     margin-left: 20px;
     margin-right: 20px;
     text-decoration: none;
     color:black;
     display: inline-block;
+}
+
+.navleft a {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    color:black;
+    display: inline-block;
+}
+
+.navcenter a {
+    text-decoration: none;
+    color:black;
+    display: inline-block;
+    padding-right: 60px;
+    font-size: 130%;
+    padding-bottom: 10px;
 }
 
 
@@ -108,7 +124,7 @@ body{
 }
 
 .sectiondetails2{
-    color:#fffac6;
+    color:#F5F5DC;
     font-family: 'DM Sans', sans-serif;
     text-align: center;
     padding-top:5vh;
@@ -155,7 +171,7 @@ body{
 }
 
 .latestnews {
-    background-color: #ffffff;
+    background-color: #222222;
     height:5vh;
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
@@ -166,7 +182,7 @@ body{
 }
 
 .Title{
-    background-color: #D9D9D9;
+    background-color: #ffffff;
     height:100vh;
     text-align: center;
     align-items: center;
@@ -191,9 +207,8 @@ h1{
 
 .productimage{
     max-width:40vh;
-    max-height:40vh;
+    max-height:286.5px;
     border-collapse: collapse;
-    padding: 0;
 }
 
 .productimage img {
@@ -227,18 +242,26 @@ h1{
     padding: 0;
 }
     
-.newcollection, .newarrivals{
-    background-color: #D9D9D9;
+.newcollection {
+    background-color: #222222;
     height:100vh;
     text-align: center;
     align-items: center;
 }
+
+.newarrivals{
+    background-color: #ffffff;
+    height:100vh;
+    text-align: center;
+    align-items: center;
+}
+
 .collectionimage img {
     width: 100%;
     height: 100%; 
     object-fit: cover;
     padding: 0;
-    box-shadow: 0px 5px #88888890;
+    box-shadow: 0px 0px #88888890;
 }
 
 .collectionbottom {
@@ -251,9 +274,11 @@ h1{
 .newcollection h1{
     padding-top:0px;
     margin-block-end: 20px;
+    color: #ffffff;
 }
 .newcollection a{
     font-family: 'Lato', sans-serif;
+    color: #ffffff;
 }
 
 .genderbutton {
@@ -335,7 +360,7 @@ h1{
 
 /* Newsletter*/
 .newsletter {
-    background-color: #D9D9D9;
+    background-color: #ffffff;
     
     height:41vh;
     display: flex;
@@ -358,7 +383,7 @@ h1{
     width:36vw;
     background-color: #FFFFFF;
     font-size: 16px;
-    border:0px;
+    border:2px solid #000;
     padding: 10px 10px;
     border-radius: 5px;
 }
@@ -380,7 +405,7 @@ h1{
     position: relative;
     background-color: #000000;
     color:#FFFFFF;
-    height:20vh;
+    height:25vh;
     font-size: 20px;
     float:bottom;
 }
@@ -404,16 +429,25 @@ h1{
     float:right;
 }
 
+
+.socialmedia img {
+        width: 30px;
+        height: 30px;
+        margin: 5px; /* Add spacing between icons if desired */
+    }
+
+
 .copyright{
     position: absolute; 
     bottom: 2vh; 
     width: 100%; 
     padding: 10px;
+    padding-bottom: 25px;
     text-align: center;
 }
 
 .sitemaplinks td{
-    padding: 10px 0px 10px;
+    padding-top: 10px;
 }
 
 
@@ -422,7 +456,8 @@ h1{
 .listing {
     display: flex;
     flex-wrap: wrap;
-    overflow-y: auto; /* Enable vertical scrolling if content exceeds the viewport */
+    /*overflow-y: auto; /* Enable vertical scrolling if content exceeds the viewport */
+    margin-bottom: 80px;
 
 }
 
@@ -433,13 +468,14 @@ h1{
     padding: 20px 20px 20px 20px;
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
-    background-color: #D9D9D9;
+    background-color: #222222;
     width: 100%;
+    height: 19vh;
 }
 
-.mensheader span {
-    margin-left: 20px;
-    margin-right: 20px;
+.mensheader h2, p {
+    color: #ffffff;
+    padding: 10px 0px 20px 20px;
 }
 
 
@@ -469,13 +505,14 @@ label, input[type="checkbox"] {
     padding: 10px;
     cursor: pointer;
     margin-left: 20px;
+    padding-left: 10px;
 }
 
 .checkbox-form {
     display: none; /* Initially hide the form */
     padding: 10px;
     padding-left: 30px;
-    font-size: 140%;
+    font-size: 100%;
 }
 
 /* Style the form elements */
@@ -616,6 +653,12 @@ label, input[type="checkbox"] {
     padding-top: 25px;
     width: 100%; /* Allow each individual product grid item to take up 100% of the column width */
     box-sizing: border-box; /* Ensure padding and borders are included in the width */
+    max-height: 489px;
+}
+
+.product_listing_product p {
+    color: #000000;
+    padding: 0px;
 }
 
 .product_listing_product a {
@@ -766,51 +809,27 @@ label, input[type="checkbox"] {
     display: none; /* Hide the input element */
 }
 
-/* Cart */
-
-
-.cart-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-}
-
-.cart-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 20px;
-}
 
 /* Add more styles for cart items, button, etc. */
 
 /* Cart */
 .cart{
     text-align: center;
-    height:60vh;
+    max-height: 500vh;
+    height: auto;
+    min-height: 70vh;
+    padding-bottom: 30px;
+    
 }
 
 /* Center the table */
 .displaycart {
     display: flex;
     justify-content: center;
+}
+
+.displaycart p {
+    color: #000000;
 }
 
 /* Style your table */
@@ -902,6 +921,11 @@ label, input[type="checkbox"] {
 .cartdisplayitems{
     overflow-y: scroll;
     max-height:60vh;
+}
+
+.cartdisplayitems p{
+    color: #000000;
+    margin: 8px;
 }
 
 .infoneeded{

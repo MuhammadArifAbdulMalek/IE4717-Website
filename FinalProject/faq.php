@@ -53,8 +53,8 @@ $conn->close();
 
         .faqheader {
             
-            margin-left: 0px;
-            font-size: 150%;
+            margin-left: 175px;
+            font-size: 180%;
         }
 
         .faqdropdown{
@@ -120,12 +120,12 @@ $conn->close();
             <span><a href="product_list3.php"> UNISEX  </a></span>   
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> Logo </a></span>
+            <span><a href="index.php"> SHOESHOE </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 140px; position: relative;">
+                    <div class="dropdown" style="width: 110px; position: relative;">
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
@@ -142,123 +142,125 @@ $conn->close();
         </div>
     </nav>
 
-    <div class="faq">
-        <div class="faqheader">
-            <h2>FREQUENTLY ASKED QUESTIONS</h2>
-        </div>
-
-        <div class="faqdropdown">
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>MY SIZE IS SOLD OUT, WHAT NOW?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>Most sneakers are not restocked but you can sign up to receive an email notification when your size is restocked. Just click on the size you're interested in and a window will pop-up. Fill in your details and that's it!</span>
-                </div>
+    <div class="faqbody">
+        <div class="faq">
+            <div class="faqheader">
+                <h2>FREQUENTLY ASKED QUESTIONS</h2>
             </div>
 
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>WHEN WILL YOU SHIP MY ORDER? WHEN WILL MY ORDER ARRIVE?</span>
+            <div class="faqdropdown">
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>MY SIZE IS SOLD OUT, WHAT NOW?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>Most sneakers are not restocked but you can sign up to receive an email notification when your size is restocked. Just click on the size you're interested in and a window will pop-up. Fill in your details and that's it!</span>
+                    </div>
                 </div>
-                <div class="faqcontent">
-                    <span>We try to ship all orders the following business day, unless you’ve ordered products from an external warehouse. We don’t ship on the weekends and on rare occassions, it may take more than one day for your order to leave our warehouse. Your order will arrive 1-10 business days after shipment, you can track it from your profile or from the email we’ve sent you!</span>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>WHEN WILL YOU SHIP MY ORDER? WHEN WILL MY ORDER ARRIVE?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>We try to ship all orders the following business day, unless you’ve ordered products from an external warehouse. We don’t ship on the weekends and on rare occassions, it may take more than one day for your order to leave our warehouse. Your order will arrive 1-10 business days after shipment, you can track it from your profile or from the email we’ve sent you!</span>
+                    </div>
                 </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>HOW CAN I CANCEL MY ORDER?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>If you're a registered customer, just go to your profile and select the order you wish to cancel. Click on the button in the bottom right corner. You can also remove just one product from your order. In case the order was paid, you'll be refunded accordingly. Unfortunately, if you have placed the order as a guest, you have to contact our Customer Care team to help you out.</span>
+                    </div>
+                </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>WHEN WILL I RECEIVE FREE DELIVERY?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>We offer free delivery to VIP customers in selected countries with selected carriers. Check the delivery page.</span>
+                    </div>
+                </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>CAN I PLACE AN ORDER WITHOUT HAVING AN ACCOUNT?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>Yes, it is possible to create an order without having/creating an account. However, if you have an account, you can be a part of the great Footshop Club and get some great benefits with your purchases!</span>
+                    </div>
+                </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>HOW LONG DOES A REFUND TAKE?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>It depends on the payment method. If you've paid by card or bank transfer, the refund may take 2-3 business days to appear in your account from the moment we process your return. If you've paid with PayPal, the refund is the same day we receive your return.</span>
+                    </div>
+                </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>HOW DO I PROCEED WITH FAULTY GOODS?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>Claims work the same way as returns. Just fill out the claim form which you can find HERE and send the goods to our return address. You will get the answer within 30 days of receipt of the package. We will inform you about everything by e-mail. If your claim is accepted, you will get a refund. More info can be found HERE</span>
+                    </div>
+                </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>GLOBAL SHIPPING DISCLAIMER</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>We reserve the right to charge higher shipping fees on orders of 3+ pairs of sneakers. Items shipped outside of the EU may be required to pay additional tax in the country of delivery. This does not apply to the USA. If your delivery country charges customs or import duties, you will have to pay these charges. Unfortunately, we have no control over them and cannot inform you of what they will be. Customs policies vary from country to country so if you have any questions, please contact your local customs office for more info. Nike: Due to Nike's new policy, we do not ship Nike and Jordan products outside of the European Union. Exceptions are Switzerland and the United Kingdom.</span>
+                    </div>
+                </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>HOW DO I FIND THE PARCEL TRACKING NUMBER?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>You will get the tracking number automatically by e-mail. If you can not find it or have trouble tracking your order, contact us!</span>
+                    </div>
+                </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>I RECEIVED DAMAGED GOODS, HOW DO I PROCEED NOW?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>We're so sorry! This definitely should not happen and we will, of course, find the solution for you. Please contact our customer support within 3 business days!</span>
+                    </div>
+                </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>HOW LONG WILL IT TAKE FOR MY MONEY TO BE REFUNDED AFTER I RETURN THE GOODS?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>We try to process refunds as soon as we receive packages at our central warehouse in Prague. If you've paid by card/ PayPal, you will receive the refund almost immediately. If you've paid with cash on delivery, only our finance dept. can refund you so they will need a few extra days to do so. We will send you an email when we receive the goods back and when we send you a refund.</span>
+                    </div>
+                </div>
+
+                <div class="faqdropdownbar">
+                    <div class="faqquestion">
+                        <span>HOW CAN I GET A+ FOR IE4717?</span>
+                    </div>
+                    <div class="faqcontent">
+                        <span>PRAY TO PROF WESLEY 24/7 PLS PLS PLS PLS PLS PLS</span>
+                    </div>
+                </div>
+
+                <hr class="faqdropdown-divider"></div>
+
             </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>HOW CAN I CANCEL MY ORDER?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>If you're a registered customer, just go to your profile and select the order you wish to cancel. Click on the button in the bottom right corner. You can also remove just one product from your order. In case the order was paid, you'll be refunded accordingly. Unfortunately, if you have placed the order as a guest, you have to contact our Customer Care team to help you out.</span>
-                </div>
-            </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>WHEN WILL I RECEIVE FREE DELIVERY?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>We offer free delivery to VIP customers in selected countries with selected carriers. Check the delivery page.</span>
-                </div>
-            </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>CAN I PLACE AN ORDER WITHOUT HAVING AN ACCOUNT?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>Yes, it is possible to create an order without having/creating an account. However, if you have an account, you can be a part of the great Footshop Club and get some great benefits with your purchases!</span>
-                </div>
-            </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>HOW LONG DOES A REFUND TAKE?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>It depends on the payment method. If you've paid by card or bank transfer, the refund may take 2-3 business days to appear in your account from the moment we process your return. If you've paid with PayPal, the refund is the same day we receive your return.</span>
-                </div>
-            </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>HOW DO I PROCEED WITH FAULTY GOODS?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>Claims work the same way as returns. Just fill out the claim form which you can find HERE and send the goods to our return address. You will get the answer within 30 days of receipt of the package. We will inform you about everything by e-mail. If your claim is accepted, you will get a refund. More info can be found HERE</span>
-                </div>
-            </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>GLOBAL SHIPPING DISCLAIMER</span>
-                </div>
-                <div class="faqcontent">
-                    <span>We reserve the right to charge higher shipping fees on orders of 3+ pairs of sneakers. Items shipped outside of the EU may be required to pay additional tax in the country of delivery. This does not apply to the USA. If your delivery country charges customs or import duties, you will have to pay these charges. Unfortunately, we have no control over them and cannot inform you of what they will be. Customs policies vary from country to country so if you have any questions, please contact your local customs office for more info. Nike: Due to Nike's new policy, we do not ship Nike and Jordan products outside of the European Union. Exceptions are Switzerland and the United Kingdom.</span>
-                </div>
-            </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>HOW DO I FIND THE PARCEL TRACKING NUMBER?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>You will get the tracking number automatically by e-mail. If you can not find it or have trouble tracking your order, contact us!</span>
-                </div>
-            </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>I RECEIVED DAMAGED GOODS, HOW DO I PROCEED NOW?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>We're so sorry! This definitely should not happen and we will, of course, find the solution for you. Please contact our customer support within 3 business days!</span>
-                </div>
-            </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>HOW LONG WILL IT TAKE FOR MY MONEY TO BE REFUNDED AFTER I RETURN THE GOODS?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>We try to process refunds as soon as we receive packages at our central warehouse in Prague. If you've paid by card/ PayPal, you will receive the refund almost immediately. If you've paid with cash on delivery, only our finance dept. can refund you so they will need a few extra days to do so. We will send you an email when we receive the goods back and when we send you a refund.</span>
-                </div>
-            </div>
-
-            <div class="faqdropdownbar">
-                <div class="faqquestion">
-                    <span>HOW CAN I GET A+ FOR IE4717?</span>
-                </div>
-                <div class="faqcontent">
-                    <span>PRAY TO PROF WESLEY 24/7 PLS PLS PLS PLS PLS PLS</span>
-                </div>
-            </div>
-
-            <hr class="faqdropdown-divider"></div>
-
         </div>
     </div>
 
@@ -268,26 +270,27 @@ $conn->close();
                 <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
                 <table class = sitemaplinks>
                     <tr>
-                        <td> <a> Link 1</a> </td>
-                        <td> <a> Link 2</a> </td>
+                        <td> <a> Size Guide</a> </td>
+                        <td> <a> T&Cs</a> </td>
                     </tr>
                     <tr>
-                        <td> <a> Link 1</a> </td>
-                        <td> <a> Link 2</a> </td>
+                        <td> <a> Contact Us</a> </td>
+                        <td> <a> Privacy Policy</a> </td>
                     </tr>
                 </table>
                     
             </div>
             <div class="socialmedia">
-                <a>facebook</a>
-                <a>instagram</a>
-                <a>youtube</a>
+                <a><img src="assets/Images/Icons/facebook.png"></a>
+                <a><img src="assets/Images/Icons/instagram.png"></a>
+                <a><img src="assets/Images/Icons/tiktok.png"></a>
             </div>
         </div>
         <div class="copyright">
             <a> 2023 ShoeShoe Singapore Ltd</a>
         </div>
     </div>
+    
 
 
             

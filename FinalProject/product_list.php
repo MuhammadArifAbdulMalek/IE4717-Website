@@ -60,7 +60,20 @@ $products = array();
 
 if ($productsResult->num_rows > 0) {
     while ($row = $productsResult->fetch_assoc()) {
-        $products[] = $row;
+        // Check if all 'US' columns are blank
+        $usColumns = ['US 4.0', 'US 4.5', 'US 5.0', 'US 5.5', 'US 6.0', 'US 6.5', 'US 7.0', 'US 7.5', 'US 8.0', 'US 8.5', 'US 9.0', 'US 9.5', 'US 10.0', 'US 10.5', 'US 11.0'];
+        $isEmptyRow = true;
+        foreach ($usColumns as $column) {
+            if (!empty($row[$column])) {
+                $isEmptyRow = false;
+                break;
+            }
+        }
+
+        // If the row is not empty, add it to the products array
+        if (!$isEmptyRow) {
+            $products[] = $row;
+        }
     }
 }
 
@@ -114,12 +127,12 @@ $conn->close();
         </div>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> Logo </a></span>
+            <span><a href="index.php"> SHOESHOE </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 140px; position: relative;">
+                    <div class="dropdown" style="width: 110px; position: relative;">
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
@@ -139,13 +152,8 @@ $conn->close();
     <div class="listing">
 
         <div class="mensheader">
-                <h2>MEN'S SHOES</h2>
-                    <p>Footshop offers men's Nike, Converse, Supra, Vans, Jordan, Puma, New Balance, adidas Originals and more street style shoes.<br> These original designs are made from high quality materials.</p>
-                    <br>
-                    <span>Link 1</span> 
-                    <span>Link 2</span>
-                    <span>Link 3</span>
-                    <span>Link 4</span>
+                <h2>MEN'S</h2>
+                    <p>Shoeshoe offers men's Nike, Converse, Supra, Vans, Jordan, Puma, New Balance, adidas Originals and more street style shoes.<br> These original designs are made from high quality materials.</p>
         </div>
 
         <div class="mensfilter">
@@ -168,7 +176,7 @@ $conn->close();
                                     die("Connection failed: " . $conn->connect_error);
                                 }
 
-                                $sizeQuery = "SELECT COUNT(*) as count, GROUP_CONCAT(id) as product_ids FROM inventory WHERE `US $size` > 0";
+                                $sizeQuery = "SELECT COUNT(*) as count, GROUP_CONCAT(id) as product_ids FROM inventory WHERE `US $size` > 0 AND `M`= 1";
                                 $sizeResult = $conn->query($sizeQuery);
 
                                 if ($sizeResult->num_rows > 0) {
@@ -279,20 +287,20 @@ $conn->close();
                 <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
                 <table class = sitemaplinks>
                     <tr>
-                        <td> <a> Link 1</a> </td>
-                        <td> <a> Link 2</a> </td>
+                        <td> <a> Size Guide</a> </td>
+                        <td> <a> T&Cs</a> </td>
                     </tr>
                     <tr>
-                        <td> <a> Link 1</a> </td>
-                        <td> <a> Link 2</a> </td>
+                        <td> <a> Contact Us</a> </td>
+                        <td> <a> Privacy Policy</a> </td>
                     </tr>
                 </table>
                     
             </div>
             <div class="socialmedia">
-                <a>facebook</a>
-                <a>instagram</a>
-                <a>youtube</a>
+                <a><img src="assets/Images/Icons/facebook.png"></a>
+                <a><img src="assets/Images/Icons/instagram.png"></a>
+                <a><img src="assets/Images/Icons/tiktok.png"></a>
             </div>
         </div>
         <div class="copyright">

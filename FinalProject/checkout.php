@@ -62,12 +62,12 @@ $total = 0;
         </div>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> Logo </a></span>
+            <span><a href="index.php"> SHOESHOE </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 140px; position: relative;">
+                    <div class="dropdown" style="width: 110px; position: relative;">
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
@@ -173,31 +173,31 @@ $total = 0;
     </div>
     </form>
     <div class="footer">
-            <div class="footerupper">
-                <div class="sitemap">
-                    <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
-                    <table class = sitemaplinks>
-                        <tr>
-                            <td> <a> Link 1</a> </td>
-                            <td> <a> Link 2</a> </td>
-                        </tr>
-                        <tr>
-                            <td> <a> Link 1</a> </td>
-                            <td> <a> Link 2</a> </td>
-                        </tr>
-                    </table>
+        <div class="footerupper">
+            <div class="sitemap">
+                <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
+                <table class = sitemaplinks>
+                    <tr>
+                        <td> <a> Size Guide</a> </td>
+                        <td> <a> T&Cs</a> </td>
+                    </tr>
+                    <tr>
+                        <td> <a> Contact Us</a> </td>
+                        <td> <a> Privacy Policy</a> </td>
+                    </tr>
+                </table>
                     
-                </div>
-                <div class="socialmedia">
-                    <a>facebook</a>
-                    <a>instagram</a>
-                    <a>youtube</a>
-                </div>
             </div>
-            <div class="copyright">
-                <a> 2023 ShoeShoe Singapore Ltd</a>
+            <div class="socialmedia">
+                <a><img src="assets/Images/Icons/facebook.png"></a>
+                <a><img src="assets/Images/Icons/instagram.png"></a>
+                <a><img src="assets/Images/Icons/tiktok.png"></a>
             </div>
         </div>
+        <div class="copyright">
+            <a> 2023 ShoeShoe Singapore Ltd</a>
+        </div>
+    </div>
 </body>
 </html>
 <script>

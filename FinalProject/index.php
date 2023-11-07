@@ -102,7 +102,7 @@ if (isset($_POST['newsletter'])) {
     <div class="promo">  
         <table border="0">
             <tr>
-               <td id="tabledata">Current Promotion</td>
+               <td id="tabledata" style="color: #ffffff;">Current Promotion</td>
              </tr>
         </table>
     </div>
@@ -114,12 +114,12 @@ if (isset($_POST['newsletter'])) {
         </div>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> Logo </a></span>
+            <span><a href="index.php"> SHOESHOE </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 140px; position: relative;">
+                    <div class="dropdown" style="width: 110px; position: relative;">
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
@@ -144,6 +144,13 @@ if (isset($_POST['newsletter'])) {
                     <button class="genderbutton" style="color:#ffffff; border: 2px solid #ffffff;"><a style="text-decoration:none; color:#ffffff;" href="product_list.php?brand=Nike">Shop Now</a></button> 
                 </div>
             </div>
+            <div class="section" id="section3">
+            <div class="sectiondetails3">
+                    <a style="font-size: 100px">CROCS</a> <br>
+                    <a>The Biggest Selection Of Clogs, Sandals & More</a> <br>
+                    <button class="genderbutton" style="background-color:#00000080; color:#ffffff; border: 2px solid #ffffff;"><a style="text-decoration:none; color:white;" href="product_list.php?brand=Crocs">Shop Now</a></button> 
+                </div>
+            </div>
             <div class="section" id="section2">
                 <div class="sectiondetails2">
                     <a style="font-size: 100px">DR MARTENS</a> <br>
@@ -152,18 +159,11 @@ if (isset($_POST['newsletter'])) {
                 </div>
                 
             </div>
-            <div class="section" id="section3">
-            <div class="sectiondetails3">
-                    <a style="font-size: 100px">CROCS</a> <br>
-                    <a>The Biggest Selection Of Clogs, Sandals & More</a> <br>
-                    <button class="genderbutton" style="background-color:#00000080; color:#ffffff; border: 2px solid #ffffff;"><a style="text-decoration:none; color:white;" href="product_list.php?brand=Crocs">Shop Now</a></button> 
-                </div>
-            </div>
         </div>
         <div class="dot-indicator"></div>
     </div>
     <div class="latestnews">  
-        <a id="LatestNews">Buy Our Latest Collection Now</a>
+        <a id="LatestNews" style="color: #ffffff;">Buy Our Latest Collection Now</a>
     </div>
     <div class="Title">
         <h1>OUR BESTSELLERS</h1>
@@ -240,8 +240,8 @@ if (isset($_POST['newsletter'])) {
                     Get the newest kicks, be in trend
                 </a>
                 <div class="collectionbuttons">
-                    <button class="genderbutton"> <a style="text-decoration:none; color:black;" href="product_list.php">MEN</a> </button>
-                    <button class="genderbutton"> <a style="text-decoration:none; color:black;" href="product_list.php">WOMEN</a> </button>
+                    <button class="genderbutton" style="border: 2px solid #ffffff;"> <a style="text-decoration:none; color:#ffffff;" href="product_list.php">MEN</a> </button>
+                    <button class="genderbutton" style="border: 2px solid #ffffff;"> <a style="text-decoration:none; color:#ffffff;" href="product_list.php">WOMEN</a> </button>
                 </div>
             </div>
         </div>
@@ -306,9 +306,6 @@ if (isset($_POST['newsletter'])) {
                     </a>
                     
                 </div>
-                <button id="scroll-button">
-                    <img src="assets/Images/nextbutton.png">
-                </button>
             </div>
         </div>    
         <div class="newsletter">
@@ -325,20 +322,20 @@ if (isset($_POST['newsletter'])) {
                     <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
                     <table class = sitemaplinks>
                         <tr>
-                            <td> <a> Link 1</a> </td>
-                            <td> <a> Link 2</a> </td>
+                            <td> <a> Size Guide</a> </td>
+                            <td> <a> T&Cs</a> </td>
                         </tr>
                         <tr>
-                            <td> <a> Link 1</a> </td>
-                            <td> <a> Link 2</a> </td>
+                            <td> <a> Contact Us</a> </td>
+                            <td> <a> Privacy Policy</a> </td>
                         </tr>
                     </table>
-                    
+                        
                 </div>
                 <div class="socialmedia">
-                    <a>facebook</a>
-                    <a>instagram</a>
-                    <a>youtube</a>
+                    <a><img src="assets/Images/Icons/facebook.png"></a>
+                    <a><img src="assets/Images/Icons/instagram.png"></a>
+                    <a><img src="assets/Images/Icons/tiktok.png"></a>
                 </div>
             </div>
             <div class="copyright">

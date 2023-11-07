@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             $stmt->close();
 
-            $sqldup = "SELECT * FROM email WHERE email = '$email'";
+            $sqldup = "SELECT * FROM users WHERE email = '$email'";
             $result = $conn->query($sqldup);
 
             if ($result->num_rows > 0) {
@@ -175,8 +175,8 @@ $conn->close();
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            margin-top: 70px;
-            margin-bottom: 180px;
+            padding-top: 70px;
+            padding-bottom: 180px;
         }
 
         .accounts-container {
@@ -193,7 +193,7 @@ $conn->close();
         .accounts-form {
             width: 100%; /* Make each form fill the container width */
             text-align: left;
-            height: 710px;
+            height: 720px;
             padding-left: 80px;
             padding-top: 40px;
             font-size: 150%;
@@ -201,6 +201,11 @@ $conn->close();
 
         .accounts-form h2 {
             margin: 0;
+        }
+        
+        .accounts-form p {
+            color: #000000;
+            padding-left: 0px;
         }
 
         .accounts-form label {
@@ -222,8 +227,8 @@ $conn->close();
             color: #fff;
             border: 1px solid #000000;
             cursor: pointer;
-            margin-top: 30px;
-            width: 80%;
+            margin-top: 40px;
+            width: 83.7%;
             font-family: 'DM Sans', sans-serif;
             font-weight: 600;
         }
@@ -249,12 +254,12 @@ $conn->close();
         <a style="text-decoration:none; color:black;" href="product_list3.php"><span>UNISEX</span></a>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> Logo </a></span>
+            <span><a href="index.php"> SHOESHOE </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 140px; position: relative;">
+                    <div class="dropdown" style="width: 110px; position: relative;">
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
@@ -337,21 +342,22 @@ $conn->close();
         <div class="footerupper">
             <div class="sitemap">
                 <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
-                <table class="sitemaplinks">
+                <table class = sitemaplinks>
                     <tr>
-                        <td> <a> Link 1</a> </td>
-                        <td> <a> Link 2</a> </td>
+                        <td> <a> Size Guide</a> </td>
+                        <td> <a> T&Cs</a> </td>
                     </tr>
                     <tr>
-                        <td> <a> Link 1</a> </td>
-                        <td> <a> Link 2</a> </td>
+                        <td> <a> Contact Us</a> </td>
+                        <td> <a> Privacy Policy</a> </td>
                     </tr>
                 </table>
+                    
             </div>
             <div class="socialmedia">
-                <a>facebook</a>
-                <a>instagram</a>
-                <a>youtube</a>
+                <a><img src="assets/Images/Icons/facebook.png"></a>
+                <a><img src="assets/Images/Icons/instagram.png"></a>
+                <a><img src="assets/Images/Icons/tiktok.png"></a>
             </div>
         </div>
         <div class="copyright">

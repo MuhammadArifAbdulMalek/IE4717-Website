@@ -51,15 +51,30 @@ $sqlDelete = "DELETE c1
         }
         }
     </script>
+    <script src="scripts.js"defer></script>
+    <script type="text/JavaScript">
+        var message="Current Promotions Latest News Get it Here";
+        var space=" ";
+        var position=0;
+        function scroller(){
+            var newtext = space + message.substring(position,message.length) + space + message.substring(0,position);
+            var td = document.getElementById("tabledata");
+            td.firstChild.nodeValue = newtext;
+            position++;
+            if (position > message.length){position=0;}
+            window.setTimeout("scroller()",200);
+        }
+    
+    </script>
     
     
 </head>
-<body >
-    <div class="promo">  
-        <table>
+<body onload="scroller();">
+    <div class="promo">
+        <table border="0">
             <tr>
-               <td id="tabledata">Current Promotion</td>
-             </tr>
+                <td id="tabledata">Current Promotion</td>
+            </tr>
         </table>
     </div>
     <nav class="navbar">
@@ -70,12 +85,12 @@ $sqlDelete = "DELETE c1
         </div>
         </div>
         <div class="navcenter">
-            <span><a href="index.php"> Logo </a></span>
+            <span><a href="index.php"> SHOESHOE </a></span>
         </div>
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 140px; position: relative;">
+                    <div class="dropdown" style="width: 110px; position: relative;">
                         <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
                                 <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                 <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
@@ -91,157 +106,160 @@ $sqlDelete = "DELETE c1
             <span><a href= "cart.php"> <img src="assets/Images/Icons/cart.png"> </a></span>
         </div>
     </nav>
-    <form action="checkout.php" method="post" class="cartdetails" id="checkout-form">
-    
-    <div class="cart">
-        <h1 style="padding-top:15px;"> Cart </h1>
-        <?php
-        $cartSql = "SELECT product_id,size, quantity, price, subtotal FROM cart WHERE user_id = '$user_id'";
-        $cartResult = $conn->query($cartSql);
-        $cartData = array();
+    <div class="cartbodyyy">
+        <form action="checkout.php" method="post" class="cartdetails" id="checkout-form">
+        
+        <div class="cart">
+            <h1 style="padding-top:15px;"> Cart </h1>
+            <?php
+            $cartSql = "SELECT product_id,size, quantity, price, subtotal FROM cart WHERE user_id = '$user_id'";
+            $cartResult = $conn->query($cartSql);
+            $cartData = array();
 
-        while ($row = $cartResult->fetch_assoc()) {
-            $cartData[] = array(
-                'product_id' => $row['product_id'],
-                'size' => $row['size'],
-                'quantity' => $row['quantity'],
-                'price' => $row['price'],
-                'subtotal' => $row['subtotal']
-            );
-        }
-        $productDetails = array();
-
-        // Loop through $cartData to fetch product details
-        foreach ($cartData as $cartItem) {
-            $product_id = $cartItem['product_id'];
-        
-            // Query to fetch product details based on product_id
-            $productSql = "SELECT id, image_data, product_name, colourway FROM products WHERE id = '$product_id'";
-            $productResult = $conn->query($productSql);
-        
-            if ($productResult && $productResult->num_rows > 0) {
-                $productRow = $productResult->fetch_assoc();
-        
-                // Query to fetch the stock for the specified size and product
-                $size = $cartItem['size'];
-                $stockSql = "SELECT `$size` FROM inventory WHERE id = $product_id";
-                $stockResult = $conn->query($stockSql);
-        
-                if ($stockResult) {
-                    $stockRow = $stockResult->fetch_assoc();
-                    $stock = $stockRow[$size];
-                } else {
-                    echo "Failed to fetch stock information.";
-                    $stock = "N/A"; // Set a default value or handle the error as needed
-                }
-        
-                $productDetails[] = array(
-                    'product_id' => $productRow['id'],
-                    'product_name' => $productRow['product_name'],
-                    'image_data' => $productRow['image_data'],
-                    'colourway' => $productRow['colourway'],
-                    'quantity' => $cartItem['quantity'],
-                    'price' => $cartItem['price'],
-                    'subtotal' => $cartItem['subtotal'],
-                    'size' => $cartItem['size'],
-                    'stock' => $stock // Include the stock value
+            while ($row = $cartResult->fetch_assoc()) {
+                $cartData[] = array(
+                    'product_id' => $row['product_id'],
+                    'size' => $row['size'],
+                    'quantity' => $row['quantity'],
+                    'price' => $row['price'],
+                    'subtotal' => $row['subtotal']
                 );
-            } else {
-                echo "<h2>Your shopping cart is empty.</h2>";
             }
-        }
-        
+            $productDetails = array();
 
-        // Add buttons for updating the cart or proceeding to checkout
-        ?>
-        <div class="displaycart">
-            <?php if (empty($productDetails)) {
-                    echo '<h2 style="font-size:30px; text-align: center;">Your shopping cart is empty</h2>';
-                } else { echo ' <table class="displayproducts">';
-                
-                $total = 0 ;
-                
-                foreach ($productDetails as $product) {
-                    $product_id = $product['product_id'];
-                    $product_name = $product['product_name'];
-                    $image_data = $product['image_data'];
-                    $colourway = $product['colourway'];
-                    $quantity = $product['quantity'];
-                    $stock = $product['stock'];
-                    $price = $product['price'];
-                    $size = $product['size'];
-                    $subtotal = $product['subtotal'];
-                    $total += $subtotal;
-                    echo '<tr>';
-                    echo '<td id="cartimagecolumn"><a class="cartimage" href=""><img src="data:image/jpeg;base64,' . base64_encode($image_data) . '"></td>';
-                    echo '<td id="cartdetailscolumn">';
-                    echo '<h2 style="font-size:30px;">' . $product_name . '</h2>';
-                    echo '<p style="font-size:20px;">Colour: ' . " " . $colourway . '</p>';
-                    echo '<p style="font-size:20px;">Size: ' . " " . $size . '</p>';
-                    echo '<p style="font-size:20px;">Quantity: ' . " ";
-                    echo '<input type="number" class="quantity-input" name="quantity[]" min="0" max="'. $stock.'" value="' . $quantity . '" data-price="' . $price . '" data-subtotal="' . $subtotal . '">';
-                    echo '</p>';
-                    echo '<p> Subtotal: <span class="subtotal">$' . $subtotal . '</span></p>';
-                    echo '</td>';
-                    echo '</tr>';
-                    echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
-                    echo '<input type="hidden" name="product_name[]" value="'. $product_name .'">';
-                    echo '<input type="hidden" name="colourway[]" value="'. $colourway .'">';
-                    echo '<input type="hidden" name="size[]" value="'. $size .'">';
-                    echo '<input type="hidden" name="price[]" value="'. $price .'">';
-                }
-
-                echo '</table>';
-                }
-
-
-                ?>
-
+            // Loop through $cartData to fetch product details
+            foreach ($cartData as $cartItem) {
+                $product_id = $cartItem['product_id'];
             
+                // Query to fetch product details based on product_id
+                $productSql = "SELECT id, image_data, product_name, colourway FROM products WHERE id = '$product_id'";
+                $productResult = $conn->query($productSql);
+            
+                if ($productResult && $productResult->num_rows > 0) {
+                    $productRow = $productResult->fetch_assoc();
+            
+                    // Query to fetch the stock for the specified size and product
+                    $size = $cartItem['size'];
+                    $stockSql = "SELECT `$size` FROM inventory WHERE id = $product_id";
+                    $stockResult = $conn->query($stockSql);
+            
+                    if ($stockResult) {
+                        $stockRow = $stockResult->fetch_assoc();
+                        $stock = $stockRow[$size];
+                    } else {
+                        echo "Failed to fetch stock information.";
+                        $stock = "N/A"; // Set a default value or handle the error as needed
+                    }
+            
+                    $productDetails[] = array(
+                        'product_id' => $productRow['id'],
+                        'product_name' => $productRow['product_name'],
+                        'image_data' => $productRow['image_data'],
+                        'colourway' => $productRow['colourway'],
+                        'quantity' => $cartItem['quantity'],
+                        'price' => $cartItem['price'],
+                        'subtotal' => $cartItem['subtotal'],
+                        'size' => $cartItem['size'],
+                        'stock' => $stock // Include the stock value
+                    );
+                } else {
+                    echo "<h2>Your shopping cart is empty.</h2>";
+                }
+            }
+            
+
+            // Add buttons for updating the cart or proceeding to checkout
+            ?>
+            <div class="displaycart">
+                <?php if (empty($productDetails)) {
+                        echo '<h2 style="font-size:30px; text-align: center;">Your shopping cart is empty</h2>';
+                    } else { echo ' <table class="displayproducts">';
+                    
+                    $total = 0 ;
+                    
+                    foreach ($productDetails as $product) {
+                        $product_id = $product['product_id'];
+                        $product_name = $product['product_name'];
+                        $image_data = $product['image_data'];
+                        $colourway = $product['colourway'];
+                        $quantity = $product['quantity'];
+                        $stock = $product['stock'];
+                        $price = $product['price'];
+                        $size = $product['size'];
+                        $subtotal = $product['subtotal'];
+                        $total += $subtotal;
+                        echo '<tr>';
+                        echo '<td id="cartimagecolumn"><a class="cartimage" href=""><img src="data:image/jpeg;base64,' . base64_encode($image_data) . '"></td>';
+                        echo '<td id="cartdetailscolumn">';
+                        echo '<h2 style="font-size:30px;">' . $product_name . '</h2>';
+                        echo '<p style="font-size:20px;">Colour: ' . " " . $colourway . '</p>';
+                        echo '<p style="font-size:20px;">Size: ' . " " . $size . '</p>';
+                        echo '<p style="font-size:20px;">Quantity: ' . " ";
+                        echo '<input type="number" class="quantity-input" name="quantity[]" min="0" max="'. $stock.'" value="' . $quantity . '" data-price="' . $price . '" data-subtotal="' . $subtotal . '">';
+                        echo '</p>';
+                        echo '<p> Subtotal: <span class="subtotal">$' . $subtotal . '</span></p>';
+                        echo '</td>';
+                        echo '</tr>';
+                        echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
+                        echo '<input type="hidden" name="product_name[]" value="'. $product_name .'">';
+                        echo '<input type="hidden" name="colourway[]" value="'. $colourway .'">';
+                        echo '<input type="hidden" name="size[]" value="'. $size .'">';
+                        echo '<input type="hidden" name="price[]" value="'. $price .'">';
+                    }
+
+                    echo '</table>';
+                    }
+
+
+                    ?>
+
+                
+            </div>
+            <?php if (!empty($productDetails)) {
+                echo '<h2 id="total">Total: $ <?php echo '.$total.' ?></h2>';
+                echo '<input type="hidden" name="user_id" value="<?php echo '.$user_id.'?>">';
+            }
+            ?>
+        
+            <div class="cartcheckoutbuttons">
+            <button class="checkoutbutton" type="submit">
+                <?php if (empty($productDetails)): ?>
+                    Add items
+                <?php else: ?>
+                    Checkout
+                <?php endif; ?></button>
+            </div>
+
         </div>
-        <?php if (!empty($productDetails)) {
-            echo '<h2 id="total">Total: $ <?php echo '.$total.' ?></h2>';
-            echo '<input type="hidden" name="user_id" value="<?php echo '.$user_id.'?>">';
-        }
-        ?>
-       
-        <div class="cartcheckoutbuttons">
-         <button class="checkoutbutton" type="submit">
+            </form>
+
+            <script>
             <?php if (empty($productDetails)): ?>
-                Add items
-            <?php else: ?>
-                Checkout
-            <?php endif; ?></button>
-        </div>
-
+                document.getElementById("checkout-form").action = "index.php";
+            <?php endif; ?>
+        </script>
     </div>
-        </form>
 
-        <script>
-        <?php if (empty($productDetails)): ?>
-            document.getElementById("checkout-form").action = "index.php";
-        <?php endif; ?>
-    </script>
         <div class="footer">
             <div class="footerupper">
                 <div class="sitemap">
                     <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
-                    <table class = "sitemaplinks">
+                    <table class = sitemaplinks>
                         <tr>
-                            <td> <a> Link 1</a> </td>
-                            <td> <a> Link 2</a> </td>
+                            <td> <a> Size Guide</a> </td>
+                            <td> <a> T&Cs</a> </td>
                         </tr>
                         <tr>
-                            <td> <a> Link 1</a> </td>
-                            <td> <a> Link 2</a> </td>
+                            <td> <a> Contact Us</a> </td>
+                            <td> <a> Privacy Policy</a> </td>
                         </tr>
                     </table>
-                    
+                        
                 </div>
                 <div class="socialmedia">
-                    <a>facebook</a>
-                    <a>instagram</a>
-                    <a>youtube</a>
+                    <a><img src="assets/Images/Icons/facebook.png"></a>
+                    <a><img src="assets/Images/Icons/instagram.png"></a>
+                    <a><img src="assets/Images/Icons/tiktok.png"></a>
                 </div>
             </div>
             <div class="copyright">
