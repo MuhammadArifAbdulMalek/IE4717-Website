@@ -294,6 +294,25 @@ if (isset($_POST['promocodeaddition'])) {
                 <a> 2023 ShoeShoe Singapore Ltd</a>
             </div>
         </div>
+
+        <script>
+                    // Select all dropdown bars and checkbox forms
+        const dropdownBars2 = document.querySelectorAll(".dropdownbar");
+        const dropdownContent = document.querySelectorAll(".dropdown-content");
+
+        // Add a click event listener to each dropdown bar
+        dropdownBars2.forEach((dropdownBar, index) => {
+            dropdownBar.addEventListener("click", () => {
+                const form = dropdownContent[index];
+                if (form.style.display === "none" || form.style.display === "") {
+                    form.style.display = "block";
+                } else {
+                    form.style.display = "none";
+                }
+            });
+        });
+        </script>
+        
 </body>
 </html>
 <script>

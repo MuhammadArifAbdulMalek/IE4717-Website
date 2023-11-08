@@ -10,8 +10,9 @@ $conn = new mysqli($hostname, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-if (isset($_POST['addtocart'])) {
-    $user_id = setUserSession();
+$user_id = setUserSession();
+
+if (isset($_POST['id'], $_POST['product_name'], $_POST['price'], $_POST['size'], $_POST['quantity'], $_POST['colorway'])) {
     $product_id = $_POST['id'];
     $product_name = $_POST['product_name'];
     $product_price = $_POST['price'];
@@ -19,7 +20,7 @@ if (isset($_POST['addtocart'])) {
     $product_quantity = $_POST['quantity'];
     $product_color = $_POST['colorway'];
     $subtotal = $product_price * $product_quantity;
-    
+
     $sql = "INSERT INTO cart (user_id, product_id,size, quantity, price, subtotal)
             VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -98,17 +99,29 @@ if (isset($_POST['addtocart'])) {
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&family=Lato:wght@700&display=swap" rel="stylesheet">
     <script>
         function validateaddtocart() {
-
-        var quantity = document.getElementById("quantity").value;
-
-        if (quantity <1) {
-            alert("No quantity has been selected");
+            var quantity = document.getElementById("quantity").value;
+            var selectedSize = document.querySelector('.productsizecell button[id="sizebuttonactive"]');
+    
+            if (!selectedSize) {
+                alert("Please select a size before adding to the cart.");
                 return false;
-        } else {
+            }
+
+            if (quantity < 1) {
+                alert("No quantity has been selected.");
+                return false;
+            }
+
             return true;
         }
-        }
     </script>
+    <style>
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
     <div class="promo">  
@@ -385,6 +398,44 @@ if (isset($_POST['addtocart'])) {
         </div>
 </body>
 <script>
+
+    // Get references to the input and buttons
+const quantityInput = document.getElementById("quantity");
+const incrementButton = document.getElementById("increment");
+const decrementButton = document.getElementById("decrement");
+
+// Function to handle the increment button click
+incrementButton.addEventListener("click", function() {
+    // Parse the current value and increment it
+    let currentValue = parseInt(quantityInput.value);
+    quantityInput.value = currentValue + 1;
+});
+
+// Function to handle the decrement button click
+decrementButton.addEventListener("click", function() {
+    // Parse the current value and decrement it, but not below 0
+    let currentValue = parseInt(quantityInput.value);
+    if (currentValue > 0) {
+        quantityInput.value = currentValue - 1;
+    }
+});
+
+// Function to handle input changes and ensure it's a valid number
+function handleInput() {
+    let currentValue = parseInt(quantityInput.value);
+    if (isNaN(currentValue) || currentValue < 0) {
+        quantityInput.value = 0; // Reset to 0 if input is invalid
+    }
+}
+
+// Function to handle the Enter key press
+function handleEnterKey(event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Prevent form submission
+        handleInput(); // Ensure the input value is valid
+    }
+}
+
             // Select all dropdown bars and checkbox forms
             const dropdownBars = document.querySelectorAll(".dropdownbar");
             const dropdownContent = document.querySelectorAll(".dropdown-content");
