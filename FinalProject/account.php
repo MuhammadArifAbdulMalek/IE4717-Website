@@ -23,11 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $loginPassword = $_POST['login-password'];
     
         // Query the database to check the credentials
-        $loginQuery = "SELECT user_id, username, email, password, first_name FROM users WHERE username = ? OR email = ?";
+        $loginQuery = "SELECT user_id, username, email, password, first_name, admin FROM users WHERE username = ? OR email = ?";
         $loginStmt = $conn->prepare($loginQuery);
         $loginStmt->bind_param("ss", $loginInput, $loginInput); // Check both username and email
         $loginStmt->execute();
-        $loginStmt->bind_result($dbUser_Id,$dbUsername, $dbEmail, $dbPassword, $dbFirst_Name);
+        $loginStmt->bind_result($dbUser_Id,$dbUsername, $dbEmail, $dbPassword, $dbFirst_Name, $dbAdmin);
     
         if ($loginStmt->fetch()) {
             if (password_verify($loginPassword, $dbPassword)) {
@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_id'] = $dbUser_Id;
                 $_SESSION['first_name'] = $dbFirst_Name;
                 $_SESSION['username'] = $dbUsername;
+                $_SESSION['admin'] = $dbAdmin;
             } else {
                 // Password doesn't match
                 $loginMessage = "Invalid password.";
@@ -101,16 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             $stmt->close();
 
-            $sqldup = "SELECT * FROM email WHERE email = '$email'";
-            $result = $conn->query($sqldup);
-
-            if ($result->num_rows > 0) {
-                // Data already exists; you can update it or take appropriate action
-                echo "Data already exists.";
-            } else {    $insertSql = "INSERT INTO email (email) VALUES ('$sqlemail')";
-                        $stmt2->query($insertSql);
-                        $stmt2->close();
-            }
         }
     }
 }
@@ -255,14 +246,26 @@ $conn->close();
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 110px; position: relative;">
-                        <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
-                                <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
-                                <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
-                                <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
-                                </div>
+                    <?php if ($_SESSION['admin'] == 1): ?>
+                        <div class="dropdown" style="width: 110px; position: relative;">
+                            <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
+                                    <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
+                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
+                                    <a href="admin.php">Admin</a>
+                                    </div>
+                            </div>
                         </div>
-                    </div>
+                    <?php else: ?>
+                        <div class="dropdown" style="width: 110px; position: relative;">
+                            <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
+                                    <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
+                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
+                                    </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 <?php else: ?>
                     <span><a href="account.php"><img src="assets/Images/Icons/account.png"></a></span>
                 <?php endif; ?>
@@ -393,13 +396,22 @@ $conn->close();
         function validatePassword() {
             var password = document.getElementById("create-password").value;
             var confirmPassword = document.getElementById("confirm-password").value;
+            var numberRegex = /\d/;
+            var specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
+            // Password strength validation
+            if (!(password.length >= 8 && numberRegex.test(password) && specialCharRegex.test(password))) {
+                alert("Password must be at least 8 characters long and include at least 1 number and 1 special character.");
+                return false; // Prevent form submission
+            }
+
+            // Password match validation
             if (password !== confirmPassword) {
                 alert("Passwords do not match.");
                 return false; // Prevent form submission
             }
 
-            return true;
+            return true; // Allow form submission
         }
 
         // Select all dropdown bars and checkbox forms

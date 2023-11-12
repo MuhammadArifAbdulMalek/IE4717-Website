@@ -848,6 +848,11 @@ label, input[type="checkbox"] {
     padding-left: 30px;
 }
 
+.dropdown-content a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 /* Checkout */
 .checkoutcontainer{
     display:flex;

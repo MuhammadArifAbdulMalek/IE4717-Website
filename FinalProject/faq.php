@@ -125,14 +125,26 @@ $conn->close();
         <div class="navright" >
             <span style="margin:0px;">
                 <?php if (isset($_SESSION['first_name'])): ?>
-                    <div class="dropdown" style="width: 110px; position: relative;">
-                        <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                        
-                                <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
-                                <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                    <?php if ($_SESSION['admin'] == 1): ?>
+                        <div class="dropdown" style="width: 110px; position: relative;">
+                            <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
+                                    <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
+                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
                                     <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
-                                </div>
+                                    <a href="admin.php">Admin</a>
+                                    </div>
+                            </div>
                         </div>
-                    </div>
+                    <?php else: ?>
+                        <div class="dropdown" style="width: 110px; position: relative;">
+                            <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
+                                    <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
+                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
+                                    </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 <?php else: ?>
                     <span><a href="account.php"><img src="assets/Images/Icons/account.png"></a></span>
                 <?php endif; ?>
