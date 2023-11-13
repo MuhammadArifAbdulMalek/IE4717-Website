@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2023 at 12:38 AM
+-- Generation Time: Nov 13, 2023 at 12:04 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `confirmedorder` (
   `order_id` int(11) NOT NULL,
+  `datetime` datetime DEFAULT NULL,
   `user_id` varchar(19) NOT NULL,
   `product_id` int(11) NOT NULL,
   `size` varchar(20) NOT NULL,
@@ -52,10 +53,13 @@ CREATE TABLE `confirmedorder` (
 -- Dumping data for table `confirmedorder`
 --
 
-INSERT INTO `confirmedorder` (`order_id`, `user_id`, `product_id`, `size`, `quantity`, `price`, `subtotal`, `name`, `email`, `phonenumber`, `address1`, `address2`, `addresscity`, `addresspostalcode`, `billingaddress1`, `billingaddress2`, `billingcity`, `billingpostalcode`) VALUES
-(27, 'guest_65491fb8234c0', 2, '0', 13, 165.00, 2145.00, '', '', '0', '', '', '', '', '', '', '', ''),
-(28, 'guest_65491fb8234c0', 1, 'US 4.0', 11, 165.00, 1815.00, '', '', '0', '', '', '', '', '', '', '', ''),
-(29, 'guest_65491fb8234c0', 1, 'US 4.5', 3, 165.00, 495.00, 'Muhammad Arif', 'muhdarif1999@gmail.com', '97101944', 'aaa', '', 'Singapore', '510519', 'aaaa', '', 'Singapore', '510519');
+INSERT INTO `confirmedorder` (`order_id`, `datetime`, `user_id`, `product_id`, `size`, `quantity`, `price`, `subtotal`, `name`, `email`, `phonenumber`, `address1`, `address2`, `addresscity`, `addresspostalcode`, `billingaddress1`, `billingaddress2`, `billingcity`, `billingpostalcode`) VALUES
+(76, '2023-11-13 16:57:33', '3', 2, 'US 4.5', 1, 165.00, 165.00, 'Muhammad Arif', 'muhdarif1999a', '97101944', 'aaa', '', 'Singapore', '111111', 'aaaa', '', 'Singapore', '510519'),
+(77, '2023-11-13 18:25:31', '3', 3, 'US 5.0', 1, 155.00, 155.00, 'Muhammad Arif', 'muhdarif1999a', '97101944', 'aaa', '', 'Singapore', '111111', 'aaaa', '', 'Singapore', '510519'),
+(78, '2023-11-13 18:25:31', '3', 2, 'US 6.5', 2, 165.00, 330.00, 'Muhammad Arif', 'muhdarif1999a', '97101944', 'aaa', '', 'Singapore', '111111', 'aaaa', '', 'Singapore', '510519'),
+(79, '2023-11-13 18:51:44', '3', 5, 'US 11.0', 1, 186.92, 186.92, 'Muhammad Arif', 'muhdarif1999a', '97101944', 'aaa', '', 'Singapore', '111111', 'aaaa', '', 'Singapore', '510519'),
+(80, '2023-11-13 18:51:44', '3', 5, 'US 11.0', 1, 186.92, 186.92, 'Muhammad Arif', 'muhdarif1999a', '97101944', 'aaa', '', 'Singapore', '111111', 'aaaa', '', 'Singapore', '510519'),
+(81, '2023-11-13 18:51:44', '3', 5, 'US 11.0', 1, 186.92, 186.92, 'Muhammad Arif', 'muhdarif1999a', '97101944', 'aaa', '', 'Singapore', '111111', 'aaaa', '', 'Singapore', '510519');
 
 --
 -- Indexes for dumped tables
@@ -75,7 +79,7 @@ ALTER TABLE `confirmedorder`
 -- AUTO_INCREMENT for table `confirmedorder`
 --
 ALTER TABLE `confirmedorder`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

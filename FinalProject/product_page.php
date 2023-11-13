@@ -151,6 +151,7 @@ if (isset($_POST['id'], $_POST['product_name'], $_POST['price'], $_POST['size'],
                                     <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
                                     <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
                                     <a href="admin.php">Admin</a>
+                                    <a href="orderhistory.php" style="text-align:left">Order History</a>
                                     </div>
                             </div>
                         </div>
@@ -160,7 +161,8 @@ if (isset($_POST['id'], $_POST['product_name'], $_POST['price'], $_POST['size'],
                                     <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                     <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
                                     <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
-                                    </div>
+                                    <a href="orderhistory.php" style="text-align:left">Order History</a>    
+                                </div>
                             </div>
                         </div>
                     <?php endif; ?>

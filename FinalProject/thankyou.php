@@ -53,7 +53,7 @@ for ($i = 0; $i < count($product_ids); $i++) {
 
 
 foreach ($order_data as $order) {
-    $insertQuery = "INSERT INTO confirmedorder (user_id, product_id, size, quantity, price, subtotal,name,email,phonenumber,address1,address2,addresscity,addresspostalcode,billingaddress1,billingaddress2,billingcity,billingpostalcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+    $insertQuery = "INSERT INTO confirmedorder (user_id, datetime, product_id, size, quantity, price, subtotal,name,email,phonenumber,address1,address2,addresscity,addresspostalcode,billingaddress1,billingaddress2,billingcity,billingpostalcode) VALUES (?, NOW(),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
     $stmt = $conn->prepare($insertQuery);
     $stmt->bind_param("sisdddsssssssssss", $user_id, $order['product_id'], $order['size'], $order['quantity'], $order['price'], $order['subtotal'],$myName,$myEmail,$myphone,$myaddress,$myaddress2,$mycity,$mypostalcode,$mybillingaddress,$mybillingaddress2,$mybillingcity,$mybillingpostalcode  );
     $stmt->execute();

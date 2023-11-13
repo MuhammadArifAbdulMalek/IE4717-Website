@@ -471,7 +471,7 @@ h1{
     height: 19vh;
 }
 
-.mensheader h2, p {
+.mensheader h2, .mensheader p {
     color: #ffffff;
     padding: 10px 0px 20px 20px;
 }
