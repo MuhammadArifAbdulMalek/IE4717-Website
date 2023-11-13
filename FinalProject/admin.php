@@ -18,7 +18,57 @@ if ($_SESSION['admin'] != 1) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['existingProduct'])) {
+    if (isset($_POST['removeProduct'])) {
+        $existingProductName = $_POST['existingProductName'];
+        $existingProductColor = $_POST['existingProductColor'];
+
+        // Check if the product exists in the "inventory" table
+        $sqlCheckInventory = "SELECT * FROM inventory WHERE product_name = ? AND colorway = ?";
+        $stmtCheckInventory = $conn->prepare($sqlCheckInventory);
+        $stmtCheckInventory->bind_param("ss", $existingProductName, $existingProductColor);
+
+        // Execute the check query
+        $stmtCheckInventory->execute();
+        $resultCheckInventory = $stmtCheckInventory->get_result();
+
+        // Check if the product exists in the "products" table
+        $sqlCheckProducts = "SELECT * FROM products WHERE product_name = ? AND colourway = ?";
+        $stmtCheckProducts = $conn->prepare($sqlCheckProducts);
+        $stmtCheckProducts->bind_param("ss", $existingProductName, $existingProductColor);
+
+        // Execute the check query
+        $stmtCheckProducts->execute();
+        $resultCheckProducts = $stmtCheckProducts->get_result();
+
+        // Check if both the product and color exist in both tables
+        if ($resultCheckInventory->num_rows > 0 && $resultCheckProducts->num_rows > 0) {
+            // Rows exist, proceed with deletion
+
+            // Delete from the "inventory" table
+            $sqlRemoveInventory = "DELETE FROM inventory WHERE product_name = ? AND colorway = ?";
+            $stmtRemoveInventory = $conn->prepare($sqlRemoveInventory);
+            $stmtRemoveInventory->bind_param("ss", $existingProductName, $existingProductColor);
+
+            // Delete from the "products" table
+            $sqlRemoveProducts = "DELETE FROM products WHERE product_name = ? AND colourway = ?";
+            $stmtRemoveProducts = $conn->prepare($sqlRemoveProducts);
+            $stmtRemoveProducts->bind_param("ss", $existingProductName, $existingProductColor);
+
+            // Execute the deletion queries
+            if ($stmtRemoveInventory->execute() && $stmtRemoveProducts->execute()) {
+                echo '<script>alert("Product removed successfully from both inventory and products.");</script>';
+            } else {
+                echo '<script>alert("Error removing product.");</script>';
+            }
+
+        } else {
+            // Rows do not exist, display an error message
+            echo '<script>alert("This Product Does Not Exist.");</script>';
+        }
+
+        // Close the check statements
+        $stmtCheckInventory->close();
+        $stmtCheckProducts->close();
     } else {
         $productName = $_POST['newProductName'];
         $productColor = $_POST['newProductColor'];
@@ -27,7 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $productBrand = $_POST['newProductBrand'];
         $productPrice = $_POST['newProductPrice'];
         $productGender = $_POST['newProductGender'];
-            // Set default values for 'M' and 'F'
+
+        // Set default values for 'M' and 'F'
         $MValue = 0;
         $FValue = 0;
 
@@ -41,66 +92,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $FValue = 1;
         }
 
-        $sqlInventory = "INSERT INTO inventory (product_name, colorway, release_date, brand, price, image_data, M, F) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        // Insert into inventory table
+        $sqlInventory = "INSERT INTO inventory (product_name, colorway, release_date, brand, price, image_data, M, F, `US 4.0`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)";
         $stmtInventory = $conn->prepare($sqlInventory);
         $stmtInventory->bind_param("ssssdbii", $productName, $productColor, $productReleaseDate, $productBrand, $productPrice, $imageData, $MValue, $FValue);
 
         $imageFieldName = "newProductImage1";
-        validateAndProcessImage($imageFieldName, $stmtInventory, 0);
-        $imageFileName = $_FILES[$imageFieldName]["name"];
-        $imageTmpName = $_FILES[$imageFieldName]["tmp_name"];
-        $imageData = file_get_contents($imageTmpName);
-        $stmtInventory->send_long_data(0, $imageData);
+        validateAndProcessImage($imageFieldName, $stmtInventory, $imageData);
+        $stmtInventory->send_long_data(5, $imageData);
 
+        // Execute the statement
         if ($stmtInventory->execute()) {
-            echo '<script>alert("Inventory data inserted successfully.");</script>';
+            // Get the last inserted ID
+            $lastInsertID = $conn->insert_id;
+
+            // Insert into products table using the same ID
+            $sqlProducts = "INSERT INTO products (id, product_name, colourway, release_date, product_details, price, image_data, image_data2, image_data3, image_data4, gender)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            // Prepare the statement
+            $stmtProducts = $conn->prepare($sqlProducts);
+
+            // Bind the parameters
+            $stmtProducts->bind_param("issssdbbbbs", $lastInsertID, $productName, $productColor, $productReleaseDate, $productDetails, $productPrice, $imageData, $imageData2, $imageData3, $imageData4, $productGender);
+
+            $imageFieldName = "newProductImage1";
+            validateAndProcessImage($imageFieldName, $stmtInventory, $imageData);
+            $stmtProducts->send_long_data(6, $imageData);
+            
+            // Process and insert the second image for the products table
+            $imageFieldName = "newProductImage2";
+            validateAndProcessImage($imageFieldName, $stmtProducts, $imageData2);
+            $stmtProducts->send_long_data(7, $imageData2);
+
+            // Process and insert the third image for the products table
+            $imageFieldName = "newProductImage3";
+            validateAndProcessImage($imageFieldName, $stmtProducts, $imageData3);
+            $stmtProducts->send_long_data(8, $imageData3);
+
+            // Process and insert the fourth image for the products table
+            $imageFieldName = "newProductImage4";
+            validateAndProcessImage($imageFieldName, $stmtProducts, $imageData4);
+            $stmtProducts->send_long_data(9, $imageData4);
+
+            // Execute the statement
+            if ($stmtProducts->execute()) {
+                echo '<script>alert("Product data inserted successfully.");</script>';
+            } else {
+                echo '<script>alert("Error inserting product data.");</script>';
+            }
+
+            // Close the statement
+            $stmtProducts->close();
         } else {
             echo '<script>alert("Error inserting inventory data.");</script>';
         }
         // Close the statement
         $stmtInventory->close();
-        
-        // Get the last inserted product ID
-    $lastProductID = $conn->insert_id;
-
-
-    // Insert into products table
-    $sqlProducts = "INSERT INTO products (product_name, colourway, release_date, product_details, price, image_data, image_data2, image_data3, image_data4, gender)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    // Prepare the statement
-    $stmtProducts = $conn->prepare($sqlProducts);
-    
-    // Bind the parameters
-    $stmtProducts->bind_param("ssssdbbbbs", $productName, $productColor, $productReleaseDate, $productDetails, $productPrice, $imageData, $imageData2, $imageData3, $imageData4, $productGender);
-
-    // Insert image2, image3, and image4
-    for ($i = 2; $i <= 4; $i++) {
-        $imageFieldName = "newProductImage" . $i;
-        validateAndProcessImage($imageFieldName, $stmtProducts, $i - 2);
-        $imageFileName = $_FILES[$imageFieldName]["name"];
-        $imageTmpName = $_FILES[$imageFieldName]["tmp_name"];
-        $imageData = file_get_contents($imageTmpName);
-        $stmtProducts->send_long_data($i - 2, $imageData);
     }
-
-    // Execute the statement
-    if ($stmtProducts->execute()) {
-        echo '<script>alert("Products data inserted successfully.");</script>';
-    } else {
-        echo '<script>alert("Error inserting products data.");</script>';
-    }
-
-    // Close the statement
-    $stmtProducts->close();
-
-    }
- 
 }
 
-function validateAndProcessImage($imageFieldName, $stmt, $paramIndex) {
+// Modify your function to handle the case where no file is uploaded
+function validateAndProcessImage($imageFieldName, $stmt, &$imageData) {
     if (!isset($_FILES[$imageFieldName]) || $_FILES[$imageFieldName]['error'] == UPLOAD_ERR_NO_FILE) {
         // No file uploaded for this image
+        $imageData = null;
         return;
     }
 
@@ -121,14 +177,11 @@ function validateAndProcessImage($imageFieldName, $stmt, $paramIndex) {
     }
 
     // Process the file
-    $imageFileName = $_FILES[$imageFieldName]["name"];
     $imageTmpName = $_FILES[$imageFieldName]["tmp_name"];
     $imageData = file_get_contents($imageTmpName);
-    $stmt->send_long_data($paramIndex, $imageData);
 }
 
 $conn->close();
-
 ?>
 
 <!DOCTYPE html>
@@ -340,10 +393,17 @@ $conn->close();
                 </div>
                 <div id="removeProductDropdown" class="dropdownform-content" style="display: none;">
                     <form action="" method="post">
-                        <label for="existingProduct">Select Product to Remove:</label>
-                        <input type="text" id="existingProduct" name="existingProduct" required>
+                        <div class="form-group">
+                            <label for="existingProductName">Product Name:</label>
+                            <input type="text" id="existingProductName" name="existingProductName" required>
+                        </div>
 
-                        <button type="submit">Remove Product</button>
+                        <div class="form-group">
+                            <label for="existingProductColor">Product Color:</label>
+                            <input type="text" id="existingProductColor" name="existingProductColor" required>
+                        </div>
+
+                        <button type="submit" name="removeProduct">Remove Product</button>
                     </form>
                 </div>
             </div>
