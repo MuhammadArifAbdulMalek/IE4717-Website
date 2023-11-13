@@ -278,6 +278,23 @@ if (isset($_POST['backtocart'])) {
             </div>
         </div>
         </footer>
+
+        <script>
+            // Select all dropdown bars and checkbox forms
+            const dropdownBars = document.querySelectorAll(".dropdownbar");
+            const dropdownContent = document.querySelectorAll(".dropdown-content");
+            // Add a click event listener to each dropdown bar
+            dropdownBars.forEach((dropdownBar, index) => {
+                dropdownBar.addEventListener("click", () => {
+                    const form = dropdownContent[index];
+                    if (form.style.display === "none" || form.style.display === "") {
+                        form.style.display = "block";
+                    } else {
+                        form.style.display = "none";
+                    }
+                });
+            });
+        </script>
     
 </body>
 </html>
@@ -316,20 +333,5 @@ if (isset($_POST['backtocart'])) {
     // Call updateTotal initially to display the total based on the initial values
     updateTotal();
     
-            // Select all dropdown bars and checkbox forms
-            const dropdownBars = document.querySelectorAll(".dropdownbar");
-            const dropdownContent = document.querySelectorAll(".dropdown-content");
-            // Add a click event listener to each dropdown bar
-            dropdownBars.forEach((dropdownBar, index) => {
-                dropdownBar.addEventListener("click", () => {
-                    const form = dropdownContent[index];
-                    if (form.style.display === "none" || form.style.display === "") {
-                        form.style.display = "block";
-                    } else {
-                        form.style.display = "none";
-                    }
-                });
-            });
-       
 </script>
 
