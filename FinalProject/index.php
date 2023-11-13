@@ -255,7 +255,7 @@ if (isset($_POST['newsletter'])) {
                 </a>
                 <div class="collectionbuttons">
                     <button class="genderbutton" style="border: 2px solid #ffffff;"> <a style="text-decoration:none; color:#ffffff;" href="product_list.php">MEN</a> </button>
-                    <button class="genderbutton" style="border: 2px solid #ffffff;"> <a style="text-decoration:none; color:#ffffff;" href="product_list.php">WOMEN</a> </button>
+                    <button class="genderbutton" style="border: 2px solid #ffffff;"> <a style="text-decoration:none; color:#ffffff;" href="product_list2.php">WOMEN</a> </button>
                 </div>
             </div>
         </div>
