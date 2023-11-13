@@ -217,6 +217,8 @@ $conn->close();
         display: center;
         height: auto;
         margin: 20vh;
+        margin-left: 50vh;
+        margin-right: 50vh;
         background-color: #f9f9f9;
         border: 1px solid #ccc; /* Add border to the container */
         justify-content: center;
@@ -246,6 +248,12 @@ $conn->close();
 
     .dropdownform-content button {
         margin-top: 10px;
+        background-color: #000000;
+            color: #fff;
+            border: 1px solid #000000;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
     }
 
     .form-group {
