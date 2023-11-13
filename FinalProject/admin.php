@@ -56,14 +56,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Execute the deletion queries
             if ($stmtRemoveInventory->execute() && $stmtRemoveProducts->execute()) {
-                echo '<script>alert("Product removed successfully from both inventory and products.");</script>';
+                echo '<script>alert("Product sucessfully removed.");</script>';
             } else {
                 echo '<script>alert("Error removing product.");</script>';
             }
 
         } else {
             // Rows do not exist, display an error message
-            echo '<script>alert("This Product Does Not Exist.");</script>';
+            echo '<script>alert("Product does not exist.");</script>';
         }
 
         // Close the check statements
@@ -297,6 +297,7 @@ $conn->close();
                                     <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
                                     <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
                                     <a href="admin.php">Admin</a>
+                                    <a href="orderhistory.php" style="text-align:left">Order History</a>    
                                     </div>
                             </div>
                         </div>
@@ -306,6 +307,7 @@ $conn->close();
                                     <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                     <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
                                     <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
+                                    <a href="orderhistory.php" style="text-align:left">Order History</a>    
                                     </div>
                             </div>
                         </div>

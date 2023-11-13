@@ -67,70 +67,6 @@ $user_id = setUserSession();
 
 
     <style>
-        .accounts {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 70px;
-            padding-bottom: 180px;
-        }
-
-        .accounts-container {
-            display: flex;
-            background-color: #f9f9f9;
-            justify-content: center;
-            align-items: flex-start;
-            border: 1px solid #ccc; /* Add border to the container */
-            width: 66%; /* Set width to 66% of the page */
-            margin: 0 auto; /* Center the container horizontally */
-            padding-bottom: 20px;
-        }
-
-        .accounts-form {
-            width: 100%; /* Make each form fill the container width */
-            text-align: left;
-            height: 720px;
-            padding-left: 80px;
-            padding-top: 40px;
-            font-size: 150%;
-        }
-
-        .accounts-form h2 {
-            margin: 0;
-        }
-        .accounts-form p {
-            color: #000000;
-            padding-left: 0px;
-        }
-        .accounts-form label {
-            display: block;
-            font-size: 80%;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .accounts-form input {
-            display: block;
-            width: 80%;
-            padding: 8px;
-        }
-
-        .accounts-form button {
-            padding: 14px;
-            background-color: #000000;
-            color: #fff;
-            border: 1px solid #000000;
-            cursor: pointer;
-            margin-top: 40px;
-            width: 83.7%;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 600;
-        }
-
-        .accounts-form button:hover {
-            background-color: #0056b3;
-        }
-
         .orderhistory{
             text-align:center;
             height:auto;
@@ -141,7 +77,6 @@ $user_id = setUserSession();
         }
         .orderpastpurchase{
             display: flex;
-            width:50vw;
             text-align:center;
             margin: auto;
             margin-top:20px;
@@ -174,6 +109,10 @@ $user_id = setUserSession();
             margin: auto;
             margin-bottom:30px;
         }
+
+        .footer {
+            margin-top: 80px;
+        }
     </style>
 </head>
 
@@ -202,7 +141,7 @@ $user_id = setUserSession();
                             <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
                                     <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                     <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
-                                    <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
+                                    <a href="logout.php?return_url=<?php echo urlencode('index.php');?>">Logout</a>
                                     <a href="admin.php">Admin</a>
                                     <a href="orderhistory.php" style="text-align:left">Order History</a>
                                     </div>
@@ -213,7 +152,7 @@ $user_id = setUserSession();
                             <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
                                     <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
                                     <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
-                                    <a href="logout.php?return_url=<?php echo urlencode($_SERVER['REQUEST_URI']);?>">Logout</a>
+                                    <a href="logout.php?return_url=<?php echo urlencode('index.php');?>">Logout</a>
                                     <a href="orderhistory.php" style="text-align:left">Order History</a>
                                     </div>
                             </div>
@@ -227,6 +166,25 @@ $user_id = setUserSession();
             <span><a href= "cart.php"> <img src="assets/Images/Icons/cart.png"> </a></span>
         </div>
     </nav>
+
+    <script>
+        // Select all dropdown bars and checkbox forms
+        const dropdownBars2 = document.querySelectorAll(".dropdownbar");
+        const dropdownContent = document.querySelectorAll(".dropdown-content");
+
+        // Add a click event listener to each dropdown bar
+        dropdownBars2.forEach((dropdownBar, index) => {
+            dropdownBar.addEventListener("click", () => {
+                const form = dropdownContent[index];
+                if (form.style.display === "none" || form.style.display === "") {
+                    form.style.display = "block";
+                } else {
+                    form.style.display = "none";
+                }
+            });
+        });
+    </script>
+
 
     <div class="orderhistory">
        <h1> Order History </h1>
@@ -305,99 +263,33 @@ $user_id = setUserSession();
 
 
     <div class="footer">
-            <div class="footerupper">
-                <div class="sitemap">
-                    <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
-                    <table class = sitemaplinks>
-                    <tr>
-                        <td> <a> Size Guide</a> </td>
+        <div class="footerupper">
+            <div class="sitemap">
+                <a style="font-size: 25px; text-decoration: underline;"> <strong>Quick Directory </strong> </a> <br>
+                <table class = sitemaplinks>
+                <tr>
+                    <td> <a> Size Guide</a> </td>
                         <td> <a> T&Cs</a> </td>
-                    </tr>
-                    <tr>
-                        <td> <a> Contact Us</a> </td>
-                        <td> <a> Privacy Policy</a> </td>
-                    </tr>
-                    </table>
+                </tr>
+                <tr>
+                    <td> <a> Contact Us</a> </td>
+                    <td> <a> Privacy Policy</a> </td>
+                </tr>
+                </table>
                     
-                </div>
-                <div class="socialmedia">
-                <a><img src="assets/Images/Icons/facebook.png"></a>
-                <a><img src="assets/Images/Icons/instagram.png"></a>
-                <a><img src="assets/Images/Icons/tiktok.png"></a>
-                </div>
             </div>
-            <div class="copyright">
-                <a> 2023 ShoeShoe Singapore Ltd</a>
+            <div class="socialmedia">
+            <a><img src="assets/Images/Icons/facebook.png"></a>
+            <a><img src="assets/Images/Icons/instagram.png"></a>
+            <a><img src="assets/Images/Icons/tiktok.png"></a>
             </div>
         </div>
+        <div class="copyright">
+            <a> 2023 ShoeShoe Singapore Ltd</a>
+        </div>
+    </div>
 
-    <script>
-
-        function validateForm() {
-            if (!checkEmail()) {
-                alert("Invalid email format. Please correct it.");
-                return false; // Prevent form submission
-            }
-
-            if (!validatePassword()) {
-                return false; // Prevent form submission
-            }
-
-            // Add other form validation logic here if needed
-            return true; // Allow form submission if all checks pass
-        }
-
-        function checkEmail() {
-            var email = document.getElementById("create-email").value;
-
-            if (email.trim() === "") {
-                alert("Please fill up your email.");
-                return false;
-            } else if (!/^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
-                return false;
-            }
-
-            return true;
-        }
-
-        function validatePassword() {
-            var password = document.getElementById("create-password").value;
-            var confirmPassword = document.getElementById("confirm-password").value;
-            var numberRegex = /\d/;
-            var specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-
-            // Password strength validation
-            if (!(password.length >= 8 && numberRegex.test(password) && specialCharRegex.test(password))) {
-                alert("Password must be at least 8 characters long and include at least 1 number and 1 special character.");
-                return false; // Prevent form submission
-            }
-
-            // Password match validation
-            if (password !== confirmPassword) {
-                alert("Passwords do not match.");
-                return false; // Prevent form submission
-            }
-
-            return true; // Allow form submission
-        }
-
-        // Select all dropdown bars and checkbox forms
-        const dropdownBars = document.querySelectorAll(".dropdownbar");
-        const dropdownContent = document.querySelectorAll(".dropdown-content");
-
-        // Add a click event listener to each dropdown bar
-        dropdownBars.forEach((dropdownBar, index) => {
-            dropdownBar.addEventListener("click", () => {
-                const form = dropdownContent[index];
-                if (form.style.display === "none" || form.style.display === "") {
-                    form.style.display = "block";
-                } else {
-                    form.style.display = "none";
-                }
-            });
-        });
-
-    </script>
+    
 <?php
 $conn->close();
 ?>
