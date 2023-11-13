@@ -33,36 +33,14 @@ if (isset($_POST['id'], $_POST['product_name'], $_POST['price'], $_POST['size'],
     // Bind parameters and their data types
     $stmt->bind_param('sisidi', $user_id, $product_id, $product_size, $product_quantity, $product_price, $subtotal);
     
-    /*// Check if the product is already in the cart
-    if (isset($_SESSION['cart'][$product_id][$product_size])) {
-        // Increment the quantity if it's already in the cart
-        $_SESSION['cart'][$product_id][$product_size]['quantity']++;
-        
-    } else {
-        // Add the product to the cart
-        $_SESSION['cart'][$product_id][$product_size] = [
-            'name' => $product_name,
-            'price' => $product_price,
-            'quantity' => $product_quantity,
-            'size' => $product_size,
-            'color' => $product_color,
-        ];
-        
-    }*/
-
+  
     if ($stmt->execute()) {
         echo '<script>alert("Added to Cart");</script>';
     } else {
         echo "Error adding product to the cart: " . $stmt->error;
     }
 }
-/* if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $productid = $_POST['id'];
-    $productName = $_POST['product_name'];
-    $colorway = $_POST['colorway'];
-    $quantity = $_POST['quantity'];
-    $size = $_POST['size'];
-}  */
+
         $productid = $_GET['id'];
         
         

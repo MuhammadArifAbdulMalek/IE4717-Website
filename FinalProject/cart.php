@@ -58,6 +58,27 @@ if (isset($_POST['backtocart'])) {
     }
  
  </script>
+ <script>
+    function deleteitem(element) {
+        event.preventDefault();
+        var productId = element.parentNode.getAttribute('data-product-id');
+        var productSize = element.parentNode.getAttribute('data-size');
+        var cleanedSize = productSize.replace(/[a-zA-Z\s]/g, '');
+        var xhr = new XMLHttpRequest();
+        var url = "deleteproduct.php?productId=" + productId + "&productSize=" + cleanedSize;
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                
+                element.parentNode.parentNode.remove();
+                window.location.reload();
+            }
+        };
+        xhr.send();
+
+        
+    }
+</script>
     
 </head>
 <style>
@@ -68,7 +89,29 @@ if (isset($_POST['backtocart'])) {
   flex-direction: column;
   min-height: 100vh; /* This ensures the body takes at least the full height of the viewport */
 }
-
+.delete{
+    position:relative;
+}
+.deleteBtn {
+            background-color: transparent; /* Red background color */
+            color: #000; /* White text color */
+            border: none;
+            padding: 15px 15px;
+            font-size:20px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: inline-block;
+            position: absolute;
+            top: 40px;
+            
+        }
+ /* Style the 'X' inside the button */
+ .deleteBtn::after {
+            content: 'X';
+            font-weight: bold;
+            font-size: 20px;
+            
+        }
 </style>
 <body onload="scroller();">
     <div class="promo">  
@@ -202,18 +245,20 @@ if (isset($_POST['backtocart'])) {
                     $size = $product['size'];
                     $subtotal = $product['subtotal'];
                     $total += $subtotal;
-                    echo '<tr>';
-                    echo '<td id="cartimagecolumn"><a class="cartimage" href=""><img src="data:image/jpeg;base64,' . base64_encode($image_data) . '"></td>';
-                    echo '<td id="cartdetailscolumn">';
-                    echo '<h2 style="font-size:30px;">' . $product_name . '</h2>';
-                    echo '<p style="font-size:20px;">Colour: ' . " " . $colourway . '</p>';
-                    echo '<p style="font-size:20px;">Size: ' . " " . $size . '</p>';
-                    echo '<p style="font-size:20px;">Quantity: ' . " ";
-                    echo '<input type="number" class="quantity-input" name="quantity[]" min="0" max="'. $stock.'" value="' . $quantity . '" data-price="' . $price . '" data-subtotal="' . $subtotal . '">';
-                    echo '</p>';
-                    echo '<p> Subtotal: <span class="subtotal">$' . $subtotal . '</span></p>';
-                    echo '</td>';
+                    echo '<tr >';
+                        echo '<td id="cartimagecolumn"><a class="cartimage"><img src="data:image/jpeg;base64,' . base64_encode($image_data) . '"></a></td>';
+                        echo '<td id="cartdetailscolumn">';
+                            echo '<h2 style="font-size:30px;">' . $product_name . '</h2>';
+                            echo '<p style="font-size:20px;">Colour: ' . " " . $colourway . '</p>';
+                            echo '<p style="font-size:20px;">Size: ' . " " . $size . '</p>';
+                            echo '<p style="font-size:20px;">Quantity: ' . " ";
+                            echo '<input type="number" class="quantity-input" name="quantity[]" min="0" max="' . $stock . '" value="' . $quantity . '" data-price="' . $price . '" data-subtotal="' . $subtotal . '">';
+                            echo '</p>';
+                            echo '<p> Subtotal: <span class="subtotal">$' . $subtotal . '</span></p>';
+                        echo '</td>';
+                        echo '<td class="delete" data-product-id="' . $product_id . '" data-size="' . $size . '"><button class="deleteBtn" onclick="deleteitem(this)"></button></td>';
                     echo '</tr>';
+
                     echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
                     echo '<input type="hidden" name="product_name[]" value="'. $product_name .'">';
                     echo '<input type="hidden" name="colourway[]" value="'. $colourway .'">';

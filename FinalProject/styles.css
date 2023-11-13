@@ -879,7 +879,6 @@ label, input[type="checkbox"] {
 .cartorders{
     flex:1;
     width:50%;
-    min-height: 80vh;
     height:auto;
 }
 
@@ -895,6 +894,7 @@ label, input[type="checkbox"] {
 
 .infoneeded{
     padding-left:20px;
+    
 }
 
 .infoneeded input{

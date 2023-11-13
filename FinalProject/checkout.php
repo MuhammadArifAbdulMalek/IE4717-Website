@@ -16,6 +16,46 @@ $sizes = $_POST['size'];
 $quantities = $_POST['quantity'];
 $prices = $_POST['price'];
 $total = 0;
+for ($i = 0; $i < count($product_ids); $i++) {
+                        
+    $product_id = $product_ids[$i];
+    $product_name = $product_names[$i];
+    $colourway= $colourways[$i];
+    $size = $sizes[$i];
+    $quantity = $quantities[$i];
+    $price = $prices[$i];
+    $subtotal = $quantities[$i] * $prices[$i];
+    $total +=  $subtotal;
+$sql = "SELECT image_data FROM products WHERE id = $product_id";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$image_data = $row['image_data'];
+
+$updatesql = "UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ? AND size = ?";
+$updatestmt = $conn->prepare($updatesql);
+
+$updatestmt->bind_param("iiis", $quantity, $user_id, $product_id, $size);
+$updatestmt->execute();
+$updatestmt->close();
+
+if ($quantity == 0){
+$emptysql = "DELETE FROM cart WHERE user_id = ? AND product_id = ? AND size = ?";
+$emptystmt = $conn->prepare($emptysql);
+
+$emptystmt->bind_param("iis", $user_id, $product_id, $size);
+$emptystmt->execute();
+$emptystmt->close();
+}
+
+$countSql = "SELECT COUNT(*) AS instanceCount FROM cart WHERE user_id = ?";
+                    $countStmt = $conn->prepare($countSql);
+                    $countStmt->bind_param("i", $user_id);
+                    $countStmt->execute();
+                    $countStmt->bind_result($instanceCount);
+                    $countStmt->fetch();
+                    $countStmt->close();
+
+}
 if (!isset($_SESSION['promocodeapplied'])){
     $_SESSION['promocodeapplied'] = 0;
 }
@@ -125,48 +165,49 @@ if (isset($_POST['promocodeaddition'])) {
         </div>
     </nav>
 
-    <form action="thankyou.php" method="post" id="confirmation">
-    <div class="checkoutcontainer"> 
-        <div class="customerinformationcontainer">
-        <div class="customerinformation">
-            <div class="infoneeded">
-                <h2> Billing Information </h2>
-                    <label for=myName>Name: </label><label class="orderheader">* </label> <br>
-                    <input type="text" name="myName" size="25" id="myName" pattern="[A-Za-z\s]+" required title="Please enter only alphabets" required><br>
+    <?php if($instanceCount != 0){
+     echo '<form action="thankyou.php" method="post" id="confirmation">';
+     echo '<div class="checkoutcontainer">';
+        echo '<div class="customerinformationcontainer">';
+        echo '<div class="customerinformation">';
+             echo '<div class="infoneeded">';
+                echo '<h2> Billing Information </h2>';
+                    echo '<label for=myName>Name: </label><label class="orderheader">* </label> <br>';
+                    echo '<input type="text" name="myName" size="25" id="myName" pattern="[A-Za-z\s]+" required title="Please enter only alphabets" required><br>';
                  
-                    <label for="myEmail">Email:</label><label class="orderheader">* </label><br>
-                    <input type="text" name="myEmail" size="25" id="myEmail" pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" required title="Please enter following example (hello@domain.sg)" required><br>
+                    echo '<label for="myEmail">Email:</label><label class="orderheader">* </label><br>';
+                    echo '<input type="text" name="myEmail" size="25" id="myEmail" pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" required title="Please enter following example (hello@domain.sg)" required><br>';
          
-                    <label for="myphone">Phone: +65</label><label class="orderheader">* </label><br>
-                    <input type="tel" id="phone" name="myphone" class="intl-tel-input" required><br>
+                    echo '<label for="myphone">Phone: +65</label><label class="orderheader">* </label><br>';
+                    echo '<input type="tel" id="phone" name="myphone" class="intl-tel-input" required><br>';
   
-                    <label for="myaddress">Delivery Address:</label><label class="orderheader">* </label><br>
-                    <input type="text" name="myaddress" size="25" id="myaddress"  required><br>  
+                    echo '<label for="myaddress">Delivery Address:</label><label class="orderheader">* </label><br>';
+                    echo '<input type="text" name="myaddress" size="25" id="myaddress"  required><br>  ';
          
-                    <label for="myaddress2">Delivery Address Line 2:</label><br>
-                    <input type="text" name="myaddress2" size="25" id="myaddress2"><br>  
+                    echo '<label for="myaddress2">Delivery Address Line 2:</label><br>';
+                    echo '<input type="text" name="myaddress2" size="25" id="myaddress2"><br>  ';
              
-                    <label for="mycity">City:</label><label class="orderheader">* </label><br>
-                    <input type="text" name="mycity" size="25" id="mycity"  required><br>
+                    echo '<label for="mycity">City:</label><label class="orderheader">* </label><br> ';
+                    echo '<input type="text" name="mycity" size="25" id="mycity"  required><br> ';
 
-                    <label for="mypostalcode">Postal Code:</label><label class="orderheader">* </label><br>
-                    <input type="text" name="mypostalcode" size="25" id="mypostalcode"  pattern="[0-9]+" required title="Please enter a valid number (digits only)" required><br>
+                    echo '<label for="mypostalcode">Postal Code:</label><label class="orderheader">* </label><br>';
+                    echo '<input type="text" name="mypostalcode" size="25" id="mypostalcode"  pattern="[0-9]+" required title="Please enter a valid number (digits only)" required><br>';
                 
                 
-                <h2> Payment </h2>
-                <label for="mybillingaddress">Biling Address:</label><label class="orderheader">* </label><br>
-                <input type="text" name="mybillingaddress" size="25" id="mybillingaddress"  required><br>
+                    echo '<h2> Payment </h2>';
+                    echo '<label for="mybillingaddress">Biling Address:</label><label class="orderheader">* </label><br>';
+                    echo '<input type="text" name="mybillingaddress" size="25" id="mybillingaddress"  required><br>';
       
-                <label for="mybillingaddress2">Billing Address Line 2:</label>
-                <input type="text" name="mybillingaddress2" size="25" id="mybillingaddress2"><br>
+                    echo '<label for="mybillingaddress2">Billing Address Line 2:</label>';
+                    echo '<input type="text" name="mybillingaddress2" size="25" id="mybillingaddress2"><br>';
              
-                <label for="mybillingcity">City:</label><label class="orderheader">* </label><br>
-                <input type="text" name="mybillingcity" size="25" id="mybillingcity" required><br>
+                    echo '<label for="mybillingcity">City:</label><label class="orderheader">* </label><br>';
+                    echo '<input type="text" name="mybillingcity" size="25" id="mybillingcity" required><br>';
          
-                <label for="mybillingpostalcode">Postal Code:</label><label class="orderheader">* </label><br>
-                <input type="text" name="mybillingpostalcode" size="25" id="mybillingpostalcode" pattern="[0-9]+" required title="Please enter a valid number (digits only)" required><br>   
+                    echo '<label for="mybillingpostalcode">Postal Code:</label><label class="orderheader">* </label><br>';
+                    echo '<input type="text" name="mybillingpostalcode" size="25" id="mybillingpostalcode" pattern="[0-9]+" required title="Please enter a valid number (digits only)" required><br>   ';
          
-                <?php  
+                
                     for ($i = 0; $i < count($product_ids); $i++) {
                         $product_id = $product_ids[$i];
                         $product_name = $product_names[$i];
@@ -185,21 +226,25 @@ if (isset($_POST['promocodeaddition'])) {
                         echo '<input type="hidden" name="subtotal[]" value="'. $subtotal .'">';
                         }
                     
-                ?>
-            </div>
-            <div class="orderbutton">
-            <button class="checkoutbutton" type="submit" style="margin-top:10px; margin-left:20px;">Order Now</button>
-            </div>
-        </div>
-        </div>
-        </form>
+               
+            echo '</div>';
+            echo '<div class="orderbutton">';
+            echo '<button class="checkoutbutton" type="submit" style="margin-top:10px; margin-left:20px;">Order Now</button>';
+            echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        echo '</form>';
+                    }?>
         <div class="cartorders">
-            <h2 style="text-align:center; padding-top:5vh;"> In Your Cart </h2>
+            <?php if($instanceCount != 0) {
+             echo '<h2 style="text-align:center; padding-top:5vh;"> In Your Cart </h2>';
+            }
+            ?>
             <div class="cartdisplayitems">
             <table class="displayproductsorder">
                 <?php
                     for ($i = 0; $i < count($product_ids); $i++) {
-                        if($quantity >0){
+                        
                             $product_id = $product_ids[$i];
                             $product_name = $product_names[$i];
                             $colourway= $colourways[$i];
@@ -212,6 +257,8 @@ if (isset($_POST['promocodeaddition'])) {
                         $result = $conn->query($sql);
                         $row = $result->fetch_assoc();
                         $image_data = $row['image_data'];
+                        
+                         if ($quantity != 0) {
 
 
                         echo '<tr>';
@@ -226,10 +273,14 @@ if (isset($_POST['promocodeaddition'])) {
                         echo '</tr>';
                         
                         
-                    } else if ($quantity=0){
-                        echo 'Cart is now empty';
+                    } 
+                    
+                    
                     }
-                    }
+
+                    
+                    
+
                     echo '<input type="hidden" name="total[]" value="'. $total .'">';
                     
                 ?>
@@ -237,10 +288,11 @@ if (isset($_POST['promocodeaddition'])) {
             </div>
             <div class="orderreturn">
             <div style="padding-top:20px; ">
-            <form action="" method="post" id="promocodeaddition" name="promocodeaddition" style="display: flex; align-items: center; justify-content: center;">
-            <label for=promocode>Promo Code: </label>
-            <input type="text" name="promocode" size="25" id="promocode" style="margin-left:20px;"><br>
-            <?php
+            <?php if($instanceCount != 0){
+            echo '<form action="" method="post" id="promocodeaddition" name="promocodeaddition" style="display: flex; align-items: center; justify-content: center;">';
+            echo '<label for=promocode>Promo Code: </label>';
+            echo '<input type="text" name="promocode" size="25" id="promocode" style="margin-left:20px;"><br>';
+            
              for ($i = 0; $i < count($product_ids); $i++) {
             echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
                         echo '<input type="hidden" name="product_name[]" value="'. $product_name .'">';
@@ -249,13 +301,16 @@ if (isset($_POST['promocodeaddition'])) {
                         echo '<input type="hidden" name="price[]" value="'. $price .'">';
                         echo '<input type="hidden" name="quantity[]" value="'. $quantity .'">';
              }
-                        ?>
-            <button class="checkoutbutton" id="promocodeaddition" name="promocodeaddition" type="submit" style="margin-top:10px; margin-left:20px;">Apply</button>
-            </form>
-            </div>
-            <h2 id="total" style="text-align:center">Total: $ <?php echo $total ?></h2>
+                        
+             echo ' <button class="checkoutbutton" id="promocodeaddition" name="promocodeaddition" type="submit" style="margin-top:10px; margin-left:20px;">Apply</button>';
+             echo '</form>';
+             echo '</div>';
+             echo '<h2 id="total" style="text-align:center">Total: $ '.$total.' </h2>';
 
-            <a href="cart.php" id="backToCartLink" class="button-link">Back to Cart</a>
+             echo '<a href="cart.php" id="backToCartLink" class="button-link">Back to Cart</a>';
+            } 
+
+            ?>
             <script>
         
              document.getElementById("backToCartLink").addEventListener("click", function (event) {
@@ -280,8 +335,17 @@ if (isset($_POST['promocodeaddition'])) {
     </script>
             </div>
         </div>
-    </div>
+
     
+    </div>
+    <?php
+    if ($instanceCount == 0) {
+        echo '<div style="text-align:center; height:51vh;">';
+        echo '<p style="font-size:40px; text-align:center"><strong>Your Cart is Empty</strong></p>';
+        echo '<a href="index.php" id="backToCartLink" class="button-link">Add Items</a>';
+        echo '</div>';
+    }
+    ?>
     <div class="footer">
             <div class="footerupper">
                 <div class="sitemap">
