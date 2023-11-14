@@ -89,6 +89,19 @@ foreach ($order_data as $order) {
     $stmt2->close();
 }
 $conn->close();
+
+$to = $myEmail;
+$subject = "Order Confirmation";
+$message = "Thank you for your order! Your order has been successfully placed.";
+$headers = "From: muhdarif1999@gmail.com";
+if (mail($to, $subject, $message, $headers))
+{
+    echo "Email sent successfully .....";
+}else
+{
+    
+    echo "Email not sent .....";
+}
 ?>
 
 <!DOCTYPE html>

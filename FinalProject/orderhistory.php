@@ -65,6 +65,68 @@ $user_id = setUserSession();
     
     </script>
 
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var stars = document.querySelectorAll('.rating input[type="radio"]');
+            
+            for (var i = 0; i < stars.length; i++) {
+                stars[i].addEventListener('change', function () {
+                    fillPreviousStars(this);
+                });
+            }
+        });
+
+        function fillPreviousStars(selectedStar) {
+            var stars = document.querySelectorAll('.rating input[type="radio"]');
+            var selectedIndex = Array.from(stars).indexOf(selectedStar);
+
+            for (var i = 0; i <= selectedIndex; i++) {
+                var star = stars[i];
+                var label = star.nextElementSibling;
+
+                label.classList.add('filled');
+            }
+
+            for (var i = selectedIndex + 1; i < stars.length; i++) {
+                var star = stars[i];
+                var label = star.nextElementSibling;
+
+                label.classList.remove('filled');
+            }
+        }
+                
+                function showReviewPopup() {
+                document.getElementById('reviewPopup').style.display = 'block';
+                
+                }
+
+                function closeReviewPopup() {
+                document.getElementById('reviewPopup').style.display = 'none';
+        }
+    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var reviewButtons = document.querySelectorAll('.review-button');
+
+    reviewButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            
+            var productname = button.closest('.orderpastpurchasedetails').dataset.productname;
+            var colourway = button.closest('.orderpastpurchasedetails').dataset.colourway;
+            var datetime = button.closest('.orderpastpurchasedetails').dataset.datetime;
+            var size = button.closest('.orderpastpurchasedetails').dataset.size;
+
+            document.getElementById('product_name').value = productname;
+            document.getElementById('colourway').value = colourway;
+            document.getElementById('orderdate').value = datetime;
+            document.getElementById('size').value = size;
+
+            showReviewPopup();
+        });
+    });
+});
+    </script>
 
     <style>
         .orderhistory{
@@ -84,6 +146,7 @@ $user_id = setUserSession();
 
         .orderpastpurchaseimage {
             flex:1;
+            text-align:right;
         }
         .orderpastpurchaseimage img{
             width:200px; 
@@ -93,6 +156,7 @@ $user_id = setUserSession();
         .orderpastpurchasedetails{
             flex:1;
             padding-left:20px;
+            text-align: left;
             
         }
 
@@ -113,6 +177,53 @@ $user_id = setUserSession();
         .footer {
             margin-top: 80px;
         }
+
+        .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid #ccc;
+        padding: 20px;
+        background: #fff;
+        }
+
+        .popup-content {
+        text-align: center;
+        }
+
+        .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 20px;
+        cursor: pointer;
+        }
+
+        .rating {
+        display: flex;
+        justify-content: center;
+        }
+
+        .rating input {
+        display: none;
+        }
+
+        .rating label.filled {
+        background-image: url('assets/Images/filled_star.png'); /* Replace with your filled star icon */
+        background-size: cover;
+        }
+
+        /* Adjust the order of your existing styles if needed */
+        .rating label {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        background-image: url('assets/Images/star.png'); /* Replace with your star icon */
+        background-size: cover;
+        }
+
     </style>
 </head>
 
@@ -204,7 +315,7 @@ $user_id = setUserSession();
             while ($row = $result->fetch_assoc()) {
                 // Display order details for each order on the same date
                 echo "Order Date: " . $row['formatted_datetime'] . "<br>";
-                $subquery = "SELECT product_id, size, quantity, price, subtotal FROM confirmedorder WHERE user_id = ? AND datetime = ?";
+                $subquery = "SELECT rating, product_id, size, quantity, price, subtotal FROM confirmedorder WHERE user_id = ? AND datetime = ?";
                 $substmt = $conn->prepare($subquery);
                 $substmt->bind_param("ss", $user_id, $row['datetime']);
                 $substmt->execute();
@@ -227,19 +338,60 @@ $user_id = setUserSession();
                             echo '<div class="orderpastpurchaseimage">';
                                 echo '<img src="data:image/jpeg;base64,'  . base64_encode($productrow['image_data']) . '" >';
                             echo '</div>';
-                            echo '<div class="orderpastpurchasedetails">';
+                            echo '<div class="orderpastpurchasedetails" data-productname="'.$productrow['product_name'].'" data-colourway="'.$productrow['colourway'].'" data-datetime="'.$row['datetime'].'" data-size="'.$subrow['size'].'">';
                                 echo '<p style="font-size:24px;">'.$productrow['product_name'].'</p>';
-                                echo '<p style="font-size:20px;">'.$productrow['colourway'].'</p>';
+                                echo '<p style="font-size:20px;">'.$productrow['colourway'].'&nbsp;&nbsp;&nbsp;'.' Size: '.$subrow['size']. '</p>';
                                 echo '<p style="font-size:16px;"> Quantity: '.$subrow['quantity'].'&nbsp;&nbsp;&nbsp;'.' Price: $'.$subrow['price']. '</p>';
                                 echo '<p style="font-size:16px;"> Subtotal: $'.$subrow['subtotal'].'</p>';
                                 $total += $subrow['subtotal'];
+
+                                if ($subrow['rating'] != 0 ){
+                                    echo 'You gave a rating of: ';
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $subrow['rating']) {
+                                        echo '★'; // Filled star
+                                    } else {
+                                        echo '☆'; // Empty star
+                                    }
+                                }
+                                } else {
+                                    echo '<div id="reviewPopup" class="popup">';
+                                    echo '<div class="popup-content">';
+                                        echo '<span class="close" onclick="closeReviewPopup()">&times;</span>';
+                                        echo '<h2>Rate us out of 5 stars</h2>';
+                                        echo '<form id="reviewForm" action="submit_review.php" method="POST">';
+                                        echo '<div class="rating">';
+                                            echo '<input type="hidden" id="orderdate" name="orderdate" value="'. $row['datetime'] .'">';
+                                            echo '<input type="hidden" id="product_name" name="product_name" value="'.$productrow['product_name'].'">';
+                                            echo '<input type="hidden" id="colourway" name="colourway" value="'.$productrow['colourway'].'">';
+                                            echo '<input type="hidden" id="size" name="size" value="'.$subrow['size'].'">';
+                                            echo '<input type="radio" id="star1" name="rating" value="1">';
+                                            echo '<label for="star1"></label>';
+                                            echo '<input type="radio" id="star2" name="rating" value="2">';
+                                            echo '<label for="star2"></label>';
+                                            echo '<input type="radio" id="star3" name="rating" value="3">';
+                                            echo '<label for="star3"></label>';
+                                            echo '<input type="radio" id="star4" name="rating" value="4">';
+                                            echo '<label for="star4"></label>';
+                                            echo '<input type="radio" id="star5" name="rating" value="5" required>';
+                                            echo '<label for="star5"></label>';    
+                                        echo '</div>';
+                                        echo '<button type="submit">Submit</button>';
+                                        echo '</form>';
+                                    echo '</div>';
+                                echo '</div>';
+                                echo '<button  class="review-button"">Review</button>';
+                                }
                                 
+                                
+
+                               
                             echo '</div>';
                         echo '</div>';
                         
                         }
                     
-                        
+                       
                      echo '</div>';
                      
                 

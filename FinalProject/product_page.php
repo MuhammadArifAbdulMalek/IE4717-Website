@@ -171,10 +171,42 @@ if (isset($_POST['id'], $_POST['product_name'], $_POST['price'], $_POST['size'],
             <a> <strong> <?php echo $products[0]['gender']; ?>  </strong> </a>
             <p style="font-size:80px; margin-bottom:0px;"> <?php echo $productName; ?> </p>
             <p style="font-size:15px; margin-top:0px;"> <strong> <?php echo $colorway; ?> </strong> </p>
+            <?php
+                $productquery = "SELECT averagerating FROM products WHERE product_name = ? AND colourway = ?";
+                $productstmt = $conn->prepare($productquery);
+                $productstmt->bind_param("ss", $productName, $colorway);
+                $productstmt->execute();
+
+                if ($productstmt->error) {
+                    echo "Error: " . $productstmt->error;
+                } else {
+                    // Your existing code
+                
+                $productresult = $productstmt->get_result();
+
+                while ($productrow = $productresult->fetch_assoc()) {
+                    if ($productrow['averagerating'] != 0) {
+                        echo '<p>';
+                        for ($i = 1; $i <= 5; $i++) {
+                            if ($i <= $productrow['averagerating']) {
+                                echo '★';
+                            } else {
+                                echo '☆'; 
+                            }
+                        }
+                        echo '</p>'; 
+                    } else {
+                        echo '<p> No reviews </p>';
+                    }
+                }
+            }
+
+                $productstmt->close();
+                ?>
             <p style="font-size:30px;"> <strong> $ <?php echo $productprice; ?> </strong> </p>
             <a style="font-size:15px; margin-top:20px;text-decoration:underline; S"> COLOURS </a> 
             <?php
-           $sql = "SELECT id, colourway, image_data, product_name, product_details FROM products WHERE product_name = '" . $products[0]['product_name'] . "' AND gender = '" . $products[0]['gender'] . "'";
+           $sql = "SELECT averagerating,id, colourway, image_data, product_name, product_details FROM products WHERE product_name = '" . $products[0]['product_name'] . "' AND gender = '" . $products[0]['gender'] . "'";
 
            // Execute the query
            $result = $conn->query($sql);
