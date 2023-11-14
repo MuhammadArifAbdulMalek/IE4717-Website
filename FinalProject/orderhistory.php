@@ -26,7 +26,7 @@ $user_id = setUserSession();
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&family=Lato:wght@700&display=swap" rel="stylesheet">
     <script src="scripts.js" defer></script>
     <script type="text/JavaScript">
-    var message="Current Promotions Latest News Get it Here! Promo Code:15OFF for 15% Off";
+    var message="Current Promotions Latest News Get it Here! Promo Code 15OFF for 15% off your next purchase.";
     var space=" ";
     var position=0;
     function scroller(){
@@ -349,9 +349,9 @@ $user_id = setUserSession();
                                     echo 'You gave a rating of: ';
                                 for ($i = 1; $i <= 5; $i++) {
                                     if ($i <= $subrow['rating']) {
-                                        echo '★'; // Filled star
+                                        echo '★';
                                     } else {
-                                        echo '☆'; // Empty star
+                                        echo '☆'; 
                                     }
                                 }
                                 } else {

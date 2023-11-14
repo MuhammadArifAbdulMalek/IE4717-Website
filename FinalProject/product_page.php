@@ -93,6 +93,21 @@ if (isset($_POST['id'], $_POST['product_name'], $_POST['price'], $_POST['size'],
             return true;
         }
     </script>
+    <script src="scripts.js"defer></script>
+<script type="text/JavaScript">
+    var message="Current Promotions Latest News Get it Here! Promo Code 15OFF for 15% off your next purchase.";
+    var space=" ";
+    var position=0;
+    function scroller(){
+         var newtext = space + message.substring(position,message.length) + space + message.substring(0,position);
+         var td = document.getElementById("tabledata");
+         td.firstChild.nodeValue = newtext;
+         position++;
+         if (position > message.length){position=0;}
+         window.setTimeout("scroller()",200);
+    }
+ 
+ </script>
     <style>
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
@@ -101,7 +116,7 @@ if (isset($_POST['id'], $_POST['product_name'], $_POST['price'], $_POST['size'],
         }
     </style>
 </head>
-<body>
+<body onload="scroller();">
     <div class="promo">  
         <table>
             <tr>

@@ -113,7 +113,7 @@ if (isset($_POST['promocodeaddition'])) {
     
     
 </head>
-<body >
+<body>
     <div class="promo">  
         <table>
             <tr>
