@@ -136,6 +136,7 @@ $user_id = setUserSession();
 
         .orderpast{
             height:25vh;
+            margin-bottom: 10px;
         }
         .orderpastpurchase{
             display: flex;
@@ -224,6 +225,17 @@ $user_id = setUserSession();
         background-size: cover;
         }
 
+        .review-button {
+            background-color: #000000;
+            color: #fff;
+            border: 1px solid #000000;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            width: 200px;
+            margin-bottom: 30px;
+        }
+
     </style>
 </head>
 
@@ -251,7 +263,7 @@ $user_id = setUserSession();
                         <div class="dropdown" style="width: 110px; position: relative;">
                             <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
                                     <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
-                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; z-index: 1;">
                                     <a href="logout.php?return_url=<?php echo urlencode('index.php');?>">Logout</a>
                                     <a href="admin.php">Admin</a>
                                     <a href="orderhistory.php" style="text-align:left">Order History</a>
@@ -262,7 +274,7 @@ $user_id = setUserSession();
                         <div class="dropdown" style="width: 110px; position: relative;">
                             <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
                                     <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
-                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; z-index: 1;">
                                     <a href="logout.php?return_url=<?php echo urlencode('index.php');?>">Logout</a>
                                     <a href="orderhistory.php" style="text-align:left">Order History</a>
                                     </div>

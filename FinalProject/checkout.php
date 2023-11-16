@@ -110,12 +110,26 @@ if (isset($_POST['promocodeaddition'])) {
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&family=Lato:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
+    <script type="text/JavaScript">
+    var message="Current Promotions Latest News Get it Here! Promo Code 15OFF for 15% off your next purchase.";
+    var space=" ";
+    var position=0;
+    function scroller(){
+         var newtext = space + message.substring(position,message.length) + space + message.substring(0,position);
+         var td = document.getElementById("tabledata");
+         td.firstChild.nodeValue = newtext;
+         position++;
+         if (position > message.length){position=0;}
+         window.setTimeout("scroller()",200);
+    }
+ 
+    </script>
     
     
 </head>
-<body>
+<body onload="scroller();">
     <div class="promo">  
-        <table>
+        <table border="0">
             <tr>
                <td id="tabledata">Current Promotion</td>
              </tr>
@@ -138,7 +152,7 @@ if (isset($_POST['promocodeaddition'])) {
                         <div class="dropdown" style="width: 110px; position: relative;">
                             <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
                                     <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
-                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; z-index: 1;">
                                     <a href="logout.php?return_url=<?php echo urlencode('index.php');?>">Logout</a>
                                     <a href="admin.php">Admin</a>
                                     <a href="orderhistory.php" style="text-align:left">Order History</a>
@@ -149,7 +163,7 @@ if (isset($_POST['promocodeaddition'])) {
                         <div class="dropdown" style="width: 110px; position: relative;">
                             <div class="dropdownbar" style="text-align:left; position: relative; display: inline-block; font-size: 90%;">                                      
                                     <label for=user-account>Hi, <?php echo $_SESSION['first_name']; ?></label>
-                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; right: 0; z-index: 1;">
+                                    <div class="dropdown-content" style="text-align:right; display: none; position: absolute; background-color: white; padding: 10px; top: 100%; z-index: 1;">
                                     <a href="logout.php?return_url=<?php echo urlencode('index.php');?>">Logout</a>
                                     <a href="orderhistory.php" style="text-align:left">Order History</a>
                                 </div>
@@ -182,10 +196,10 @@ if (isset($_POST['promocodeaddition'])) {
                     echo '<input type="tel" id="phone" name="myphone" class="intl-tel-input" required><br>';
   
                     echo '<label for="myaddress">Delivery Address:</label><label class="orderheader">* </label><br>';
-                    echo '<input type="text" name="myaddress" size="25" id="myaddress"  required><br>  ';
+                    echo '<input type="text" name="myaddress" size="25" id="myaddress" pattern="/^[a-zA-Z0-9#-]*$/" required title="Please enter a valid address" required><br>  ';
          
                     echo '<label for="myaddress2">Delivery Address Line 2:</label><br>';
-                    echo '<input type="text" name="myaddress2" size="25" id="myaddress2"><br>  ';
+                    echo '<input type="text" name="myaddress2" size="25" id="myaddress2" pattern="/^[a-zA-Z0-9#-]*$/" title="Please enter a valid address"><br>  ';
              
                     echo '<label for="mycity">City:</label><label class="orderheader">* </label><br> ';
                     echo '<input type="text" name="mycity" size="25" id="mycity"  required><br> ';
@@ -196,13 +210,13 @@ if (isset($_POST['promocodeaddition'])) {
                 
                     echo '<h2> Payment </h2>';
                     echo '<label for="mybillingaddress">Biling Address:</label><label class="orderheader">* </label><br>';
-                    echo '<input type="text" name="mybillingaddress" size="25" id="mybillingaddress"  required><br>';
+                    echo '<input type="text" name="mybillingaddress" size="25" id="mybillingaddress" pattern="/^[a-zA-Z0-9#-]*$/" required title="Please enter a valid address" required><br>';
       
                     echo '<label for="mybillingaddress2">Billing Address Line 2:</label>';
-                    echo '<input type="text" name="mybillingaddress2" size="25" id="mybillingaddress2"><br>';
+                    echo '<input type="text" name="mybillingaddress2" size="25" id="mybillingaddress2" pattern="/^[a-zA-Z0-9#-]*$/" title="Please enter a valid address"><br>';
              
                     echo '<label for="mybillingcity">City:</label><label class="orderheader">* </label><br>';
-                    echo '<input type="text" name="mybillingcity" size="25" id="mybillingcity" required><br>';
+                    echo '<input type="text" name="mybillingcity" size="25" id="mybillingcity"  required><br>';
          
                     echo '<label for="mybillingpostalcode">Postal Code:</label><label class="orderheader">* </label><br>';
                     echo '<input type="text" name="mybillingpostalcode" size="25" id="mybillingpostalcode" pattern="[0-9]+" required title="Please enter a valid number (digits only)" required><br>   ';
@@ -239,6 +253,8 @@ if (isset($_POST['promocodeaddition'])) {
             <?php if($instanceCount != 0) {
              echo '<h2 style="text-align:center; padding-top:5vh;"> In Your Cart </h2>';
             }
+
+            $total = 0;
             ?>
             <div class="cartdisplayitems">
             <table class="displayproductsorder">
@@ -292,6 +308,8 @@ if (isset($_POST['promocodeaddition'])) {
             echo '<form action="" method="post" id="promocodeaddition" name="promocodeaddition" style="display: flex; align-items: center; justify-content: center;">';
             echo '<label for=promocode>Promo Code: </label>';
             echo '<input type="text" name="promocode" size="25" id="promocode" style="margin-left:20px;"><br>';
+
+            echo "$product_ids = $_POST['product_id']";
             
              for ($i = 0; $i < count($product_ids); $i++) {
             echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
