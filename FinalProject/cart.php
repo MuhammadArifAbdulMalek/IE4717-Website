@@ -87,14 +87,14 @@ if (isset($_POST['backtocart'])) {
   padding: 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* This ensures the body takes at least the full height of the viewport */
+  min-height: 100vh; 
 }
 .delete{
     position:relative;
 }
 .deleteBtn {
-            background-color: transparent; /* Red background color */
-            color: #000; /* White text color */
+            background-color: transparent; 
+            color: #000;
             border: none;
             padding: 15px 15px;
             font-size:20px;
@@ -105,7 +105,6 @@ if (isset($_POST['backtocart'])) {
             top: 40px;
             
         }
- /* Style the 'X' inside the button */
  .deleteBtn::after {
             content: 'X';
             font-weight: bold;
@@ -183,19 +182,15 @@ if (isset($_POST['backtocart'])) {
             );
         }
         $productDetails = array();
-
-        // Loop through $cartData to fetch product details
         foreach ($cartData as $cartItem) {
             $product_id = $cartItem['product_id'];
         
-            // Query to fetch product details based on product_id
             $productSql = "SELECT id, image_data, product_name, colourway FROM products WHERE id = '$product_id'";
             $productResult = $conn->query($productSql);
         
             if ($productResult && $productResult->num_rows > 0) {
                 $productRow = $productResult->fetch_assoc();
-        
-                // Query to fetch the stock for the specified size and product
+ 
                 $size = $cartItem['size'];
                 $stockSql = "SELECT `$size` FROM inventory WHERE id = $product_id";
                 $stockResult = $conn->query($stockSql);
@@ -205,7 +200,7 @@ if (isset($_POST['backtocart'])) {
                     $stock = $stockRow[$size];
                 } else {
                     echo "Failed to fetch stock information.";
-                    $stock = "N/A"; // Set a default value or handle the error as needed
+                    $stock = "N/A"; 
                 }
         
                 $productDetails[] = array(
@@ -217,15 +212,12 @@ if (isset($_POST['backtocart'])) {
                     'price' => $cartItem['price'],
                     'subtotal' => $cartItem['subtotal'],
                     'size' => $cartItem['size'],
-                    'stock' => $stock // Include the stock value
-                );
+                    'stock' => $stock 
             } else {
                 echo "<h2>Your shopping cart is empty.</h2>";
             }
         }
         
-
-        // Add buttons for updating the cart or proceeding to checkout
         ?>
         <div class="displaycart">
             <?php if (empty($productDetails)) {
@@ -327,10 +319,10 @@ if (isset($_POST['backtocart'])) {
         </footer>
 
         <script>
-            // Select all dropdown bars and checkbox forms
+
             const dropdownBars = document.querySelectorAll(".dropdownbar");
             const dropdownContent = document.querySelectorAll(".dropdown-content");
-            // Add a click event listener to each dropdown bar
+  
             dropdownBars.forEach((dropdownBar, index) => {
                 dropdownBar.addEventListener("click", () => {
                     const form = dropdownContent[index];
@@ -347,19 +339,19 @@ if (isset($_POST['backtocart'])) {
 </html>
 
 <script>
-    // Add JavaScript code to handle quantity changes and update subtotal
+
     const quantityInputs = document.querySelectorAll('.quantity-input');
     const totalElement = document.getElementById('total');
-    let total = <?php echo $total ?>; // Initialize the total from the PHP value
+    let total = <?php echo $total ?>;
 
     quantityInputs.forEach(input => {
         input.addEventListener('input', () => {
-            const quantity = parseInt(input.value, 10); // Parse the input value as an integer
+            const quantity = parseInt(input.value, 10); 
             if (!isNaN(quantity) && quantity >= 0) {
                 const price = input.getAttribute('data-price');
                 const subtotal = quantity * price;
                 const subtotalElement = input.closest('tr').querySelector('.subtotal');
-                subtotalElement.textContent = '$' + subtotal.toFixed(2); // Format as currency
+                subtotalElement.textContent = '$' + subtotal.toFixed(2); 
                 input.setAttribute('data-subtotal', subtotal);
                 total = calculateTotal();
                 updateTotal();
@@ -377,7 +369,6 @@ if (isset($_POST['backtocart'])) {
         totalElement.textContent = 'Total: $ ' + total.toFixed(2);
     }
 
-    // Call updateTotal initially to display the total based on the initial values
     updateTotal();
     
 </script>

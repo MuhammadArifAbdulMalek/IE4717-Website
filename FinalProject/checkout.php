@@ -65,10 +65,11 @@ if (isset($_POST['promocodeaddition'])) {
     if (isset($_POST['promocode'])) {
         $promocode = $_POST['promocode'];
         
+        
         if ($promocode == $_SESSION['promocodeapplied']) {
             echo '<script>alert("Promo Code has been applied previously");</script>';
         } else {
-            // Use prepared statements to avoid SQL injection
+
             $promocodesql = "SELECT pricecut FROM promocode WHERE promocode = ?";
             $stmt = $conn->prepare($promocodesql);
             $stmt->bind_param("s", $promocode);
@@ -107,23 +108,10 @@ if (isset($_POST['promocodeaddition'])) {
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,600&family=Lato:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
-    <script type="text/JavaScript">
-    var message="Current Promotions Latest News Get it Here! Promo Code 15OFF for 15% off your next purchase.";
-    var space=" ";
-    var position=0;
-    function scroller(){
-         var newtext = space + message.substring(position,message.length) + space + message.substring(0,position);
-         var td = document.getElementById("tabledata");
-         td.firstChild.nodeValue = newtext;
-         position++;
-         if (position > message.length){position=0;}
-         window.setTimeout("scroller()",200);
-    }
  
     </script>
+   
+
     
     
 </head>
@@ -190,19 +178,19 @@ if (isset($_POST['promocodeaddition'])) {
                     echo '<input type="text" name="myName" size="25" id="myName" pattern="[A-Za-z\s]+" required title="Please enter only alphabets" required><br>';
                  
                     echo '<label for="myEmail">Email:</label><label class="orderheader">* </label><br>';
-                    echo '<input type="text" name="myEmail" size="25" id="myEmail" pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" required title="Please enter following example (hello@domain.sg)" required><br>';
+                    echo '<input type="email" name="myEmail" size="25" id="myEmail" required title="Please enter following example (hello@domain.sg)" required><br>';
          
                     echo '<label for="myphone">Phone: +65</label><label class="orderheader">* </label><br>';
-                    echo '<input type="tel" id="phone" name="myphone" class="intl-tel-input" required><br>';
+                    echo '<input type="text" id="myphone" name="myphone" pattern="^[689]\d{7}$" required title="Please enter a valid Singapore number"required><br>';
   
                     echo '<label for="myaddress">Delivery Address:</label><label class="orderheader">* </label><br>';
-                    echo '<input type="text" name="myaddress" size="25" id="myaddress" pattern="/^[a-zA-Z0-9#-]*$/" required title="Please enter a valid address" required><br>  ';
+                    echo '<input type="text" name="myaddress" size="25" id="myaddress" pattern="^[A-Za-z0-9\'\.\-\s,&sharp;]+$" required title="Please enter a valid address"><br>';
          
                     echo '<label for="myaddress2">Delivery Address Line 2:</label><br>';
-                    echo '<input type="text" name="myaddress2" size="25" id="myaddress2" pattern="/^[a-zA-Z0-9#-]*$/" title="Please enter a valid address"><br>  ';
+                    echo '<input type="text" name="myaddress2" size="25" id="myaddress2" pattern="^[A-Za-z0-9\'\.\-\s,&sharp;]+$" title="Please enter a valid address"><br>  ';
              
                     echo '<label for="mycity">City:</label><label class="orderheader">* </label><br> ';
-                    echo '<input type="text" name="mycity" size="25" id="mycity"  required><br> ';
+                    echo '<input type="text" name="mycity" size="25" id="mycity" pattern="[A-Za-z\s]+" title="Please enter a valid City" required><br> ';
 
                     echo '<label for="mypostalcode">Postal Code:</label><label class="orderheader">* </label><br>';
                     echo '<input type="text" name="mypostalcode" size="25" id="mypostalcode"  pattern="[0-9]+" required title="Please enter a valid number (digits only)" required><br>';
@@ -210,13 +198,13 @@ if (isset($_POST['promocodeaddition'])) {
                 
                     echo '<h2> Payment </h2>';
                     echo '<label for="mybillingaddress">Biling Address:</label><label class="orderheader">* </label><br>';
-                    echo '<input type="text" name="mybillingaddress" size="25" id="mybillingaddress" pattern="/^[a-zA-Z0-9#-]*$/" required title="Please enter a valid address" required><br>';
+                    echo '<input type="text" name="mybillingaddress" size="25" id="mybillingaddress" pattern="^[A-Za-z0-9\'\.\-\s,&sharp;]+$" required title="Please enter a valid address" required><br>';
       
                     echo '<label for="mybillingaddress2">Billing Address Line 2:</label>';
-                    echo '<input type="text" name="mybillingaddress2" size="25" id="mybillingaddress2" pattern="/^[a-zA-Z0-9#-]*$/" title="Please enter a valid address"><br>';
+                    echo '<input type="text" name="mybillingaddress2" size="25" id="mybillingaddress2" pattern="^[A-Za-z0-9\'\.\-\s,&sharp;]+$" title="Please enter a valid address"><br>';
              
                     echo '<label for="mybillingcity">City:</label><label class="orderheader">* </label><br>';
-                    echo '<input type="text" name="mybillingcity" size="25" id="mybillingcity"  required><br>';
+                    echo '<input type="text" name="mybillingcity" size="25" id="mybillingcity" pattern="[A-Za-z\s]+" title="Please enter a valid City" required><br>';
          
                     echo '<label for="mybillingpostalcode">Postal Code:</label><label class="orderheader">* </label><br>';
                     echo '<input type="text" name="mybillingpostalcode" size="25" id="mybillingpostalcode" pattern="[0-9]+" required title="Please enter a valid number (digits only)" required><br>   ';
@@ -309,16 +297,16 @@ if (isset($_POST['promocodeaddition'])) {
             echo '<label for=promocode>Promo Code: </label>';
             echo '<input type="text" name="promocode" size="25" id="promocode" style="margin-left:20px;"><br>';
 
-            echo "$product_ids = $_POST['product_id']";
             
-             for ($i = 0; $i < count($product_ids); $i++) {
-            echo '<input type="hidden" name="product_id[]" value="'. $product_id .'">';
-                        echo '<input type="hidden" name="product_name[]" value="'. $product_name .'">';
-                        echo '<input type="hidden" name="colourway[]" value="'. $colourway .'">';
-                        echo '<input type="hidden" name="size[]" value="'. $size .'">';
-                        echo '<input type="hidden" name="price[]" value="'. $price .'">';
-                        echo '<input type="hidden" name="quantity[]" value="'. $quantity .'">';
-             }
+            
+            for ($i = 0; $i < count($product_ids); $i++) {
+                echo '<input type="hidden" name="product_id[]" value="'. $product_ids[$i] .'">';
+                echo '<input type="hidden" name="product_name[]" value="'. $product_names[$i] .'">';
+                echo '<input type="hidden" name="colourway[]" value="'. $colourways[$i] .'">';
+                echo '<input type="hidden" name="size[]" value="'. $sizes[$i] .'">';
+                echo '<input type="hidden" name="price[]" value="'. $prices[$i] .'">';
+                echo '<input type="hidden" name="quantity[]" value="'. $quantities[$i] .'">';
+            }
                         
              echo ' <button class="checkoutbutton" id="promocodeaddition" name="promocodeaddition" type="submit" style="margin-top:10px; margin-left:20px;">Apply</button>';
              echo '</form>';
@@ -411,9 +399,3 @@ if (isset($_POST['promocodeaddition'])) {
         
 </body>
 </html>
-<script>
-  var input = document.querySelector("#phone");
-  window.intlTelInput(input, {
-    initialCountry: "auto",
-  });
-</script>

@@ -316,7 +316,7 @@ $conn->close();
 
                     <div class="form-group">
                         <label for="create-username">Username:</label>
-                        <input type="text" id="create-username" name="create-username" pattern="/^[a-zA-Z0-9]{8,}+$/" required>
+                        <input type="text" id="create-username" name="create-username" pattern="^[a-zA-Z0-9]{8,}$"  title = "Minimum 8 Characters with no special characters" required>
                     </div>
 
                     <div class="form-group">
